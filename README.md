@@ -1,21 +1,19 @@
 /*==========================================================================
 * IMU BOARD project
-*
 * Author: Mattia Poggiani
 * Centro di Ricerca "E. Piaggio" - University of Pisa
 * http://www.centropiaggio.unipi.it
 * http://www.naturalmachinemotioninitiative.com/
 * For support, please refer to: mattia.poggiani at centropiaggio.unipi.it
-*
 *==========================================================================/
 
-qbimu
+IMU
 ===============
 The repository is organized as follows:
 
 1) Firmware
 
-Here you can find the PSoC firmware to be programmed in the qbimu board.
+Here you can find the PSoC firmware to be programmed in the IMU board.
 It handles the readings of up to 17 connected IMUs and allows the user to choose 
 which sensors to read.
 Firmware version 1.0.0 allows to choose between accelerometers, gyroscopes and 
@@ -27,7 +25,7 @@ Just open the project with PSoC Creator and upload it onto the board
 -------------------------------------------------------------------------------------
 2) Management
 
-Here are useful libraries to manage the qbimu board.
+Here are useful libraries to manage the IMU board.
 In particular:
 - qbAPI contains the API to communicate with the device through FTDI and RS-485 protocol.
 - qbadmin contains softwares to interface with the board using the API.
