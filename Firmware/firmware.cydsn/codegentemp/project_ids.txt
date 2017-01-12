@@ -1,0 +1,6 @@
+C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\firmware.cyprj|82f40708-fc43-4d7c-83d6-5d1b2bee733f
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|2eedd3ab-c2a3-41ec-9bb1-cde09613fa4f
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\default\CyReferenceLibrary\CyReferenceLibrary.cylib\CyReferenceLibrary.cyprj|641b49a2-4645-4392-a3df-d954efbed83e
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|95ddc0ea-3013-47d3-839e-82989936dc60
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|63edd105-5e27-4a58-a511-50f9d23731e0
+C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|be7a12ca-4e6a-44a6-b291-e8d61e5c2f60

@@ -1,4 +1,4 @@
-C51 COMPILER V9.51   GLOBALS                                                               11/18/2016 10:36:25 PAGE 1   
+C51 COMPILER V9.51   GLOBALS                                                               01/12/2017 16:13:59 PAGE 1   
 
 
 C51 COMPILER V9.51, COMPILATION OF MODULE GLOBALS
@@ -62,7 +62,7 @@ line level    source
   50          // IMU variables
   51          uint8 N_IMU_Connected;
   52          uint8 IMU_connected[N_IMU_MAX];
-C51 COMPILER V9.51   GLOBALS                                                               11/18/2016 10:36:25 PAGE 2   
+C51 COMPILER V9.51   GLOBALS                                                               01/12/2017 16:13:59 PAGE 2   
 
   53          uint8 IMU_conf[N_IMU_MAX][5];
   54          int imus_data_size;
@@ -82,7 +82,7 @@ line level    source
   68          uint8   rateGyro;                   // Gyro ticks to deg/s conversion factor
   69          
   70          /* END OF FILE */
-C51 COMPILER V9.51   GLOBALS                                                               11/18/2016 10:36:25 PAGE 3   
+C51 COMPILER V9.51   GLOBALS                                                               01/12/2017 16:13:59 PAGE 3   
 
 ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
