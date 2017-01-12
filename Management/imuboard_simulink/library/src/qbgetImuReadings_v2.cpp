@@ -168,51 +168,96 @@ static void mdlInitializeSizes( SimStruct *S )
 			
 
 ////////////////////////////////   values      //////////////////////////////
-	int_T dims[3];
-	DECL_AND_INIT_DIMSINFO(di);
-	di.numDims = 3;
-	dims[0] = NUM_OF_QBOTS;
-		
-	// Acc output
-	dims[1] = 3;
-	dims[2] = n_imu;
-	di.dims = dims;
-	di.width = NUM_OF_QBOTS * 3 * n_imu;
-	ssSetOutputPortDimensionInfo(S, 0, &di);
-	ssSetOutputPortDataType ( S, 0, SS_DOUBLE );
-	
-	// Gyro output
-	dims[1] = 3;
-	dims[2] = n_imu;
-	di.dims = dims;
-	di.width = NUM_OF_QBOTS * 3 * n_imu;
-	ssSetOutputPortDimensionInfo(S, 1, &di);
-	ssSetOutputPortDataType ( S, 1, SS_DOUBLE );
-	
-	// Mag output
-	dims[1] = 3;
-	dims[2] = n_imu;
-	di.dims = dims;
-	di.width = NUM_OF_QBOTS * 3 * n_imu;
-	ssSetOutputPortDimensionInfo(S, 2, &di);
-	ssSetOutputPortDataType ( S, 2, SS_DOUBLE );
-	
-	// Quat output
-	dims[1] = 4;
-	dims[2] = n_imu;
-	di.dims = dims;
-	di.width = NUM_OF_QBOTS * 4 * n_imu;
-	ssSetOutputPortDimensionInfo(S, 3, &di);
-	ssSetOutputPortDataType ( S, 3, SS_DOUBLE );
-	
-	// Temp output
-	dims[1] = 1;
-	dims[2] = n_imu;
-	di.dims = dims;
-	di.width = NUM_OF_QBOTS * n_imu;
-	ssSetOutputPortDimensionInfo(S, 4, &di);
-	ssSetOutputPortDataType ( S, 4, SS_DOUBLE );
-	
+    if (n_imu <= 1){
+    	for (int i=0; i < n_imu; i++){
+            DECL_AND_INIT_DIMSINFO(di);
+        	int_T dims[2];
+    
+            di.numDims = 2;
+            dims[0] = NUM_OF_QBOTS;
+            
+            // Acc output
+            dims[1] = 3;
+            di.dims = dims;
+            di.width = NUM_OF_QBOTS * 3 * n_imu;
+            ssSetOutputPortDimensionInfo(S, 0, &di);
+            ssSetOutputPortDataType ( S, 0, SS_DOUBLE );
+
+            // Gyro output
+            dims[1] = 3;
+            di.dims = dims;
+            di.width = NUM_OF_QBOTS * 3 * n_imu;
+            ssSetOutputPortDimensionInfo(S, 1, &di);
+            ssSetOutputPortDataType ( S, 1, SS_DOUBLE );
+
+            // Mag output
+            dims[1] = 3;
+            di.dims = dims;
+            di.width = NUM_OF_QBOTS * 3 * n_imu;
+            ssSetOutputPortDimensionInfo(S, 2, &di);
+            ssSetOutputPortDataType ( S, 2, SS_DOUBLE );
+
+            // Quat output
+            dims[1] = 4;
+            di.dims = dims;
+            di.width = NUM_OF_QBOTS * 4 * n_imu;
+            ssSetOutputPortDimensionInfo(S, 3, &di);
+            ssSetOutputPortDataType ( S, 3, SS_DOUBLE );
+
+            // Temp output
+            dims[1] = 1;
+            di.dims = dims;
+            di.width = NUM_OF_QBOTS * n_imu;
+            ssSetOutputPortDimensionInfo(S, 4, &di);
+            ssSetOutputPortDataType ( S, 4, SS_DOUBLE );
+        }
+    }
+    else {
+        int_T dims[3];
+        DECL_AND_INIT_DIMSINFO(di);
+        di.numDims = 3;
+        dims[0] = NUM_OF_QBOTS;
+
+        // Acc output
+        dims[1] = 3;
+        dims[2] = n_imu;
+        di.dims = dims;
+        di.width = NUM_OF_QBOTS * 3 * n_imu;
+        ssSetOutputPortDimensionInfo(S, 0, &di);
+        ssSetOutputPortDataType ( S, 0, SS_DOUBLE );
+
+        // Gyro output
+        dims[1] = 3;
+        dims[2] = n_imu;
+        di.dims = dims;
+        di.width = NUM_OF_QBOTS * 3 * n_imu;
+        ssSetOutputPortDimensionInfo(S, 1, &di);
+        ssSetOutputPortDataType ( S, 1, SS_DOUBLE );
+
+        // Mag output
+        dims[1] = 3;
+        dims[2] = n_imu;
+        di.dims = dims;
+        di.width = NUM_OF_QBOTS * 3 * n_imu;
+        ssSetOutputPortDimensionInfo(S, 2, &di);
+        ssSetOutputPortDataType ( S, 2, SS_DOUBLE );
+
+        // Quat output
+        dims[1] = 4;
+        dims[2] = n_imu;
+        di.dims = dims;
+        di.width = NUM_OF_QBOTS * 4 * n_imu;
+        ssSetOutputPortDimensionInfo(S, 3, &di);
+        ssSetOutputPortDataType ( S, 3, SS_DOUBLE );
+
+        // Temp output
+        dims[1] = 1;
+        dims[2] = n_imu;
+        di.dims = dims;
+        di.width = NUM_OF_QBOTS * n_imu;
+        ssSetOutputPortDimensionInfo(S, 4, &di);
+        ssSetOutputPortDataType ( S, 4, SS_DOUBLE );
+    }
 	
 
 //=============================================================     sample times
