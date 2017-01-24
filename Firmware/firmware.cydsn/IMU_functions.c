@@ -164,7 +164,7 @@ void InitIMUgeneral()
         IMU_conf[k_imu][1] = 1;
         IMU_conf[k_imu][2] = 0;
         IMU_conf[k_imu][3] = 0;
-        IMU_conf[k_imu][4] = 1;
+        IMU_conf[k_imu][4] = 0;
     }
     
     // Reading of MagCal Parameters
@@ -221,7 +221,7 @@ void InitIMUgeneral()
         IMU_conf[k_imu][1] = 1;
         IMU_conf[k_imu][2] = 0;
         IMU_conf[k_imu][3] = 0;
-        IMU_conf[k_imu][4] = 1;
+        IMU_conf[k_imu][4] = 0;
     }
     CyDelay(50);
     
@@ -229,7 +229,7 @@ void InitIMUgeneral()
     imus_data_size = 1; //header    
     for (k_imu = 0; k_imu < N_IMU_Connected; k_imu++)
     {
-        single_imu_size[IMU_connected[k_imu]] = 1 + 6*IMU_conf[IMU_connected[k_imu]][0] + 6*IMU_conf[IMU_connected[k_imu]][1] + 6*IMU_conf[IMU_connected[k_imu]][2] + 2*IMU_conf[IMU_connected[k_imu]][4]+ 1;
+        single_imu_size[IMU_connected[k_imu]] = 1 + 6*IMU_conf[IMU_connected[k_imu]][0] + 6*IMU_conf[IMU_connected[k_imu]][1] + 6*IMU_conf[IMU_connected[k_imu]][2] + 8*IMU_conf[IMU_connected[k_imu]][3] + 2*IMU_conf[IMU_connected[k_imu]][4]+ 1;
         imus_data_size = imus_data_size + single_imu_size[IMU_connected[k_imu]];
     }
     imus_data_size = imus_data_size + 1;    //checksum
@@ -245,7 +245,7 @@ void ReadIMU(int n)
     if (IMU_conf[n][0]) ReadAcc(n);
     if (IMU_conf[n][1]) ReadGyro(n);
     if (IMU_conf[n][2]) ReadMag(n);
-    
+    if (IMU_conf[n][3]) ReadQuat(n);
     if (IMU_conf[n][4]) ReadTemp(n);
 }
 
@@ -367,6 +367,41 @@ void ReadMagCal(int n){
     
 }
 
+/*******************************************************************************
+* Function Name: Read Qauternion of IMU n
+*********************************************************************************/
+void ReadQuat(int n)
+{
+	uint8 low=0, high=0;	
+		
+	int row = n;
+	
+	//read W
+  
+		Quat[row][0] = high; 
+		Quat[row][1] = low; 
+		low=0, high=0;
+			
+	//read X
+
+		Quat[row][2] = high; 
+		Quat[row][3] = low; 
+		low=0, high=0;
+		
+	//read Y
+
+		Quat[row][4] = high; 
+		Quat[row][5] = low;
+		low=0, high=0;
+        
+	//read Z
+
+		Quat[row][6] = high; 
+		Quat[row][7] = low;
+		low=0, high=0;        
+
+}
+
 /********************************************************************************
 * Function Name: ReadAllIMUs
 *********************************************************************************/
@@ -400,6 +435,15 @@ void ReadAllIMUs(){
         g_imuNew[k_imu].mag_value[1] = (int16)(tmp<<8 | Mag[IMU_connected[k_imu]][3]);
         tmp = Mag[IMU_connected[k_imu]][4];
         g_imuNew[k_imu].mag_value[2] = (int16)(tmp<<8 | Mag[IMU_connected[k_imu]][5]);
+        
+        tmp = Quat[IMU_connected[k_imu]][0];
+        g_imuNew[k_imu].quat_value[0] = (int16)(tmp<<8 | Quat[IMU_connected[k_imu]][1]);
+        tmp = Quat[IMU_connected[k_imu]][2];
+        g_imuNew[k_imu].quat_value[1] = (int16)(tmp<<8 | Quat[IMU_connected[k_imu]][3]);
+        tmp = Quat[IMU_connected[k_imu]][4];
+        g_imuNew[k_imu].quat_value[2] = (int16)(tmp<<8 | Quat[IMU_connected[k_imu]][5]);
+        tmp = Quat[IMU_connected[k_imu]][6];
+        g_imuNew[k_imu].quat_value[3] = (int16)(tmp<<8 | Quat[IMU_connected[k_imu]][7]);
         
         tmp = Temp[IMU_connected[k_imu]][0];
         g_imuNew[k_imu].temp_value = (int16)(tmp<<8 | Temp[IMU_connected[k_imu]][1]);

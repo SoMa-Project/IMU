@@ -61,6 +61,7 @@ uint8 Accel[N_IMU_MAX][6];
 uint8 Gyro[N_IMU_MAX][6];
 uint8 Mag[N_IMU_MAX][6];
 uint8 MagCal[N_IMU_MAX][3];
+uint8 Quat[N_IMU_MAX][8];
 uint8 Temp[N_IMU_MAX][2];
 
 int frsAccReg;

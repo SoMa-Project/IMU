@@ -1100,6 +1100,10 @@ int main (int argc, char **argv)
 					printf("Magnetometer\n");
 					printf("%f, %f, %f\n", imu_values[(3*3+4+1)*i+6], imu_values[(3*3+4+1)*i+7], imu_values[(3*3+4+1)*i+8]);
 				}
+				if (global_args.imu_table[5*i + 3] ){
+					printf("Quaternion\n");
+					printf("%f, %f, %f, %f\n", imu_values[(3*3+4+1)*i+9], imu_values[(3*3+4+1)*i+10], imu_values[(3*3+4+1)*i+11], imu_values[(3*3+4+1)*i+12]);
+				}
 				if (global_args.imu_table[5*i + 4] ){
 					printf("Temperature\n");
 					printf("%f\n", imu_values[(3*3+4+1)*i+13]);
