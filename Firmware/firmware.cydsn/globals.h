@@ -126,6 +126,7 @@ struct st_imu {
     int16 accel_value[3];
     int16 gyro_value[3];
     int16 mag_value[3];
+    int16 temp_value;
 };
 
 
@@ -170,6 +171,7 @@ extern uint8 Accel[N_IMU_MAX][6];
 extern uint8 Gyro[N_IMU_MAX][6];
 extern uint8 Mag[N_IMU_MAX][6];
 extern uint8 MagCal[N_IMU_MAX][3];
+extern uint8 Temp[N_IMU_MAX][2];
 
 
 // -----------------------------------------------------------------------------

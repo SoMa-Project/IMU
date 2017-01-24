@@ -337,6 +337,7 @@ static void mdlStart( SimStruct *S )
 		imu_table[5*i + 0] = aux_string[4*PARAM_SLOT_BYTES + 8 + 50*i];
 		imu_table[5*i + 1] = aux_string[4*PARAM_SLOT_BYTES + 9 + 50*i];
 		imu_table[5*i + 2] = aux_string[4*PARAM_SLOT_BYTES + 10 + 50*i];
+        imu_table[5*i + 4] = aux_string[4*PARAM_SLOT_BYTES + 12 + 50*i];
 		//printf("ID: %d  - %d, %d, %d, %d, %d\n", imu_ids[i], imu_table[5*i + 0], imu_table[5*i + 1], imu_table[5*i + 2], imu_table[5*i + 3], imu_table[5*i + 4]);
 		
 	}
@@ -428,7 +429,7 @@ static void mdlOutputs( SimStruct *S, int_T tid )
 		
 	//	printf("IMU: %d\n", imu_table[2*i + 0]);
 		for (int k=0; k<9; k++)
-			out(i)[k] = (float)imu_values[3*3*i+k];
+			out(i)[k] = (float)imu_values[(3*3+4+1)*i+k];
 		
 		for (int k=0; k<3; k++)
 			out(i)[k] = out(i)[k] * meas_unity_acc;
@@ -443,7 +444,7 @@ static void mdlOutputs( SimStruct *S, int_T tid )
 			out(i)[k] = 0; 	// NaN
 		
 		// Temperature
-		out(i)[13] = 0;		// NaN
+		out(i)[13] = (float)imu_values[(3*3+4+1)*i+13];
 		
 	
 	/*	

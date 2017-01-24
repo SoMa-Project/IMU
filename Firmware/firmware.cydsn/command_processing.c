@@ -362,7 +362,7 @@ void get_param_list(uint16 index)
             imus_data_size = 1; //header    
             for (i = 0; i < N_IMU_Connected; i++)
             {
-                single_imu_size[IMU_connected[i]] = 1 + 6*IMU_conf[IMU_connected[i]][0] + 6*IMU_conf[IMU_connected[i]][1] + 6*IMU_conf[IMU_connected[i]][2] + 1;
+                single_imu_size[IMU_connected[i]] = 1 + 6*IMU_conf[IMU_connected[i]][0] + 6*IMU_conf[IMU_connected[i]][1] + 6*IMU_conf[IMU_connected[i]][2] + 2*IMU_conf[IMU_connected[i]][4]+ 1;
                 imus_data_size = imus_data_size + single_imu_size[IMU_connected[i]];
             }
             imus_data_size = imus_data_size + 1;    //checksum
@@ -451,6 +451,11 @@ void infoPrepare(unsigned char *info_string)
 
             if ((IMU_conf[IMU_connected[i]][2])){
                 sprintf(str, "\tMag: %d\t%d\t%d\r\n", (int16) g_imu[i].mag_value[0], (int16) g_imu[i].mag_value[1],(int16) g_imu[i].mag_value[2]);
+                strcat(info_string, str);
+            }
+            
+            if ((IMU_conf[IMU_connected[i]][4])){
+                sprintf(str, "\tTemperature: %d\r\n", (int16) g_imu[i].temp_value);
                 strcat(info_string, str);
             }
         
@@ -745,7 +750,7 @@ void cmd_get_imu_readings(){
     
     // Packet: header + imu id(uint8) + imu flags(uint8) + crc  
     uint8 packet_data[350];
-    uint8 single_packet[20];
+    uint8 single_packet[22];
     
     // Packet to send is handled here (in this way you work with last consistent data)
     //isr_imu_Disable();
@@ -774,6 +779,10 @@ void cmd_get_imu_readings(){
             *((int16 *) &single_packet[c+2]) = (int16) g_imu[k_imu].mag_value[1];
             *((int16 *) &single_packet[c+4]) = (int16) g_imu[k_imu].mag_value[2];
             c = c + 6;
+        }
+        if (IMU_conf[IMU_connected[k_imu]][4]){
+            *((int16 *) &single_packet[c])   = (int16) g_imu[k_imu].temp_value;
+            c = c + 2;
         }
         single_packet[single_imu_size[IMU_connected[k_imu]] - 1] = (uint8) 0x3A; //':';
         c = 1;

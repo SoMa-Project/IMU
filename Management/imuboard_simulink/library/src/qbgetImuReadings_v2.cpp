@@ -416,12 +416,13 @@ static void mdlStart( SimStruct *S )
 		imu_table[5*i + 0] = aux_string[4*PARAM_SLOT_BYTES + 8 + 50*i];
 		imu_table[5*i + 1] = aux_string[4*PARAM_SLOT_BYTES + 9 + 50*i];
 		imu_table[5*i + 2] = aux_string[4*PARAM_SLOT_BYTES + 10 + 50*i];
+        imu_table[5*i + 4] = aux_string[4*PARAM_SLOT_BYTES + 12 + 50*i];
 		//printf("ID: %d  - %d, %d, %d, %d, %d\n", imu_ids[i], imu_table[5*i + 0], imu_table[5*i + 1], imu_table[5*i + 2], imu_table[5*i + 3], imu_table[5*i + 4]);
 		
 	}
 	
     // Imu values is a 3 sensors x 3 axes x n_imu values
-    imu_values = (float *) calloc(n_imu, 3*3*sizeof(float));
+    imu_values = (float *) calloc(n_imu, (3*3 + 4 + 1)*sizeof(float));
 }
 #endif /* MDL_START */
 
@@ -505,19 +506,19 @@ static void mdlOutputs( SimStruct *S, int_T tid )
 		for (i = 0; i < n_imu; i++) {
 			
 			// Acc outputs
-			out(0)[3*i+0] = (float)imu_values[3*3*i+0] * meas_unity_acc;;
-			out(0)[3*i+1] = (float)imu_values[3*3*i+1] * meas_unity_acc;;
-			out(0)[3*i+2] = (float)imu_values[3*3*i+2] * meas_unity_acc;;
+			out(0)[3*i+0] = (float)imu_values[(3*3+4+1)*i+0] * meas_unity_acc;;
+			out(0)[3*i+1] = (float)imu_values[(3*3+4+1)*i+1] * meas_unity_acc;;
+			out(0)[3*i+2] = (float)imu_values[(3*3+4+1)*i+2] * meas_unity_acc;;
 			
 			// Gyro outputs
-			out(1)[3*i+0] = (float)imu_values[3*3*i+3] * meas_unity_gyro;
-			out(1)[3*i+1] = (float)imu_values[3*3*i+4] * meas_unity_gyro;
-			out(1)[3*i+2] = (float)imu_values[3*3*i+5] * meas_unity_gyro;
+			out(1)[3*i+0] = (float)imu_values[(3*3+4+1)*i+3] * meas_unity_gyro;
+			out(1)[3*i+1] = (float)imu_values[(3*3+4+1)*i+4] * meas_unity_gyro;
+			out(1)[3*i+2] = (float)imu_values[(3*3+4+1)*i+5] * meas_unity_gyro;
 			
 			// Mag outputs
-			out(2)[3*i+0] = (float)imu_values[3*3*i+6] * meas_unity_mag;
-			out(2)[3*i+1] = (float)imu_values[3*3*i+7] * meas_unity_mag;
-			out(2)[3*i+2] = (float)imu_values[3*3*i+8] * meas_unity_mag;
+			out(2)[3*i+0] = (float)imu_values[(3*3+4+1)*i+6] * meas_unity_mag;
+			out(2)[3*i+1] = (float)imu_values[(3*3+4+1)*i+7] * meas_unity_mag;
+			out(2)[3*i+2] = (float)imu_values[(3*3+4+1)*i+8] * meas_unity_mag;
 			
 			// Quat outputs
 			out(3)[4*i+0] = 0; //NaN;
@@ -526,7 +527,7 @@ static void mdlOutputs( SimStruct *S, int_T tid )
 			out(3)[4*i+3] = 0; //NaN;
 
 			// Temp outputs
-			out(4)[i] = 0; //NaN;
+			out(4)[i] = (float)imu_values[(3*3+4+1)*i+13];
 		}
 	}
 

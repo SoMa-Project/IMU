@@ -92,7 +92,8 @@ void commGetImuReadings(comm_settings *comm_settings_t, int id, uint8_t* imu_tab
 	char data_out[BUFFER_SIZE];         // output data buffer
     char package_in[BUFFER_SIZE];       // output data buffer
     int package_in_size;
-	float acc_sf = 0, gyro_sf = 0, mag_sf = 0;	
+	float acc_sf = 0, gyro_sf = 0, mag_sf = 0;
+	float temp_sf = 0, temp_off = 0, temp_div = 0;	
 	char* values;
 	int c = 0;
 	float aux_float[3];
@@ -132,15 +133,19 @@ void commGetImuReadings(comm_settings *comm_settings_t, int id, uint8_t* imu_tab
 	acc_sf 	= 0.000061037;			// Ticks to G
 	gyro_sf = 0.007629627 * 8;		// Ticks to deg/s with FS +/- 2000 °/s
 	mag_sf 	= 0.1465;				// Ticks to uT
-		
+	
+	temp_sf = 0.00294118; // 1/340 //0.001426;
+	temp_off = 36.53; //21.6;
+	temp_div = 2.0;
+	
 	values = &package_in[1];
-	
-/* 	printf("SIZE: %d\n", package_in_size);
+	/*
+ 	printf("SIZE: %d\n", package_in_size);
 	for (int i=0; i< package_in_size; i++) {
-		printf("%c", values[i]);
+		printf("%d,", values[i]);
 	}
-	printf("\n"); */
-	
+	printf("\n"); 
+	*/
 	for (int i=0; i < n_imu; i++){
 
 		if (values[c] == ':'){
@@ -158,9 +163,9 @@ void commGetImuReadings(comm_settings *comm_settings_t, int id, uint8_t* imu_tab
 				((char *) &aux_si)[1] = values[c+5];
 				aux_float[2] = (float) ( aux_si * acc_sf);
 
-				imu_values[3*3*i] 	= aux_float[0];
-				imu_values[3*3*i+1] = aux_float[1];
-				imu_values[3*3*i+2] = aux_float[2];
+				imu_values[(3*3+4+1)*i] 	= aux_float[0];
+				imu_values[(3*3+4+1)*i+1] = aux_float[1];
+				imu_values[(3*3+4+1)*i+2] = aux_float[2];
 				c += 6;
 			}
 			if (imu_table[5*i + 1]) {
@@ -174,9 +179,9 @@ void commGetImuReadings(comm_settings *comm_settings_t, int id, uint8_t* imu_tab
 				((char *) &aux_si)[1] = values[c+5];
 				aux_float[2] = (float) ( aux_si * gyro_sf);
 
-				imu_values[3*3*i+3] = aux_float[0];
-				imu_values[3*3*i+4] = aux_float[1];
-				imu_values[3*3*i+5] = aux_float[2];
+				imu_values[(3*3+4+1)*i+3] = aux_float[0];
+				imu_values[(3*3+4+1)*i+4] = aux_float[1];
+				imu_values[(3*3+4+1)*i+5] = aux_float[2];
 				c += 6;
 			}
 			if (imu_table[5*i + 2]) {
@@ -190,10 +195,19 @@ void commGetImuReadings(comm_settings *comm_settings_t, int id, uint8_t* imu_tab
 				((char *) &aux_si)[1] = values[c+5];
 				aux_float[2] = (float) (aux_si * mag_sf * (float)imus_magcal[3*i+2]);
 				
-				imu_values[3*3*i+6] = -aux_float[1];
-				imu_values[3*3*i+7] = -aux_float[0];
-				imu_values[3*3*i+8] = aux_float[2];
+				imu_values[(3*3+4+1)*i+6] = -aux_float[1];
+				imu_values[(3*3+4+1)*i+7] = -aux_float[0];
+				imu_values[(3*3+4+1)*i+8] = aux_float[2];
 				c += 6;
+			}
+			
+			if (imu_table[5*i + 4]) {
+				((char *) &aux_si)[0] = values[c+2];
+				((char *) &aux_si)[1] = values[c+1];
+				aux_float[0] = (float) (aux_si * (float)temp_sf + temp_off) / temp_div;
+				
+				imu_values[(3*3+4+1)*i+13] = aux_float[0];
+				c += 2;
 			}
 			
 			//printf("\n");

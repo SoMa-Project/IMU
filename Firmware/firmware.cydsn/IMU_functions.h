@@ -101,6 +101,7 @@
 	void ReadGyro(int n);//reads gyro of IMU n
    	void ReadMag(int n);//reads compas of IMU n
    	void ReadMagCal(int n);//reads compas cal of IMU n
+    void ReadTemp(int n);//reads temperature of IMU n
 	void ReadIMU(int n); //reads all of data from IMU n
     void ReadAllIMUs(); //reads all data from all connected IMUs
     void LF_Frequency_Change_Accel_And_Gyro(int d_frequency, int n_imu);

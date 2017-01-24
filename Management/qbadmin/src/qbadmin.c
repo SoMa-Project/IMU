@@ -1071,12 +1071,14 @@ int main (int argc, char **argv)
 			global_args.imu_table[5*i + 0] = aux_string[4*PARAM_SLOT_BYTES + 8 + 50*i];
 			global_args.imu_table[5*i + 1] = aux_string[4*PARAM_SLOT_BYTES + 9 + 50*i];
 			global_args.imu_table[5*i + 2] = aux_string[4*PARAM_SLOT_BYTES + 10 + 50*i];
+			global_args.imu_table[5*i + 3] = aux_string[4*PARAM_SLOT_BYTES + 11 + 50*i];
+			global_args.imu_table[5*i + 4] = aux_string[4*PARAM_SLOT_BYTES + 12 + 50*i];
 			printf("ID: %d  - %d, %d, %d, %d, %d\n", global_args.ids[i], global_args.imu_table[5*i + 0], global_args.imu_table[5*i + 1], global_args.imu_table[5*i + 2], global_args.imu_table[5*i + 3], global_args.imu_table[5*i + 4]);
 			
 		}
 		
-		// Imu values is a 3 sensors x 3 axes x n_imu values
-		imu_values = (float *) calloc(global_args.n_imu, 3*3*sizeof(float));
+		// Imu values is a (3 sensors x 3 axes + 4 + 1) x n_imu values
+		imu_values = (float *) calloc(global_args.n_imu, 3*3*sizeof(float)+4*sizeof(float)+sizeof(float));
 		
 		while(1){
 			
@@ -1088,15 +1090,19 @@ int main (int argc, char **argv)
 			
 				if (global_args.imu_table[5*i + 0]){
 					printf("Accelerometer\n");
-					printf("%f, %f, %f\n", imu_values[3*3*i], imu_values[3*3*i+1], imu_values[3*3*i+2]);
+					printf("%f, %f, %f\n", imu_values[(3*3+4+1)*i], imu_values[(3*3+4+1)*i+1], imu_values[(3*3+4+1)*i+2]);
 				}
 				if (global_args.imu_table[5*i + 1]){
 					printf("Gyroscope\n");
-					printf("%f, %f, %f\n", imu_values[3*3*i+3], imu_values[3*3*i+4], imu_values[3*3*i+5]);
+					printf("%f, %f, %f\n", imu_values[(3*3+4+1)*i+3], imu_values[(3*3+4+1)*i+4], imu_values[(3*3+4+1)*i+5]);
 				}
 				if (global_args.imu_table[5*i + 2] ){
 					printf("Magnetometer\n");
-					printf("%f, %f, %f\n", imu_values[3*3*i+6], imu_values[3*3*i+7], imu_values[3*3*i+8]);
+					printf("%f, %f, %f\n", imu_values[(3*3+4+1)*i+6], imu_values[(3*3+4+1)*i+7], imu_values[(3*3+4+1)*i+8]);
+				}
+				if (global_args.imu_table[5*i + 4] ){
+					printf("Temperature\n");
+					printf("%f\n", imu_values[(3*3+4+1)*i+13]);
 				}
 				
 				printf("\n");

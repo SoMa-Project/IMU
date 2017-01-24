@@ -163,6 +163,8 @@ void InitIMUgeneral()
         IMU_conf[k_imu][0] = 1;
         IMU_conf[k_imu][1] = 1;
         IMU_conf[k_imu][2] = 0;
+        IMU_conf[k_imu][3] = 0;
+        IMU_conf[k_imu][4] = 1;
     }
     
     // Reading of MagCal Parameters
@@ -219,7 +221,7 @@ void InitIMUgeneral()
         IMU_conf[k_imu][1] = 1;
         IMU_conf[k_imu][2] = 0;
         IMU_conf[k_imu][3] = 0;
-        IMU_conf[k_imu][4] = 0;
+        IMU_conf[k_imu][4] = 1;
     }
     CyDelay(50);
     
@@ -227,7 +229,7 @@ void InitIMUgeneral()
     imus_data_size = 1; //header    
     for (k_imu = 0; k_imu < N_IMU_Connected; k_imu++)
     {
-        single_imu_size[IMU_connected[k_imu]] = 1 + 6*IMU_conf[IMU_connected[k_imu]][0] + 6*IMU_conf[IMU_connected[k_imu]][1] + 6*IMU_conf[IMU_connected[k_imu]][2] + 1;
+        single_imu_size[IMU_connected[k_imu]] = 1 + 6*IMU_conf[IMU_connected[k_imu]][0] + 6*IMU_conf[IMU_connected[k_imu]][1] + 6*IMU_conf[IMU_connected[k_imu]][2] + 2*IMU_conf[IMU_connected[k_imu]][4]+ 1;
         imus_data_size = imus_data_size + single_imu_size[IMU_connected[k_imu]];
     }
     imus_data_size = imus_data_size + 1;    //checksum
@@ -243,6 +245,8 @@ void ReadIMU(int n)
     if (IMU_conf[n][0]) ReadAcc(n);
     if (IMU_conf[n][1]) ReadGyro(n);
     if (IMU_conf[n][2]) ReadMag(n);
+    
+    if (IMU_conf[n][4]) ReadTemp(n);
 }
 
 /*******************************************************************************
@@ -396,10 +400,30 @@ void ReadAllIMUs(){
         g_imuNew[k_imu].mag_value[1] = (int16)(tmp<<8 | Mag[IMU_connected[k_imu]][3]);
         tmp = Mag[IMU_connected[k_imu]][4];
         g_imuNew[k_imu].mag_value[2] = (int16)(tmp<<8 | Mag[IMU_connected[k_imu]][5]);
+        
+        tmp = Temp[IMU_connected[k_imu]][0];
+        g_imuNew[k_imu].temp_value = (int16)(tmp<<8 | Temp[IMU_connected[k_imu]][1]);
     }
 }
 
 
+/*******************************************************************************
+* Function Name: Read Temperature Data of IMU n
+*********************************************************************************/
+void ReadTemp(int n)
+{
+	uint8 low=0, high=0;	
+		
+	int row = n;
+	
+	//read X
+        low=ReadControlRegister(MPU9250_TEMP_OUT_L);
+		high=ReadControlRegister(MPU9250_TEMP_OUT_H);
+	
+		Temp[row][0] = high; 
+		Temp[row][1] = low; 
+		low=0, high=0;
+}
 
 /********************************** ********************************************
 * Function Name: Low-Pass Filter Frequency Change

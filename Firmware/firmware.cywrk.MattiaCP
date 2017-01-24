@@ -13,7 +13,7 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="firmware">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="firmware\firmware\Source Files\main.c">
 <ExpandedNodeIds>
 <v>firmware</v>
 <v>firmware\firmware</v>
@@ -564,7 +564,14 @@
 </userData>
 </CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
 <Unloaded />
-<OpenDocs />
+<OpenDocs>
+<name v=".\firmware.cydsn\IMU_functions.c" />
+<name v=".\firmware.cydsn\IMU_functions.h" />
+<name v=".\firmware.cydsn\globals.c" />
+<name v=".\firmware.cydsn\globals.h" />
+<name v=".\firmware.cydsn\main.c" />
+<name v=".\firmware.cydsn\command_processing.c" />
+</OpenDocs>
 <config v="Release" />
 <AutoUpdate v="true" />
 </CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
