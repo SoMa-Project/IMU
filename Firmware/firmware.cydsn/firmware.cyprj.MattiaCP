@@ -1831,7 +1831,7 @@
 <v>C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\stdlogic\rtlpkg.vif</v>
 <v>C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\warp\lib\common\stdlogic\cy_psoc3.vif</v>
 </warp_dep>
-<deps_time v="131287076385491673" />
+<deps_time v="131419961297107868" />
 <top_block v="TopDesign" />
 <last_generation v="2" />
 </CyGuid_925cc1e1-309e-4e08-b0a1-09a83c35b157>
@@ -2605,20 +2605,6 @@
 <dep name=".\globals.h" />
 </file>
 <file name=".\Generated_Source\PSoC3\isr_imu.c" />
-<file name=".\DP8051_Keil_951\Release\cyfitter_cfg.obj">
-<dep name=".\Generated_Source\PSoC3\CyFlash.h" />
-<dep name=".\Generated_Source\PSoC3\CyLib.h" />
-<dep name=".\Generated_Source\PSoC3\CySpc.h" />
-<dep name=".\Generated_Source\PSoC3\PSoC3_8051.h" />
-<dep name=".\Generated_Source\PSoC3\cyPm.h" />
-<dep name=".\Generated_Source\PSoC3\cydevice.h" />
-<dep name=".\Generated_Source\PSoC3\cydevice_trm.h" />
-<dep name=".\Generated_Source\PSoC3\cyfitter.h" />
-<dep name=".\Generated_Source\PSoC3\cyfitter_cfg.c" />
-<dep name=".\Generated_Source\PSoC3\cyfitter_cfg.h" />
-<dep name=".\Generated_Source\PSoC3\cytypes.h" />
-</file>
-<file name=".\Generated_Source\PSoC3\cyfitter_cfg.c" />
 <file name=".\DP8051_Keil_951\Release\Bootloadable.obj">
 <dep name=".\Generated_Source\PSoC3\Bootloadable.c" />
 <dep name=".\Generated_Source\PSoC3\Bootloadable.h" />
@@ -3360,6 +3346,20 @@
 <dep name=".\Generated_Source\PSoC3\cytypes.h" />
 </file>
 <file name=".\Generated_Source\PSoC3\cyPm.c" />
+<file name=".\DP8051_Keil_951\Release\cyfitter_cfg.obj">
+<dep name=".\Generated_Source\PSoC3\CyFlash.h" />
+<dep name=".\Generated_Source\PSoC3\CyLib.h" />
+<dep name=".\Generated_Source\PSoC3\CySpc.h" />
+<dep name=".\Generated_Source\PSoC3\PSoC3_8051.h" />
+<dep name=".\Generated_Source\PSoC3\cyPm.h" />
+<dep name=".\Generated_Source\PSoC3\cydevice.h" />
+<dep name=".\Generated_Source\PSoC3\cydevice_trm.h" />
+<dep name=".\Generated_Source\PSoC3\cyfitter.h" />
+<dep name=".\Generated_Source\PSoC3\cyfitter_cfg.c" />
+<dep name=".\Generated_Source\PSoC3\cyfitter_cfg.h" />
+<dep name=".\Generated_Source\PSoC3\cytypes.h" />
+</file>
+<file name=".\Generated_Source\PSoC3\cyfitter_cfg.c" />
 <file name=".\DP8051_Keil_951\Release\cyutils.obj">
 <dep name=".\Generated_Source\PSoC3\cydevice.h" />
 <dep name=".\Generated_Source\PSoC3\cydevice_trm.h" />
@@ -3607,6 +3607,7 @@
 <name_val_pair name="C:\Users\MattiaCP\Google Drive\QB\IMU\Last Version\IMU Board v 1.00\firmware.cydsn\DP8051_Keil_951\Release\firmware.hex" v="TO '${OutputDir}\${ProjectShortName}.omf' CODE RU RC(10) DW(16) WL(2) PR(${OutputDir}/${ProjectShortName}.map) IX CL(XDATA(X:0x0000-X:0x1FFF)) CL(CODE(C:0x2600-C:0xFFBF)) CL(CONST(C:0x2600-C:0xFFBF))" />
 <name_val_pair name="C:\Users\MattiaCP\Desktop\FIRMWARES\IMU Board v 1.00\firmware.cydsn\DP8051_Keil_951\Release\firmware.hex" v="TO '${OutputDir}\${ProjectShortName}.omf' CODE RU RC(10) DW(16) WL(2) PR(${OutputDir}/${ProjectShortName}.map) IX CL(XDATA(X:0x0000-X:0x1FFF)) CL(CODE(C:0x2600-C:0xFFBF)) CL(CONST(C:0x2600-C:0xFFBF))" />
 <name_val_pair name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\DP8051_Keil_951\Release\firmware.hex" v="TO '${OutputDir}\${ProjectShortName}.omf' CODE RU RC(10) DW(16) WL(2) PR(${OutputDir}/${ProjectShortName}.map) IX CL(XDATA(X:0x0000-X:0x1FFF)) CL(CODE(C:0x2600-C:0xFFBF)) CL(CONST(C:0x2600-C:0xFFBF))" />
+<name_val_pair name="C:\Users\MattiaCP\Desktop\IMU-e4fd52fbd9367f830feabf4af7ccee37d036bb9a\Firmware\firmware.cydsn\DP8051_Keil_951\Release\firmware.hex" v="TO '${OutputDir}\${ProjectShortName}.omf' CODE RU RC(10) DW(16) WL(2) PR(${OutputDir}/${ProjectShortName}.map) IX CL(XDATA(X:0x0000-X:0x1FFF)) CL(CODE(C:0x2600-C:0xFFBF)) CL(CONST(C:0x2600-C:0xFFBF))" />
 </name>
 </genericCmdLineData>
 <codeGenCmdLineTag v="-.appdatapath &quot;C:\Users\MattiaCP\AppData\Local\Cypress Semiconductor\PSoC Creator\3.3&quot; -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -p C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\firmware.cyprj -d CY8C3246PVI-147 -s C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\Generated_Source\PSoC3 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=BE" />
@@ -3614,7 +3615,7 @@
 </dataGuid>
 <dataGuid v="769d31ea-68b1-4f0c-b90a-7c10a43ee563">
 <CyGuid_769d31ea-68b1-4f0c-b90a-7c10a43ee563 type_name="CyDesigner.Common.ProjMgmt.Model.CyLinkCustomData" version="1">
-<deps_time v="131297387496256884" />
+<deps_time v="131419961348844488" />
 </CyGuid_769d31ea-68b1-4f0c-b90a-7c10a43ee563>
 </dataGuid>
 </userData>

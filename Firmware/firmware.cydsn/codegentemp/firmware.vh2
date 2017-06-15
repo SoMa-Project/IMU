@@ -2,7 +2,7 @@
 --	Conversion of firmware.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Thu Jan 12 16:13:46 2017
+--	Thu Jun 15 12:28:39 2017
 --
 
 USE cypress.cypress.all;

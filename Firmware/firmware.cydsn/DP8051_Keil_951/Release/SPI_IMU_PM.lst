@@ -1,4 +1,4 @@
-C51 COMPILER V9.51   SPI_IMU_PM                                                            11/18/2016 10:36:31 PAGE 1   
+C51 COMPILER V9.51   SPI_IMU_PM                                                            06/15/2017 09:48:50 PAGE 1   
 
 
 C51 COMPILER V9.51, COMPILATION OF MODULE SPI_IMU_PM
@@ -62,7 +62,7 @@ line level    source
   50          *
   51          * Summary:
   52          *  Empty function. Included for consistency with other components.
-C51 COMPILER V9.51   SPI_IMU_PM                                                            11/18/2016 10:36:31 PAGE 2   
+C51 COMPILER V9.51   SPI_IMU_PM                                                            06/15/2017 09:48:50 PAGE 2   
 
   53          *
   54          * Parameters:
@@ -126,7 +126,7 @@ line level    source
  112          *  zero.
  113          *  SPI_IMU_txBufferRead - modified every function call - resets to
  114          *  zero.
-C51 COMPILER V9.51   SPI_IMU_PM                                                            11/18/2016 10:36:31 PAGE 3   
+C51 COMPILER V9.51   SPI_IMU_PM                                                            06/15/2017 09:48:50 PAGE 3   
 
  115          *  SPI_IMU_rxBufferWrite - modified every function call - resets to
  116          *  zero.
@@ -163,7 +163,7 @@ line level    source
  147          
  148          
  149          /* [] END OF FILE */
-C51 COMPILER V9.51   SPI_IMU_PM                                                            11/18/2016 10:36:31 PAGE 4   
+C51 COMPILER V9.51   SPI_IMU_PM                                                            06/15/2017 09:48:50 PAGE 4   
 
 ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
@@ -227,7 +227,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 MODULE INFORMATION:   STATIC OVERLAYABLE
    CODE SIZE        =     38    ----
    CONSTANT SIZE    =   ----    ----
-C51 COMPILER V9.51   SPI_IMU_PM                                                            11/18/2016 10:36:31 PAGE 5   
+C51 COMPILER V9.51   SPI_IMU_PM                                                            06/15/2017 09:48:50 PAGE 5   
 
    XDATA SIZE       =      2    ----
    PDATA SIZE       =   ----    ----

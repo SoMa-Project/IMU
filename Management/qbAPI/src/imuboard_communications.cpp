@@ -96,7 +96,7 @@ void commGetImuReadings(comm_settings *comm_settings_t, int id, uint8_t* imu_tab
 	float temp_sf = 0, temp_off = 0, temp_div = 0;	
 	char* values;
 	int c = 0;
-	float aux_float[4];
+	float aux_float[3];
 	int16_t aux_si;
 
 #if (defined(_WIN32) || defined(_WIN64))
@@ -200,26 +200,7 @@ void commGetImuReadings(comm_settings *comm_settings_t, int id, uint8_t* imu_tab
 				imu_values[(3*3+4+1)*i+8] = aux_float[2];
 				c += 6;
 			}
-			if (imu_table[5*i + 3]) {
-				((char *) &aux_si)[0] = values[c+2];
-				((char *) &aux_si)[1] = values[c+1];
-				aux_float[0] = (float) (aux_si);
-				((char *) &aux_si)[0] = values[c+4];
-				((char *) &aux_si)[1] = values[c+3];
-				aux_float[1] = (float) (aux_si);
-				((char *) &aux_si)[0] = values[c+6];
-				((char *) &aux_si)[1] = values[c+5];
-				aux_float[2] = (float) (aux_si);
-				((char *) &aux_si)[0] = values[c+8];
-				((char *) &aux_si)[1] = values[c+7];
-				aux_float[3] = (float) (aux_si);
-				
-				imu_values[(3*3+4+1)*i+9]  = aux_float[0];
-				imu_values[(3*3+4+1)*i+10] = aux_float[1];
-				imu_values[(3*3+4+1)*i+11] = aux_float[2];
-				imu_values[(3*3+4+1)*i+12] = aux_float[3];
-				c += 8;
-			}
+			
 			if (imu_table[5*i + 4]) {
 				((char *) &aux_si)[0] = values[c+2];
 				((char *) &aux_si)[1] = values[c+1];

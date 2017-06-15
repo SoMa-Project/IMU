@@ -416,7 +416,6 @@ static void mdlStart( SimStruct *S )
 		imu_table[5*i + 0] = aux_string[4*PARAM_SLOT_BYTES + 8 + 50*i];
 		imu_table[5*i + 1] = aux_string[4*PARAM_SLOT_BYTES + 9 + 50*i];
 		imu_table[5*i + 2] = aux_string[4*PARAM_SLOT_BYTES + 10 + 50*i];
-        imu_table[5*i + 3] = aux_string[4*PARAM_SLOT_BYTES + 11 + 50*i];
         imu_table[5*i + 4] = aux_string[4*PARAM_SLOT_BYTES + 12 + 50*i];
 		//printf("ID: %d  - %d, %d, %d, %d, %d\n", imu_ids[i], imu_table[5*i + 0], imu_table[5*i + 1], imu_table[5*i + 2], imu_table[5*i + 3], imu_table[5*i + 4]);
 		
@@ -522,10 +521,10 @@ static void mdlOutputs( SimStruct *S, int_T tid )
 			out(2)[3*i+2] = (float)imu_values[(3*3+4+1)*i+8] * meas_unity_mag;
 			
 			// Quat outputs
-			out(3)[4*i+0] = (float)imu_values[(3*3+4+1)*i+9];
-			out(3)[4*i+1] = (float)imu_values[(3*3+4+1)*i+10];
-			out(3)[4*i+2] = (float)imu_values[(3*3+4+1)*i+11];
-			out(3)[4*i+3] = (float)imu_values[(3*3+4+1)*i+12];
+			out(3)[4*i+0] = 0; //NaN;
+			out(3)[4*i+1] = 0; //NaN;
+			out(3)[4*i+2] = 0; //NaN;
+			out(3)[4*i+3] = 0; //NaN;
 
 			// Temp outputs
 			out(4)[i] = (float)imu_values[(3*3+4+1)*i+13];
