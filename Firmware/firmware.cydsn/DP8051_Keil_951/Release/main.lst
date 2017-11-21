@@ -1,11 +1,11 @@
-C51 COMPILER V9.51   MAIN                                                                  06/15/2017 12:28:51 PAGE 1   
+C51 COMPILER V9.51   MAIN                                                                  11/16/2017 15:16:19 PAGE 1   
 
 
 C51 COMPILER V9.51, COMPILATION OF MODULE MAIN
 OBJECT MODULE PLACED IN .\DP8051_Keil_951\Release\main.obj
-COMPILER INVOKED BY: C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe 
-                    -.\main.c NOIV LARGE MODDP2 OMF2 VB(1) NOIP INCDIR(.,Generated_Source\PSoC3) FF(3) DB DF(NDEBUG) WL(2) PR(.\DP8051_Keil_9
-                    -51\Release/main.lst) CD OT(11,SPEED) OJ(.\DP8051_Keil_951\Release\main.obj)
+COMPILER INVOKED BY: C:\Program Files (x86)\Cypress\PSoC Creator\4.1\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe 
+                    -main.c NOIV LARGE MODDP2 OMF2 VB(1) NOIP INCDIR(.,Generated_Source\PSoC3) FF(3) DB DF(NDEBUG) WL(2) PR(.\DP8051_Keil_951
+                    -\Release/main.lst) CD OT(11,SPEED) OJ(.\DP8051_Keil_951\Release\main.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   50          int main()
   51          {
   52   1          // Iterator
-C51 COMPILER V9.51   MAIN                                                                  06/15/2017 12:28:51 PAGE 2   
+C51 COMPILER V9.51   MAIN                                                                  11/16/2017 15:16:19 PAGE 2   
 
   53   1          uint8 i;         
   54   1          
@@ -126,7 +126,7 @@ line level    source
  112   1          // Init MPU9250 devices
  113   1          InitIMUgeneral();
  114   1          
-C51 COMPILER V9.51   MAIN                                                                  06/15/2017 12:28:51 PAGE 3   
+C51 COMPILER V9.51   MAIN                                                                  11/16/2017 15:16:19 PAGE 3   
 
  115   1          
  116   1          // ISR
@@ -190,7 +190,7 @@ line level    source
  173   4                  }
  174   3              };
  175   2      
-C51 COMPILER V9.51   MAIN                                                                  06/15/2017 12:28:51 PAGE 4   
+C51 COMPILER V9.51   MAIN                                                                  11/16/2017 15:16:19 PAGE 4   
 
  176   2              // Command a FF reset
  177   2              RESET_FF_Write(0x01);
@@ -203,15 +203,15 @@ line level    source
  184   2          }
  185   1          return 0;
  186   1      }
-*** WARNING C280 IN LINE 53 OF .\main.c: 'i': unreferenced local variable
-*** WARNING C280 IN LINE 57 OF .\main.c: 'DMA_Chan': unreferenced local variable
-*** WARNING C280 IN LINE 58 OF .\main.c: 'DMA_TD': unreferenced local variable
-*** WARNING C280 IN LINE 62 OF .\main.c: 'k_imu': unreferenced local variable
+*** WARNING C280 IN LINE 53 OF main.c: 'i': unreferenced local variable
+*** WARNING C280 IN LINE 57 OF main.c: 'DMA_Chan': unreferenced local variable
+*** WARNING C280 IN LINE 58 OF main.c: 'DMA_TD': unreferenced local variable
+*** WARNING C280 IN LINE 62 OF main.c: 'k_imu': unreferenced local variable
  187          
  188          
  189          
  190          /* [] END OF FILE */
-C51 COMPILER V9.51   MAIN                                                                  06/15/2017 12:28:51 PAGE 5   
+C51 COMPILER V9.51   MAIN                                                                  11/16/2017 15:16:19 PAGE 5   
 
 ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
@@ -275,7 +275,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
                                            ; SOURCE LINE # 105
 0050 120000      E     LCALL   SPI_IMU_ClearRxBuffer
                                            ; SOURCE LINE # 106
-C51 COMPILER V9.51   MAIN                                                                  06/15/2017 12:28:51 PAGE 6   
+C51 COMPILER V9.51   MAIN                                                                  11/16/2017 15:16:19 PAGE 6   
 
 0053 120000      E     LCALL   SPI_IMU_ClearTxBuffer
                                            ; SOURCE LINE # 107
@@ -339,7 +339,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
                                            ; SOURCE LINE # 167
                                            ; SOURCE LINE # 168
 009C 3000E6            JNB     watchdog_flag,?C0003
-C51 COMPILER V9.51   MAIN                                                                  06/15/2017 12:28:51 PAGE 7   
+C51 COMPILER V9.51   MAIN                                                                  11/16/2017 15:16:19 PAGE 7   
 
                                            ; SOURCE LINE # 170
 009F 7F01              MOV     R7,#01H

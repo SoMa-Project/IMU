@@ -1,11 +1,11 @@
-C51 COMPILER V9.51   GLOBALS                                                               06/15/2017 12:28:50 PAGE 1   
+C51 COMPILER V9.51   GLOBALS                                                               11/16/2017 15:16:18 PAGE 1   
 
 
 C51 COMPILER V9.51, COMPILATION OF MODULE GLOBALS
 OBJECT MODULE PLACED IN .\DP8051_Keil_951\Release\globals.obj
-COMPILER INVOKED BY: C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe 
-                    -.\globals.c NOIV LARGE MODDP2 OMF2 VB(1) NOIP INCDIR(.,Generated_Source\PSoC3) FF(3) DB DF(NDEBUG) WL(2) PR(.\DP8051_Kei
-                    -l_951\Release/globals.lst) CD OT(11,SPEED) OJ(.\DP8051_Keil_951\Release\globals.obj)
+COMPILER INVOKED BY: C:\Program Files (x86)\Cypress\PSoC Creator\4.1\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe 
+                    -globals.c NOIV LARGE MODDP2 OMF2 VB(1) NOIP INCDIR(.,Generated_Source\PSoC3) FF(3) DB DF(NDEBUG) WL(2) PR(.\DP8051_Keil_
+                    -951\Release/globals.lst) CD OT(11,SPEED) OJ(.\DP8051_Keil_951\Release\globals.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   50          // IMU variables
   51          uint8 N_IMU_Connected;
   52          uint8 IMU_connected[N_IMU_MAX];
-C51 COMPILER V9.51   GLOBALS                                                               06/15/2017 12:28:50 PAGE 2   
+C51 COMPILER V9.51   GLOBALS                                                               11/16/2017 15:16:18 PAGE 2   
 
   53          uint8 IMU_conf[N_IMU_MAX][5];
   54          int imus_data_size;
@@ -83,7 +83,7 @@ line level    source
   69          uint8   rateGyro;                   // Gyro ticks to deg/s conversion factor
   70          
   71          /* END OF FILE */
-C51 COMPILER V9.51   GLOBALS                                                               06/15/2017 12:28:50 PAGE 3   
+C51 COMPILER V9.51   GLOBALS                                                               11/16/2017 15:16:18 PAGE 3   
 
 ASSEMBLY LISTING OF GENERATED OBJECT CODE
 

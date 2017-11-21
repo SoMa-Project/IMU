@@ -1,11 +1,11 @@
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 1   
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 1   
 
 
 C51 COMPILER V9.51, COMPILATION OF MODULE IMU_FUNCTIONS
 OBJECT MODULE PLACED IN .\DP8051_Keil_951\Release\IMU_functions.obj
-COMPILER INVOKED BY: C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe 
-                    -.\IMU_functions.c NOIV LARGE MODDP2 OMF2 VB(1) NOIP INCDIR(.,Generated_Source\PSoC3) FF(3) DB DF(NDEBUG) WL(2) PR(.\DP80
-                    -51_Keil_951\Release/IMU_functions.lst) CD OT(11,SPEED) OJ(.\DP8051_Keil_951\Release\IMU_functions.obj)
+COMPILER INVOKED BY: C:\Program Files (x86)\Cypress\PSoC Creator\4.1\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe 
+                    -IMU_functions.c NOIV LARGE MODDP2 OMF2 VB(1) NOIP INCDIR(.,Generated_Source\PSoC3) FF(3) DB DF(NDEBUG) WL(2) PR(.\DP8051
+                    -_Keil_951\Release/IMU_functions.lst) CD OT(11,SPEED) OJ(.\DP8051_Keil_951\Release\IMU_functions.obj)
 
 line level    source
 
@@ -50,7 +50,7 @@ line level    source
   38   1              CyDelay(10);
   39   1      
   40   1      }
-*** WARNING C280 IN LINE 25 OF .\IMU_functions.c: 'k_imu': unreferenced local variable
+*** WARNING C280 IN LINE 25 OF IMU_functions.c: 'k_imu': unreferenced local variable
   41          
   42          /*******************************************************************************
   43          * Function Name: IMU Initialization
@@ -62,7 +62,7 @@ line level    source
   49   1                              WriteControlRegister(MPU9250_USER_CTRL, 0x20);  //I2C master enable - disable I2C (prima 0x30)
   50   1                              CyDelay(10);
   51   1                  WriteControlRegister(MPU9250_CONFIG, 0x06); //Gyro & Temp Low Pass Filter 0x01 = 184Hz, 0x02 =
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 2   
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 2   
 
              - 92Hz, 0x04 = 20Hz, 0x05 = 10Hz
   52   1                  CyDelay(10);        
@@ -126,7 +126,7 @@ line level    source
  103   1                              WriteControlRegister(MPU9250_I2C_MST_CTRL, 0x0D); //set slave I2C speed
  104   1                              CyDelay(10);
  105   1                              //SLV0 (use to write)
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 3   
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 3   
 
  106   1                              WriteControlRegister(MPU9250_I2C_SLV0_ADDR, 0x0C); //set compass address
  107   1                              CyDelay(10);                    
@@ -189,8 +189,8 @@ line level    source
  164   2              IMU_conf[k_imu][1] = 1;
  165   2              IMU_conf[k_imu][2] = 0;
  166   2              IMU_conf[k_imu][3] = 0;
- 167   2              IMU_conf[k_imu][4] = 1;
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 4   
+ 167   2              IMU_conf[k_imu][4] = 0;
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 4   
 
  168   2          }
  169   1          
@@ -248,13 +248,13 @@ line level    source
  221   2              IMU_conf[k_imu][1] = 1;
  222   2              IMU_conf[k_imu][2] = 0;
  223   2              IMU_conf[k_imu][3] = 0;
- 224   2              IMU_conf[k_imu][4] = 1;
+ 224   2              IMU_conf[k_imu][4] = 0;
  225   2          }
  226   1          CyDelay(50);
  227   1          
  228   1          // Set Standard Read for the IMU
  229   1          imus_data_size = 1; //header    
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 5   
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 5   
 
  230   1          for (k_imu = 0; k_imu < N_IMU_Connected; k_imu++)
  231   1          {
@@ -318,7 +318,7 @@ line level    source
  288          * Function Name: Read Gyro's Data of IMU n
  289          *********************************************************************************/
  290          void ReadGyro(int n){
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 6   
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 6   
 
  291   1              uint8 low=0, high=0;
  292   1          
@@ -382,7 +382,7 @@ line level    source
  350          *********************************************************************************/
  351          void ReadMagCal(int n){
  352   1              
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 7   
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 7   
 
  353   1          uint8 read = 0; 
  354   1              int row = n;    
@@ -446,7 +446,7 @@ line level    source
  412          *********************************************************************************/
  413          void ReadTemp(int n)
  414          {
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 8   
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 8   
 
  415   1              uint8 low=0, high=0;    
  416   1                      
@@ -510,7 +510,7 @@ line level    source
  474          //    if (d_frequency == 4) {value = 0x04;}
  475          //    if (d_frequency == 5) {value = 0x05;}
  476          //    if (d_frequency == 6) {value = 0x06;}
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 9   
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 9   
 
  477          //    
  478          //    ISR_1_Stop();             // Disable Time Interrupt
@@ -574,7 +574,7 @@ line level    source
  536          /********************************** *********************************************
  537          * Function Name: Write Control Register
  538          *********************************************************************************/
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 10  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 10  
 
  539          void WriteControlRegister(uint8 address, uint8 dta){
  540   1              
@@ -600,7 +600,7 @@ line level    source
  560   1                      controlreg = SPI_IMU_ReadByte(); //real data
  561   1                      return controlreg;
  562   1      }
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 11  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 11  
 
 ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
@@ -664,7 +664,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 000D 120000      E     LCALL   _?CyDelay
                                            ; SOURCE LINE # 49
 0010 7D20              MOV     R5,#020H
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 12  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 12  
 
 0012 7F6A              MOV     R7,#06AH
 0014 120000      R     LCALL   _WriteControlRegister
@@ -728,7 +728,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0067 E4                CLR     A
 0068 7F0A              MOV     R7,#0AH
 006A FE                MOV     R6,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 13  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 13  
 
 006B FD                MOV     R5,A
 006C FC                MOV     R4,A
@@ -792,7 +792,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00C0 7D03              MOV     R5,#03H
 00C2 7F26              MOV     R7,#026H
 00C4 120000      R     LCALL   _WriteControlRegister
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 14  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 14  
 
                                            ; SOURCE LINE # 77
 00C7 E4                CLR     A
@@ -856,7 +856,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0020 7D06              MOV     R5,#06H
 0022 7F1A              MOV     R7,#01AH
 0024 120000      R     LCALL   _WriteControlRegister
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 15  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 15  
 
                                            ; SOURCE LINE # 95
 0027 E4                CLR     A
@@ -920,7 +920,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 007A FE                MOV     R6,A
 007B FD                MOV     R5,A
 007C FC                MOV     R4,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 16  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 16  
 
 007D 120000      E     LCALL   _?CyDelay
                                            ; SOURCE LINE # 108
@@ -984,7 +984,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00D4 120000      R     LCALL   _WriteControlRegister
                                            ; SOURCE LINE # 120
 00D7 E4                CLR     A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 17  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 17  
 
 00D8 7F0A              MOV     R7,#0AH
 00DA FE                MOV     R6,A
@@ -1048,7 +1048,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0031         ?C0052:
 0031 7004              JNZ     ?C0005
                                            ; SOURCE LINE # 136
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 18  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 18  
 
 0033 FF                MOV     R7,A
 0034 120000      E     LCALL   _Chip_Select_B_Write
@@ -1103,7 +1103,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 002A FF                MOV     R7,A
 002B C3                CLR     C
 002C 9411              SUBB    A,#011H
-002E 507A              JNC     ?C0009
+002E 5079              JNC     ?C0009
                                            ; SOURCE LINE # 158
                                            ; SOURCE LINE # 159
 0030 7E00              MOV     R6,#00H
@@ -1112,7 +1112,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0035 E4                CLR     A
 0036 7F0A              MOV     R7,#0AH
 0038 FE                MOV     R6,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 19  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 19  
 
 0039 FD                MOV     R5,A
 003A FC                MOV     R4,A
@@ -1176,542 +1176,542 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0090 EF                MOV     A,R7
 0091 75F005            MOV     B,#05H
 0094 A4                MUL     AB
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 20  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 20  
 
 0095 2400        E     ADD     A,#LOW IMU_conf+04H
 0097 F582              MOV     DPL,A
 0099 E4                CLR     A
 009A 3400        E     ADDC    A,#HIGH IMU_conf+04H
 009C F583              MOV     DPH,A
-009E 7401              MOV     A,#01H
-00A0 F0                MOVX    @DPTR,A
+009E E4                CLR     A
+009F F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 168
-00A1 900000      R     MOV     DPTR,#k_imu
-00A4 E0                MOVX    A,@DPTR
-00A5 04                INC     A
-00A6 F0                MOVX    @DPTR,A
-00A7 020000      R     LJMP    ?C0008
-00AA         ?C0009:
+00A0 900000      R     MOV     DPTR,#k_imu
+00A3 E0                MOVX    A,@DPTR
+00A4 04                INC     A
+00A5 F0                MOVX    @DPTR,A
+00A6 020000      R     LJMP    ?C0008
+00A9         ?C0009:
                                            ; SOURCE LINE # 171
-00AA E4                CLR     A
-00AB 7F32              MOV     R7,#032H
-00AD FE                MOV     R6,A
-00AE FD                MOV     R5,A
-00AF FC                MOV     R4,A
-00B0 120000      E     LCALL   _?CyDelay
+00A9 E4                CLR     A
+00AA 7F32              MOV     R7,#032H
+00AC FE                MOV     R6,A
+00AD FD                MOV     R5,A
+00AE FC                MOV     R4,A
+00AF 120000      E     LCALL   _?CyDelay
                                            ; SOURCE LINE # 172
-00B3 E4                CLR     A
-00B4 900000      R     MOV     DPTR,#k_imu
-00B7 F0                MOVX    @DPTR,A
-00B8         ?C0011:
-00B8 900000      R     MOV     DPTR,#k_imu
-00BB E0                MOVX    A,@DPTR
-00BC FF                MOV     R7,A
-00BD C3                CLR     C
-00BE 9411              SUBB    A,#011H
-00C0 5017              JNC     ?C0012
+00B2 E4                CLR     A
+00B3 900000      R     MOV     DPTR,#k_imu
+00B6 F0                MOVX    @DPTR,A
+00B7         ?C0011:
+00B7 900000      R     MOV     DPTR,#k_imu
+00BA E0                MOVX    A,@DPTR
+00BB FF                MOV     R7,A
+00BC C3                CLR     C
+00BD 9411              SUBB    A,#011H
+00BF 5017              JNC     ?C0012
                                            ; SOURCE LINE # 173
-00C2 7E00              MOV     R6,#00H
-00C4 120000      R     LCALL   _ChipSelector
+00C1 7E00              MOV     R6,#00H
+00C3 120000      R     LCALL   _ChipSelector
                                            ; SOURCE LINE # 174
-00C7 900000      R     MOV     DPTR,#k_imu
-00CA E0                MOVX    A,@DPTR
-00CB FF                MOV     R7,A
-00CC 7E00              MOV     R6,#00H
-00CE 120000      R     LCALL   _ReadMagCal
+00C6 900000      R     MOV     DPTR,#k_imu
+00C9 E0                MOVX    A,@DPTR
+00CA FF                MOV     R7,A
+00CB 7E00              MOV     R6,#00H
+00CD 120000      R     LCALL   _ReadMagCal
                                            ; SOURCE LINE # 175
-00D1 900000      R     MOV     DPTR,#k_imu
-00D4 E0                MOVX    A,@DPTR
-00D5 04                INC     A
-00D6 F0                MOVX    @DPTR,A
-00D7 80DF              SJMP    ?C0011
-00D9         ?C0012:
+00D0 900000      R     MOV     DPTR,#k_imu
+00D3 E0                MOVX    A,@DPTR
+00D4 04                INC     A
+00D5 F0                MOVX    @DPTR,A
+00D6 80DF              SJMP    ?C0011
+00D8         ?C0012:
                                            ; SOURCE LINE # 178
-00D9 E4                CLR     A
-00DA FF                MOV     R7,A
-00DB FE                MOV     R6,A
-00DC 120000      R     LCALL   _ChipSelector
+00D8 E4                CLR     A
+00D9 FF                MOV     R7,A
+00DA FE                MOV     R6,A
+00DB 120000      R     LCALL   _ChipSelector
                                            ; SOURCE LINE # 179
-00DF E4                CLR     A
-00E0 7F0A              MOV     R7,#0AH
-00E2 FE                MOV     R6,A
-00E3 FD                MOV     R5,A
-00E4 FC                MOV     R4,A
-00E5 120000      E     LCALL   _?CyDelay
+00DE E4                CLR     A
+00DF 7F0A              MOV     R7,#0AH
+00E1 FE                MOV     R6,A
+00E2 FD                MOV     R5,A
+00E3 FC                MOV     R4,A
+00E4 120000      E     LCALL   _?CyDelay
                                            ; SOURCE LINE # 180
-00E8 7F75              MOV     R7,#075H
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 21  
+00E7 7F75              MOV     R7,#075H
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 21  
 
-00EA 120000      R     LCALL   _ReadControlRegister
-00ED 900000      R     MOV     DPTR,#IMU_ack
-00F0 E4                CLR     A
-00F1 F0                MOVX    @DPTR,A
-00F2 A3                INC     DPTR
-00F3 EF                MOV     A,R7
-00F4 F0                MOVX    @DPTR,A
+00E9 120000      R     LCALL   _ReadControlRegister
+00EC 900000      R     MOV     DPTR,#IMU_ack
+00EF E4                CLR     A
+00F0 F0                MOVX    @DPTR,A
+00F1 A3                INC     DPTR
+00F2 EF                MOV     A,R7
+00F3 F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 181
-00F5 E4                CLR     A
-00F6 900000      R     MOV     DPTR,#IMU_ack
-00F9 F0                MOVX    @DPTR,A
-00FA A3                INC     DPTR
-00FB F0                MOVX    @DPTR,A
+00F4 E4                CLR     A
+00F5 900000      R     MOV     DPTR,#IMU_ack
+00F8 F0                MOVX    @DPTR,A
+00F9 A3                INC     DPTR
+00FA F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 182
-00FC 900000      E     MOV     DPTR,#N_IMU_Connected
-00FF F0                MOVX    @DPTR,A
+00FB 900000      E     MOV     DPTR,#N_IMU_Connected
+00FE F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 183
-0100 900000      R     MOV     DPTR,#k_imu
-0103 F0                MOVX    @DPTR,A
-0104         ?C0014:
-0104 900000      R     MOV     DPTR,#k_imu
-0107 E0                MOVX    A,@DPTR
-0108 FF                MOV     R7,A
-0109 C3                CLR     C
-010A 9411              SUBB    A,#011H
-010C 505F              JNC     ?C0015
+00FF 900000      R     MOV     DPTR,#k_imu
+0102 F0                MOVX    @DPTR,A
+0103         ?C0014:
+0103 900000      R     MOV     DPTR,#k_imu
+0106 E0                MOVX    A,@DPTR
+0107 FF                MOV     R7,A
+0108 C3                CLR     C
+0109 9411              SUBB    A,#011H
+010B 505F              JNC     ?C0015
                                            ; SOURCE LINE # 184
                                            ; SOURCE LINE # 185
-010E 7E00              MOV     R6,#00H
-0110 120000      R     LCALL   _ChipSelector
+010D 7E00              MOV     R6,#00H
+010F 120000      R     LCALL   _ChipSelector
                                            ; SOURCE LINE # 186
-0113 E4                CLR     A
-0114 7F0A              MOV     R7,#0AH
-0116 FE                MOV     R6,A
-0117 FD                MOV     R5,A
-0118 FC                MOV     R4,A
-0119 120000      E     LCALL   _?CyDelay
+0112 E4                CLR     A
+0113 7F0A              MOV     R7,#0AH
+0115 FE                MOV     R6,A
+0116 FD                MOV     R5,A
+0117 FC                MOV     R4,A
+0118 120000      E     LCALL   _?CyDelay
                                            ; SOURCE LINE # 187
-011C 7F75              MOV     R7,#075H
-011E 120000      R     LCALL   _ReadControlRegister
-0121 7E00              MOV     R6,#00H
-0123 900000      R     MOV     DPTR,#IMU_ack
-0126 EE                MOV     A,R6
-0127 F0                MOVX    @DPTR,A
-0128 A3                INC     DPTR
-0129 EF                MOV     A,R7
-012A F0                MOVX    @DPTR,A
+011B 7F75              MOV     R7,#075H
+011D 120000      R     LCALL   _ReadControlRegister
+0120 7E00              MOV     R6,#00H
+0122 900000      R     MOV     DPTR,#IMU_ack
+0125 EE                MOV     A,R6
+0126 F0                MOVX    @DPTR,A
+0127 A3                INC     DPTR
+0128 EF                MOV     A,R7
+0129 F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 188
-012B 6471              XRL     A,#071H
-012D 7023              JNZ     ?C0017
+012A 6471              XRL     A,#071H
+012C 7023              JNZ     ?C0017
                                            ; SOURCE LINE # 189
                                            ; SOURCE LINE # 190
-012F 900000      E     MOV     DPTR,#N_IMU_Connected
-0132 E0                MOVX    A,@DPTR
-0133 04                INC     A
-0134 F0                MOVX    @DPTR,A
+012E 900000      E     MOV     DPTR,#N_IMU_Connected
+0131 E0                MOVX    A,@DPTR
+0132 04                INC     A
+0133 F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 191
-0135 E4                CLR     A
-0136 900000      R     MOV     DPTR,#IMU_ack
-0139 F0                MOVX    @DPTR,A
-013A A3                INC     DPTR
-013B F0                MOVX    @DPTR,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 22  
+0134 E4                CLR     A
+0135 900000      R     MOV     DPTR,#IMU_ack
+0138 F0                MOVX    @DPTR,A
+0139 A3                INC     DPTR
+013A F0                MOVX    @DPTR,A
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 22  
 
                                            ; SOURCE LINE # 192
-013C 900000      R     MOV     DPTR,#k_imu
-013F E0                MOVX    A,@DPTR
-0140 25E0              ADD     A,ACC
-0142 2400        R     ADD     A,#LOW tmp
-0144 F582              MOV     DPL,A
-0146 E4                CLR     A
-0147 3400        R     ADDC    A,#HIGH tmp
-0149 F583              MOV     DPH,A
-014B E4                CLR     A
-014C F0                MOVX    @DPTR,A
-014D A3                INC     DPTR
-014E 04                INC     A
-014F F0                MOVX    @DPTR,A
+013B 900000      R     MOV     DPTR,#k_imu
+013E E0                MOVX    A,@DPTR
+013F 25E0              ADD     A,ACC
+0141 2400        R     ADD     A,#LOW tmp
+0143 F582              MOV     DPL,A
+0145 E4                CLR     A
+0146 3400        R     ADDC    A,#HIGH tmp
+0148 F583              MOV     DPH,A
+014A E4                CLR     A
+014B F0                MOVX    @DPTR,A
+014C A3                INC     DPTR
+014D 04                INC     A
+014E F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 193
-0150 8013              SJMP    ?C0016
-0152         ?C0017:
+014F 8013              SJMP    ?C0016
+0151         ?C0017:
                                            ; SOURCE LINE # 195
-0152 900000      R     MOV     DPTR,#k_imu
-0155 E0                MOVX    A,@DPTR
-0156 25E0              ADD     A,ACC
-0158 2400        R     ADD     A,#LOW tmp
-015A F582              MOV     DPL,A
-015C E4                CLR     A
-015D 3400        R     ADDC    A,#HIGH tmp
-015F F583              MOV     DPH,A
-0161 E4                CLR     A
-0162 F0                MOVX    @DPTR,A
-0163 A3                INC     DPTR
-0164 F0                MOVX    @DPTR,A
+0151 900000      R     MOV     DPTR,#k_imu
+0154 E0                MOVX    A,@DPTR
+0155 25E0              ADD     A,ACC
+0157 2400        R     ADD     A,#LOW tmp
+0159 F582              MOV     DPL,A
+015B E4                CLR     A
+015C 3400        R     ADDC    A,#HIGH tmp
+015E F583              MOV     DPH,A
+0160 E4                CLR     A
+0161 F0                MOVX    @DPTR,A
+0162 A3                INC     DPTR
+0163 F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 196
-0165         ?C0016:
-0165 900000      R     MOV     DPTR,#k_imu
-0168 E0                MOVX    A,@DPTR
-0169 04                INC     A
-016A F0                MOVX    @DPTR,A
-016B 8097              SJMP    ?C0014
-016D         ?C0015:
+0164         ?C0016:
+0164 900000      R     MOV     DPTR,#k_imu
+0167 E0                MOVX    A,@DPTR
+0168 04                INC     A
+0169 F0                MOVX    @DPTR,A
+016A 8097              SJMP    ?C0014
+016C         ?C0015:
                                            ; SOURCE LINE # 197
-016D 7E00              MOV     R6,#00H
-016F 7F15              MOV     R7,#015H
-0171 7D00              MOV     R5,#00H
-0173 7B01              MOV     R3,#01H
-0175 7A00        E     MOV     R2,#HIGH g_imu
-0177 7900        E     MOV     R1,#LOW g_imu
-0179 120000      E     LCALL   ?C?MEMSET
+016C 7E00              MOV     R6,#00H
+016E 7F15              MOV     R7,#015H
+0170 7D00              MOV     R5,#00H
+0172 7B01              MOV     R3,#01H
+0174 7A00        E     MOV     R2,#HIGH g_imu
+0176 7900        E     MOV     R1,#LOW g_imu
+0178 120000      E     LCALL   ?C?MEMSET
                                            ; SOURCE LINE # 198
-017C 7E00              MOV     R6,#00H
-017E 7F11              MOV     R7,#011H
-0180 7D00              MOV     R5,#00H
-0182 7B01              MOV     R3,#01H
-0184 7A00        E     MOV     R2,#HIGH IMU_connected
-0186 7900        E     MOV     R1,#LOW IMU_connected
-0188 120000      E     LCALL   ?C?MEMSET
+017B 7E00              MOV     R6,#00H
+017D 7F11              MOV     R7,#011H
+017F 7D00              MOV     R5,#00H
+0181 7B01              MOV     R3,#01H
+0183 7A00        E     MOV     R2,#HIGH IMU_connected
+0185 7900        E     MOV     R1,#LOW IMU_connected
+0187 120000      E     LCALL   ?C?MEMSET
                                            ; SOURCE LINE # 199
-018B 7E00              MOV     R6,#00H
-018D 7F22              MOV     R7,#022H
-018F 7D00              MOV     R5,#00H
-0191 7B01              MOV     R3,#01H
-0193 7A00        E     MOV     R2,#HIGH single_imu_size
-0195 7900        E     MOV     R1,#LOW single_imu_size
-0197 120000      E     LCALL   ?C?MEMSET
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 23  
+018A 7E00              MOV     R6,#00H
+018C 7F22              MOV     R7,#022H
+018E 7D00              MOV     R5,#00H
+0190 7B01              MOV     R3,#01H
+0192 7A00        E     MOV     R2,#HIGH single_imu_size
+0194 7900        E     MOV     R1,#LOW single_imu_size
+0196 120000      E     LCALL   ?C?MEMSET
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 23  
 
                                            ; SOURCE LINE # 200
-019A E4                CLR     A
-019B 900000      R     MOV     DPTR,#k_imu
-019E F0                MOVX    @DPTR,A
-019F         ?C0019:
-019F 900000      R     MOV     DPTR,#k_imu
-01A2 E0                MOVX    A,@DPTR
-01A3 FF                MOV     R7,A
-01A4 C3                CLR     C
-01A5 9411              SUBB    A,#011H
-01A7 5034              JNC     ?C0020
+0199 E4                CLR     A
+019A 900000      R     MOV     DPTR,#k_imu
+019D F0                MOVX    @DPTR,A
+019E         ?C0019:
+019E 900000      R     MOV     DPTR,#k_imu
+01A1 E0                MOVX    A,@DPTR
+01A2 FF                MOV     R7,A
+01A3 C3                CLR     C
+01A4 9411              SUBB    A,#011H
+01A6 5034              JNC     ?C0020
                                            ; SOURCE LINE # 201
                                            ; SOURCE LINE # 202
-01A9 EF                MOV     A,R7
-01AA 25E0              ADD     A,ACC
-01AC 2400        R     ADD     A,#LOW tmp
-01AE F582              MOV     DPL,A
-01B0 E4                CLR     A
-01B1 3400        R     ADDC    A,#HIGH tmp
-01B3 F583              MOV     DPH,A
-01B5 E0                MOVX    A,@DPTR
-01B6 FE                MOV     R6,A
-01B7 A3                INC     DPTR
-01B8 E0                MOVX    A,@DPTR
-01B9 6401              XRL     A,#01H
-01BB 4E                ORL     A,R6
-01BC 7017              JNZ     ?C0021
+01A8 EF                MOV     A,R7
+01A9 25E0              ADD     A,ACC
+01AB 2400        R     ADD     A,#LOW tmp
+01AD F582              MOV     DPL,A
+01AF E4                CLR     A
+01B0 3400        R     ADDC    A,#HIGH tmp
+01B2 F583              MOV     DPH,A
+01B4 E0                MOVX    A,@DPTR
+01B5 FE                MOV     R6,A
+01B6 A3                INC     DPTR
+01B7 E0                MOVX    A,@DPTR
+01B8 6401              XRL     A,#01H
+01BA 4E                ORL     A,R6
+01BB 7017              JNZ     ?C0021
                                            ; SOURCE LINE # 203
                                            ; SOURCE LINE # 204
-01BE 900000      R     MOV     DPTR,#k_imu
-01C1 E0                MOVX    A,@DPTR
-01C2 A3                INC     DPTR
-01C3 E0                MOVX    A,@DPTR
-01C4 2400        E     ADD     A,#LOW IMU_connected
-01C6 F582              MOV     DPL,A
-01C8 E4                CLR     A
-01C9 3400        E     ADDC    A,#HIGH IMU_connected
-01CB F583              MOV     DPH,A
-01CD EF                MOV     A,R7
-01CE F0                MOVX    @DPTR,A
+01BD 900000      R     MOV     DPTR,#k_imu
+01C0 E0                MOVX    A,@DPTR
+01C1 A3                INC     DPTR
+01C2 E0                MOVX    A,@DPTR
+01C3 2400        E     ADD     A,#LOW IMU_connected
+01C5 F582              MOV     DPL,A
+01C7 E4                CLR     A
+01C8 3400        E     ADDC    A,#HIGH IMU_connected
+01CA F583              MOV     DPH,A
+01CC EF                MOV     A,R7
+01CD F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 205
-01CF 900000      R     MOV     DPTR,#count
-01D2 E0                MOVX    A,@DPTR
-01D3 04                INC     A
-01D4 F0                MOVX    @DPTR,A
+01CE 900000      R     MOV     DPTR,#count
+01D1 E0                MOVX    A,@DPTR
+01D2 04                INC     A
+01D3 F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 206
                                            ; SOURCE LINE # 207
-01D5         ?C0021:
-01D5 900000      R     MOV     DPTR,#k_imu
-01D8 E0                MOVX    A,@DPTR
-01D9 04                INC     A
-01DA F0                MOVX    @DPTR,A
-01DB 80C2              SJMP    ?C0019
-01DD         ?C0020:
+01D4         ?C0021:
+01D4 900000      R     MOV     DPTR,#k_imu
+01D7 E0                MOVX    A,@DPTR
+01D8 04                INC     A
+01D9 F0                MOVX    @DPTR,A
+01DA 80C2              SJMP    ?C0019
+01DC         ?C0020:
                                            ; SOURCE LINE # 210
-01DD E4                CLR     A
-01DE FF                MOV     R7,A
-01DF 120000      E     LCALL   _Opto_Pin_Write
+01DC E4                CLR     A
+01DD FF                MOV     R7,A
+01DE 120000      E     LCALL   _Opto_Pin_Write
                                            ; SOURCE LINE # 211
-01E2 E4                CLR     A
-01E3 7F0A              MOV     R7,#0AH
-01E5 FE                MOV     R6,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 24  
+01E1 E4                CLR     A
+01E2 7F0A              MOV     R7,#0AH
+01E4 FE                MOV     R6,A
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 24  
 
-01E6 FD                MOV     R5,A
-01E7 FC                MOV     R4,A
-01E8 120000      E     LCALL   _?CyDelay
+01E5 FD                MOV     R5,A
+01E6 FC                MOV     R4,A
+01E7 120000      E     LCALL   _?CyDelay
                                            ; SOURCE LINE # 212
-01EB 7F01              MOV     R7,#01H
-01ED 120000      E     LCALL   _Opto_Pin_Write
+01EA 7F01              MOV     R7,#01H
+01EC 120000      E     LCALL   _Opto_Pin_Write
                                            ; SOURCE LINE # 213
-01F0 E4                CLR     A
-01F1 7F0A              MOV     R7,#0AH
-01F3 FE                MOV     R6,A
-01F4 FD                MOV     R5,A
-01F5 FC                MOV     R4,A
-01F6 120000      E     LCALL   _?CyDelay
+01EF E4                CLR     A
+01F0 7F0A              MOV     R7,#0AH
+01F2 FE                MOV     R6,A
+01F3 FD                MOV     R5,A
+01F4 FC                MOV     R4,A
+01F5 120000      E     LCALL   _?CyDelay
                                            ; SOURCE LINE # 214
-01F9 E4                CLR     A
-01FA 900000      R     MOV     DPTR,#k_imu
-01FD F0                MOVX    @DPTR,A
-01FE         ?C0023:
-01FE 900000      R     MOV     DPTR,#k_imu
-0201 E0                MOVX    A,@DPTR
-0202 FF                MOV     R7,A
-0203 C3                CLR     C
-0204 9411              SUBB    A,#011H
-0206 507A              JNC     ?C0024
+01F8 E4                CLR     A
+01F9 900000      R     MOV     DPTR,#k_imu
+01FC F0                MOVX    @DPTR,A
+01FD         ?C0023:
+01FD 900000      R     MOV     DPTR,#k_imu
+0200 E0                MOVX    A,@DPTR
+0201 FF                MOV     R7,A
+0202 C3                CLR     C
+0203 9411              SUBB    A,#011H
+0205 5079              JNC     ?C0024
                                            ; SOURCE LINE # 215
                                            ; SOURCE LINE # 216
-0208 7E00              MOV     R6,#00H
-020A 120000      R     LCALL   _ChipSelector
+0207 7E00              MOV     R6,#00H
+0209 120000      R     LCALL   _ChipSelector
                                            ; SOURCE LINE # 217
-020D E4                CLR     A
-020E 7F0A              MOV     R7,#0AH
-0210 FE                MOV     R6,A
-0211 FD                MOV     R5,A
-0212 FC                MOV     R4,A
-0213 120000      E     LCALL   _?CyDelay
+020C E4                CLR     A
+020D 7F0A              MOV     R7,#0AH
+020F FE                MOV     R6,A
+0210 FD                MOV     R5,A
+0211 FC                MOV     R4,A
+0212 120000      E     LCALL   _?CyDelay
                                            ; SOURCE LINE # 218
-0216 120000      R     LCALL   InitIMU
+0215 120000      R     LCALL   InitIMU
                                            ; SOURCE LINE # 219
-0219 E4                CLR     A
-021A 7F0A              MOV     R7,#0AH
-021C FE                MOV     R6,A
-021D FD                MOV     R5,A
-021E FC                MOV     R4,A
-021F 120000      E     LCALL   _?CyDelay
+0218 E4                CLR     A
+0219 7F0A              MOV     R7,#0AH
+021B FE                MOV     R6,A
+021C FD                MOV     R5,A
+021D FC                MOV     R4,A
+021E 120000      E     LCALL   _?CyDelay
                                            ; SOURCE LINE # 220
-0222 900000      R     MOV     DPTR,#k_imu
-0225 E0                MOVX    A,@DPTR
-0226 FF                MOV     R7,A
-0227 75F005            MOV     B,#05H
-022A A4                MUL     AB
-022B 2400        E     ADD     A,#LOW IMU_conf
-022D F582              MOV     DPL,A
-022F E4                CLR     A
-0230 3400        E     ADDC    A,#HIGH IMU_conf
-0232 F583              MOV     DPH,A
-0234 7401              MOV     A,#01H
-0236 F0                MOVX    @DPTR,A
+0221 900000      R     MOV     DPTR,#k_imu
+0224 E0                MOVX    A,@DPTR
+0225 FF                MOV     R7,A
+0226 75F005            MOV     B,#05H
+0229 A4                MUL     AB
+022A 2400        E     ADD     A,#LOW IMU_conf
+022C F582              MOV     DPL,A
+022E E4                CLR     A
+022F 3400        E     ADDC    A,#HIGH IMU_conf
+0231 F583              MOV     DPH,A
+0233 7401              MOV     A,#01H
+0235 F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 221
-0237 EF                MOV     A,R7
-0238 75F005            MOV     B,#05H
-023B A4                MUL     AB
-023C 2400        E     ADD     A,#LOW IMU_conf+01H
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 25  
+0236 EF                MOV     A,R7
+0237 75F005            MOV     B,#05H
+023A A4                MUL     AB
+023B 2400        E     ADD     A,#LOW IMU_conf+01H
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 25  
 
-023E F582              MOV     DPL,A
-0240 E4                CLR     A
-0241 3400        E     ADDC    A,#HIGH IMU_conf+01H
-0243 F583              MOV     DPH,A
-0245 7401              MOV     A,#01H
-0247 F0                MOVX    @DPTR,A
+023D F582              MOV     DPL,A
+023F E4                CLR     A
+0240 3400        E     ADDC    A,#HIGH IMU_conf+01H
+0242 F583              MOV     DPH,A
+0244 7401              MOV     A,#01H
+0246 F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 222
-0248 EF                MOV     A,R7
-0249 75F005            MOV     B,#05H
-024C A4                MUL     AB
-024D 2400        E     ADD     A,#LOW IMU_conf+02H
-024F F582              MOV     DPL,A
-0251 E4                CLR     A
-0252 3400        E     ADDC    A,#HIGH IMU_conf+02H
-0254 F583              MOV     DPH,A
-0256 E4                CLR     A
-0257 F0                MOVX    @DPTR,A
+0247 EF                MOV     A,R7
+0248 75F005            MOV     B,#05H
+024B A4                MUL     AB
+024C 2400        E     ADD     A,#LOW IMU_conf+02H
+024E F582              MOV     DPL,A
+0250 E4                CLR     A
+0251 3400        E     ADDC    A,#HIGH IMU_conf+02H
+0253 F583              MOV     DPH,A
+0255 E4                CLR     A
+0256 F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 223
-0258 EF                MOV     A,R7
-0259 75F005            MOV     B,#05H
-025C A4                MUL     AB
-025D 2400        E     ADD     A,#LOW IMU_conf+03H
-025F F582              MOV     DPL,A
-0261 E4                CLR     A
-0262 3400        E     ADDC    A,#HIGH IMU_conf+03H
-0264 F583              MOV     DPH,A
-0266 E4                CLR     A
-0267 F0                MOVX    @DPTR,A
+0257 EF                MOV     A,R7
+0258 75F005            MOV     B,#05H
+025B A4                MUL     AB
+025C 2400        E     ADD     A,#LOW IMU_conf+03H
+025E F582              MOV     DPL,A
+0260 E4                CLR     A
+0261 3400        E     ADDC    A,#HIGH IMU_conf+03H
+0263 F583              MOV     DPH,A
+0265 E4                CLR     A
+0266 F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 224
-0268 EF                MOV     A,R7
-0269 75F005            MOV     B,#05H
-026C A4                MUL     AB
-026D 2400        E     ADD     A,#LOW IMU_conf+04H
-026F F582              MOV     DPL,A
-0271 E4                CLR     A
-0272 3400        E     ADDC    A,#HIGH IMU_conf+04H
-0274 F583              MOV     DPH,A
-0276 7401              MOV     A,#01H
-0278 F0                MOVX    @DPTR,A
+0267 EF                MOV     A,R7
+0268 75F005            MOV     B,#05H
+026B A4                MUL     AB
+026C 2400        E     ADD     A,#LOW IMU_conf+04H
+026E F582              MOV     DPL,A
+0270 E4                CLR     A
+0271 3400        E     ADDC    A,#HIGH IMU_conf+04H
+0273 F583              MOV     DPH,A
+0275 E4                CLR     A
+0276 F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 225
-0279 900000      R     MOV     DPTR,#k_imu
-027C E0                MOVX    A,@DPTR
-027D 04                INC     A
-027E F0                MOVX    @DPTR,A
-027F 020000      R     LJMP    ?C0023
-0282         ?C0024:
+0277 900000      R     MOV     DPTR,#k_imu
+027A E0                MOVX    A,@DPTR
+027B 04                INC     A
+027C F0                MOVX    @DPTR,A
+027D 020000      R     LJMP    ?C0023
+0280         ?C0024:
                                            ; SOURCE LINE # 226
-0282 E4                CLR     A
-0283 7F32              MOV     R7,#032H
-0285 FE                MOV     R6,A
-0286 FD                MOV     R5,A
-0287 FC                MOV     R4,A
-0288 120000      E     LCALL   _?CyDelay
+0280 E4                CLR     A
+0281 7F32              MOV     R7,#032H
+0283 FE                MOV     R6,A
+0284 FD                MOV     R5,A
+0285 FC                MOV     R4,A
+0286 120000      E     LCALL   _?CyDelay
                                            ; SOURCE LINE # 229
-028B 900000      E     MOV     DPTR,#imus_data_size
-028E E4                CLR     A
-028F F0                MOVX    @DPTR,A
-0290 A3                INC     DPTR
-0291 04                INC     A
-0292 F0                MOVX    @DPTR,A
+0289 900000      E     MOV     DPTR,#imus_data_size
+028C E4                CLR     A
+028D F0                MOVX    @DPTR,A
+028E A3                INC     DPTR
+028F 04                INC     A
+0290 F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 230
-0293 E4                CLR     A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 26  
+0291 E4                CLR     A
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 26  
 
-0294 900000      R     MOV     DPTR,#k_imu
-0297 F0                MOVX    @DPTR,A
-0298         ?C0026:
-0298 900000      E     MOV     DPTR,#N_IMU_Connected
-029B E0                MOVX    A,@DPTR
-029C FF                MOV     R7,A
-029D 900000      R     MOV     DPTR,#k_imu
-02A0 E0                MOVX    A,@DPTR
-02A1 FE                MOV     R6,A
-02A2 C3                CLR     C
-02A3 9F                SUBB    A,R7
-02A4 4003              JC      $ + 5H
-02A6 020000      R     LJMP    ?C0027
+0292 900000      R     MOV     DPTR,#k_imu
+0295 F0                MOVX    @DPTR,A
+0296         ?C0026:
+0296 900000      E     MOV     DPTR,#N_IMU_Connected
+0299 E0                MOVX    A,@DPTR
+029A FF                MOV     R7,A
+029B 900000      R     MOV     DPTR,#k_imu
+029E E0                MOVX    A,@DPTR
+029F FE                MOV     R6,A
+02A0 C3                CLR     C
+02A1 9F                SUBB    A,R7
+02A2 4003              JC      $ + 5H
+02A4 020000      R     LJMP    ?C0027
                                            ; SOURCE LINE # 231
                                            ; SOURCE LINE # 232
-02A9 E0                MOVX    A,@DPTR
-02AA FF                MOV     R7,A
-02AB 2400        E     ADD     A,#LOW IMU_connected
-02AD F582              MOV     DPL,A
-02AF E4                CLR     A
-02B0 3400        E     ADDC    A,#HIGH IMU_connected
-02B2 F583              MOV     DPH,A
-02B4 E0                MOVX    A,@DPTR
-02B5 FD                MOV     R5,A
-02B6 75F005            MOV     B,#05H
-02B9 A4                MUL     AB
-02BA 2400        E     ADD     A,#LOW IMU_conf+01H
-02BC F582              MOV     DPL,A
-02BE E4                CLR     A
-02BF 3400        E     ADDC    A,#HIGH IMU_conf+01H
-02C1 F583              MOV     DPH,A
-02C3 E0                MOVX    A,@DPTR
-02C4 75F006            MOV     B,#06H
-02C7 A4                MUL     AB
-02C8 FC                MOV     R4,A
-02C9 ED                MOV     A,R5
-02CA 75F005            MOV     B,#05H
-02CD A4                MUL     AB
-02CE 2400        E     ADD     A,#LOW IMU_conf
-02D0 F582              MOV     DPL,A
-02D2 E4                CLR     A
-02D3 3400        E     ADDC    A,#HIGH IMU_conf
-02D5 F583              MOV     DPH,A
-02D7 E0                MOVX    A,@DPTR
-02D8 75F006            MOV     B,#06H
-02DB A4                MUL     AB
-02DC 2C                ADD     A,R4
-02DD FD                MOV     R5,A
-02DE 7400        E     MOV     A,#LOW IMU_connected
-02E0 2F                ADD     A,R7
-02E1 F582              MOV     DPL,A
-02E3 E4                CLR     A
-02E4 3400        E     ADDC    A,#HIGH IMU_connected
-02E6 F583              MOV     DPH,A
-02E8 E0                MOVX    A,@DPTR
-02E9 FF                MOV     R7,A
-02EA 75F005            MOV     B,#05H
-02ED A4                MUL     AB
-02EE 2400        E     ADD     A,#LOW IMU_conf+02H
-02F0 F582              MOV     DPL,A
-02F2 E4                CLR     A
-02F3 3400        E     ADDC    A,#HIGH IMU_conf+02H
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 27  
+02A7 E0                MOVX    A,@DPTR
+02A8 FF                MOV     R7,A
+02A9 2400        E     ADD     A,#LOW IMU_connected
+02AB F582              MOV     DPL,A
+02AD E4                CLR     A
+02AE 3400        E     ADDC    A,#HIGH IMU_connected
+02B0 F583              MOV     DPH,A
+02B2 E0                MOVX    A,@DPTR
+02B3 FD                MOV     R5,A
+02B4 75F005            MOV     B,#05H
+02B7 A4                MUL     AB
+02B8 2400        E     ADD     A,#LOW IMU_conf+01H
+02BA F582              MOV     DPL,A
+02BC E4                CLR     A
+02BD 3400        E     ADDC    A,#HIGH IMU_conf+01H
+02BF F583              MOV     DPH,A
+02C1 E0                MOVX    A,@DPTR
+02C2 75F006            MOV     B,#06H
+02C5 A4                MUL     AB
+02C6 FC                MOV     R4,A
+02C7 ED                MOV     A,R5
+02C8 75F005            MOV     B,#05H
+02CB A4                MUL     AB
+02CC 2400        E     ADD     A,#LOW IMU_conf
+02CE F582              MOV     DPL,A
+02D0 E4                CLR     A
+02D1 3400        E     ADDC    A,#HIGH IMU_conf
+02D3 F583              MOV     DPH,A
+02D5 E0                MOVX    A,@DPTR
+02D6 75F006            MOV     B,#06H
+02D9 A4                MUL     AB
+02DA 2C                ADD     A,R4
+02DB FD                MOV     R5,A
+02DC 7400        E     MOV     A,#LOW IMU_connected
+02DE 2F                ADD     A,R7
+02DF F582              MOV     DPL,A
+02E1 E4                CLR     A
+02E2 3400        E     ADDC    A,#HIGH IMU_connected
+02E4 F583              MOV     DPH,A
+02E6 E0                MOVX    A,@DPTR
+02E7 FF                MOV     R7,A
+02E8 75F005            MOV     B,#05H
+02EB A4                MUL     AB
+02EC 2400        E     ADD     A,#LOW IMU_conf+02H
+02EE F582              MOV     DPL,A
+02F0 E4                CLR     A
+02F1 3400        E     ADDC    A,#HIGH IMU_conf+02H
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 27  
 
-02F5 F583              MOV     DPH,A
-02F7 E0                MOVX    A,@DPTR
-02F8 75F006            MOV     B,#06H
-02FB A4                MUL     AB
-02FC 2D                ADD     A,R5
-02FD FD                MOV     R5,A
-02FE EF                MOV     A,R7
-02FF 75F005            MOV     B,#05H
-0302 A4                MUL     AB
-0303 2400        E     ADD     A,#LOW IMU_conf+04H
-0305 F582              MOV     DPL,A
-0307 E4                CLR     A
-0308 3400        E     ADDC    A,#HIGH IMU_conf+04H
-030A F583              MOV     DPH,A
-030C E0                MOVX    A,@DPTR
-030D 25E0              ADD     A,ACC
-030F 2D                ADD     A,R5
-0310 2402              ADD     A,#02H
-0312 FD                MOV     R5,A
-0313 7400        E     MOV     A,#LOW IMU_connected
-0315 2E                ADD     A,R6
-0316 F582              MOV     DPL,A
-0318 E4                CLR     A
-0319 3400        E     ADDC    A,#HIGH IMU_connected
-031B F583              MOV     DPH,A
-031D E0                MOVX    A,@DPTR
-031E 25E0              ADD     A,ACC
-0320 2400        E     ADD     A,#LOW single_imu_size
-0322 F582              MOV     DPL,A
-0324 E4                CLR     A
-0325 3400        E     ADDC    A,#HIGH single_imu_size
-0327 F583              MOV     DPH,A
-0329 E4                CLR     A
-032A F0                MOVX    @DPTR,A
-032B A3                INC     DPTR
-032C ED                MOV     A,R5
-032D F0                MOVX    @DPTR,A
+02F3 F583              MOV     DPH,A
+02F5 E0                MOVX    A,@DPTR
+02F6 75F006            MOV     B,#06H
+02F9 A4                MUL     AB
+02FA 2D                ADD     A,R5
+02FB FD                MOV     R5,A
+02FC EF                MOV     A,R7
+02FD 75F005            MOV     B,#05H
+0300 A4                MUL     AB
+0301 2400        E     ADD     A,#LOW IMU_conf+04H
+0303 F582              MOV     DPL,A
+0305 E4                CLR     A
+0306 3400        E     ADDC    A,#HIGH IMU_conf+04H
+0308 F583              MOV     DPH,A
+030A E0                MOVX    A,@DPTR
+030B 25E0              ADD     A,ACC
+030D 2D                ADD     A,R5
+030E 2402              ADD     A,#02H
+0310 FD                MOV     R5,A
+0311 7400        E     MOV     A,#LOW IMU_connected
+0313 2E                ADD     A,R6
+0314 F582              MOV     DPL,A
+0316 E4                CLR     A
+0317 3400        E     ADDC    A,#HIGH IMU_connected
+0319 F583              MOV     DPH,A
+031B E0                MOVX    A,@DPTR
+031C 25E0              ADD     A,ACC
+031E 2400        E     ADD     A,#LOW single_imu_size
+0320 F582              MOV     DPL,A
+0322 E4                CLR     A
+0323 3400        E     ADDC    A,#HIGH single_imu_size
+0325 F583              MOV     DPH,A
+0327 E4                CLR     A
+0328 F0                MOVX    @DPTR,A
+0329 A3                INC     DPTR
+032A ED                MOV     A,R5
+032B F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 233
-032E 7400        E     MOV     A,#LOW IMU_connected
-0330 2E                ADD     A,R6
-0331 F582              MOV     DPL,A
-0333 E4                CLR     A
-0334 3400        E     ADDC    A,#HIGH IMU_connected
-0336 F583              MOV     DPH,A
-0338 E0                MOVX    A,@DPTR
-0339 25E0              ADD     A,ACC
-033B 2400        E     ADD     A,#LOW single_imu_size
-033D F582              MOV     DPL,A
-033F E4                CLR     A
-0340 3400        E     ADDC    A,#HIGH single_imu_size
-0342 F583              MOV     DPH,A
-0344 E0                MOVX    A,@DPTR
-0345 FE                MOV     R6,A
-0346 A3                INC     DPTR
-0347 E0                MOVX    A,@DPTR
-0348 FF                MOV     R7,A
-0349 900000      E     MOV     DPTR,#imus_data_size+01H
-034C E0                MOVX    A,@DPTR
-034D 2F                ADD     A,R7
-034E F0                MOVX    @DPTR,A
-034F 900000      E     MOV     DPTR,#imus_data_size
-0352 E0                MOVX    A,@DPTR
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 28  
+032C 7400        E     MOV     A,#LOW IMU_connected
+032E 2E                ADD     A,R6
+032F F582              MOV     DPL,A
+0331 E4                CLR     A
+0332 3400        E     ADDC    A,#HIGH IMU_connected
+0334 F583              MOV     DPH,A
+0336 E0                MOVX    A,@DPTR
+0337 25E0              ADD     A,ACC
+0339 2400        E     ADD     A,#LOW single_imu_size
+033B F582              MOV     DPL,A
+033D E4                CLR     A
+033E 3400        E     ADDC    A,#HIGH single_imu_size
+0340 F583              MOV     DPH,A
+0342 E0                MOVX    A,@DPTR
+0343 FE                MOV     R6,A
+0344 A3                INC     DPTR
+0345 E0                MOVX    A,@DPTR
+0346 FF                MOV     R7,A
+0347 900000      E     MOV     DPTR,#imus_data_size+01H
+034A E0                MOVX    A,@DPTR
+034B 2F                ADD     A,R7
+034C F0                MOVX    @DPTR,A
+034D 900000      E     MOV     DPTR,#imus_data_size
+0350 E0                MOVX    A,@DPTR
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 28  
 
-0353 3E                ADDC    A,R6
-0354 F0                MOVX    @DPTR,A
+0351 3E                ADDC    A,R6
+0352 F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 234
-0355 900000      R     MOV     DPTR,#k_imu
-0358 E0                MOVX    A,@DPTR
-0359 04                INC     A
-035A F0                MOVX    @DPTR,A
-035B 020000      R     LJMP    ?C0026
-035E         ?C0027:
+0353 900000      R     MOV     DPTR,#k_imu
+0356 E0                MOVX    A,@DPTR
+0357 04                INC     A
+0358 F0                MOVX    @DPTR,A
+0359 020000      R     LJMP    ?C0026
+035C         ?C0027:
                                            ; SOURCE LINE # 235
-035E 900000      E     MOV     DPTR,#imus_data_size+01H
-0361 E0                MOVX    A,@DPTR
-0362 04                INC     A
-0363 F0                MOVX    @DPTR,A
-0364 7006              JNZ     ?C0054
-0366 900000      E     MOV     DPTR,#imus_data_size
-0369 E0                MOVX    A,@DPTR
-036A 04                INC     A
-036B F0                MOVX    @DPTR,A
-036C         ?C0054:
+035C 900000      E     MOV     DPTR,#imus_data_size+01H
+035F E0                MOVX    A,@DPTR
+0360 04                INC     A
+0361 F0                MOVX    @DPTR,A
+0362 7006              JNZ     ?C0054
+0364 900000      E     MOV     DPTR,#imus_data_size
+0367 E0                MOVX    A,@DPTR
+0368 04                INC     A
+0369 F0                MOVX    @DPTR,A
+036A         ?C0054:
                                            ; SOURCE LINE # 238
-036C 22                RET     
+036A 22                RET     
              ; FUNCTION InitIMUgeneral (END)
 
              ; FUNCTION _ReadIMU (BEGIN)
@@ -1752,7 +1752,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0030 900000      E     MOV     DPTR,#IMU_conf+01H
 0033 75F005            MOV     B,#05H
 0036 120000      E     LCALL   ?C?OFFXADD
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 29  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 29  
 
 0039 EE                MOV     A,R6
 003A 75F005            MOV     B,#05H
@@ -1816,7 +1816,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0005 A3                INC     DPTR
 0006 F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 259
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 30  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 30  
 
 0007 A3                INC     DPTR
 0008 EE                MOV     A,R6
@@ -1880,7 +1880,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0061 900000      R     MOV     DPTR,#low
 0064 EF                MOV     A,R7
 0065 F0                MOVX    @DPTR,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 31  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 31  
 
                                            ; SOURCE LINE # 271
 0066 7F3D              MOV     R7,#03DH
@@ -1944,7 +1944,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00C1 FC                MOV     R4,A
 00C2 A3                INC     DPTR
 00C3 E0                MOVX    A,@DPTR
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 32  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 32  
 
 00C4 FD                MOV     R5,A
 00C5 900000      E     MOV     DPTR,#Accel+04H
@@ -2008,7 +2008,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0017 7F43              MOV     R7,#043H
 0019 120000      R     LCALL   _ReadControlRegister
 001C 900000      R     MOV     DPTR,#high
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 33  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 33  
 
 001F EF                MOV     A,R7
 0020 F0                MOVX    @DPTR,A
@@ -2072,7 +2072,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0076 900000      E     MOV     DPTR,#Gyro+02H
 0079 75F006            MOV     B,#06H
 007C 120000      E     LCALL   ?C?OFFXADD
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 34  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 34  
 
 007F EC                MOV     A,R4
 0080 75F006            MOV     B,#06H
@@ -2136,7 +2136,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00DC E0                MOVX    A,@DPTR
 00DD FF                MOV     R7,A
 00DE 900000      E     MOV     DPTR,#Gyro+05H
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 35  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 35  
 
 00E1 75F006            MOV     B,#06H
 00E4 ED                MOV     A,R5
@@ -2200,7 +2200,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
                                            ; SOURCE LINE # 331
 0036 900000      R     MOV     DPTR,#low
 0039 E0                MOVX    A,@DPTR
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 36  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 36  
 
 003A FF                MOV     R7,A
 003B 900000      E     MOV     DPTR,#Mag+01H
@@ -2264,7 +2264,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 009B F583              MOV     DPH,A
 009D EF                MOV     A,R7
 009E F0                MOVX    @DPTR,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 37  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 37  
 
                                            ; SOURCE LINE # 339
 009F E4                CLR     A
@@ -2328,7 +2328,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
              ; FUNCTION _ReadMagCal (BEGIN)
                                            ; SOURCE LINE # 351
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 38  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 38  
 
 ;---- Variable 'n' assigned to Register 'R6/R7' ----
                                            ; SOURCE LINE # 353
@@ -2392,7 +2392,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0055 F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 362
 0056 E4                CLR     A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 39  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 39  
 
 0057 900000      R     MOV     DPTR,#read
 005A F0                MOVX    @DPTR,A
@@ -2456,7 +2456,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0022 3400        E     ADDC    A,#HIGH IMU_connected
 0024 F583              MOV     DPH,A
 0026 E0                MOVX    A,@DPTR
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 40  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 40  
 
 0027 FF                MOV     R7,A
 0028 7E00              MOV     R6,#00H
@@ -2520,7 +2520,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0083 A4                MUL     AB
 0084 2400        E     ADD     A,#LOW g_imuNew+01H
 0086 F582              MOV     DPL,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 41  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 41  
 
 0088 E5F0              MOV     A,B
 008A 3400        E     ADDC    A,#HIGH g_imuNew+01H
@@ -2584,7 +2584,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00E1 F0                MOVX    @DPTR,A
 00E2 A3                INC     DPTR
 00E3 EF                MOV     A,R7
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 42  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 42  
 
 00E4 F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 387
@@ -2648,7 +2648,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 013B FD                MOV     R5,A
 013C 2400        E     ADD     A,#LOW IMU_connected
 013E F582              MOV     DPL,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 43  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 43  
 
 0140 E4                CLR     A
 0141 3400        E     ADDC    A,#HIGH IMU_connected
@@ -2712,7 +2712,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0198 FF                MOV     R7,A
 0199 75F006            MOV     B,#06H
 019C A4                MUL     AB
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 44  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 44  
 
 019D 2400        E     ADD     A,#LOW Gyro+02H
 019F F582              MOV     DPL,A
@@ -2776,7 +2776,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 01F6 F583              MOV     DPH,A
 01F8 E0                MOVX    A,@DPTR
 01F9 FB                MOV     R3,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 45  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 45  
 
 01FA 900000      R     MOV     DPTR,#tmp
 01FD E4                CLR     A
@@ -2840,7 +2840,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0252 EB                MOV     A,R3
 0253 F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 398
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 46  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 46  
 
 0254 EF                MOV     A,R7
 0255 75F006            MOV     B,#06H
@@ -2904,7 +2904,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 02AD F582              MOV     DPL,A
 02AF E4                CLR     A
 02B0 3400        E     ADDC    A,#HIGH Mag+03H
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 47  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 47  
 
 02B2 F583              MOV     DPH,A
 02B4 E0                MOVX    A,@DPTR
@@ -2968,7 +2968,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 030B E0                MOVX    A,@DPTR
 030C FE                MOV     R6,A
 030D EB                MOV     A,R3
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 48  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 48  
 
 030E FF                MOV     R7,A
 030F 75F015            MOV     B,#015H
@@ -3032,7 +3032,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0366 E5F0              MOV     A,B
 0368 3400        E     ADDC    A,#HIGH g_imuNew+013H
 036A F583              MOV     DPH,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 49  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 49  
 
 036C EE                MOV     A,R6
 036D F0                MOVX    @DPTR,A
@@ -3096,7 +3096,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0036 3E                ADDC    A,R6
 0037 F583              MOV     DPH,A
 0039 ED                MOV     A,R5
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 50  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 50  
 
 003A F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 424
@@ -3160,7 +3160,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
                                            ; SOURCE LINE # 548
 002F         ?C0048:
 002F 22                RET     
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         06/15/2017 12:28:52 PAGE 51  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         11/16/2017 15:16:20 PAGE 51  
 
              ; FUNCTION _WriteControlRegister (END)
 
@@ -3194,7 +3194,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   3548    ----
+   CODE SIZE        =   3546    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =      1      67
    PDATA SIZE       =   ----    ----

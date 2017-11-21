@@ -1,6 +1,7 @@
-C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\firmware.cyprj|6363b8c4-06fb-47b9-b5c3-a5c34509b13f
-C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|f5d47057-b914-4942-b873-b2461ccdd314
-C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\default\CyReferenceLibrary\CyReferenceLibrary.cylib\CyReferenceLibrary.cyprj|e545e754-b1c8-4cb6-82cf-bd61af3fe3af
-C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|38fcf3cf-cee4-4b6a-9381-bb9d28d36b1b
-C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|9bf95160-afe9-4b9a-a8e9-59d212ec392e
-C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|b68af04e-8cbb-4fb9-a7cb-020558c67079
+C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\firmware.cyprj|b4a00c80-da21-4aab-82d5-40418f913801
+C:\Program Files (x86)\Cypress\PSoC Creator\4.1\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|4c300c79-d5a9-4891-9cf6-94f86962bb0a
+C:\Users\MattiaCP\Documents\PSoC Creator\4.1\Downloads ( 4.1).cylib\Downloads ( 4.1).cyprj|ce2fc731-1380-43eb-9fda-3a11f79f3ff2
+C:\Program Files (x86)\Cypress\PSoC Creator\4.1\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|de754a40-57b4-438e-8c3e-3efde8a8723a
+C:\Program Files (x86)\Cypress\PSoC Creator\4.1\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|9d4c8ed4-be80-479e-997f-27e48772e156
+C:\Program Files (x86)\Cypress\PSoC Creator\4.1\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|b6fe935c-507d-438f-9771-37f1841b9bdd
+C:\Program Files (x86)\Cypress\PSoC Creator\4.1\PSoC Creator\psoc\content\default\CyReferenceLibrary\CyReferenceLibrary.cylib\CyReferenceLibrary.cyprj|8d4fdb1c-5aee-4fda-b687-c357966ae6aa
