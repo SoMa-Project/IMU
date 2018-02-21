@@ -2,7 +2,7 @@
 // BSD 3-Clause License
 
 // Copyright (c) 2016, qbrobotics
-// Copyright (c) 2017, Centro "E.Piaggio"
+// Copyright (c) 2017-2018, Centro "E.Piaggio"
 // All rights reserved.
 
 // Redistribution and use in source and binary forms, with or without
@@ -36,10 +36,10 @@
 * \file         globals.h
 *
 * \brief        Global definitions and macros are set in this file.
-* \date         October 01, 2017
+* \date         February 01, 2018
 * \author       _Centro "E.Piaggio"_
 * \copyright    (C) 2012-2016 qbrobotics. All rights reserved.
-* \copyright    (C) 2017 Centro "E.Piaggio". All rights reserved.
+* \copyright    (C) 2017-2018 Centro "E.Piaggio". All rights reserved.
 */
 
 #ifndef GLOBALS_H_INCLUDED
@@ -51,15 +51,16 @@
 #include "stdlib.h"
 #include "math.h"
 #include "commands.h"
+#include "utils.h"
 
 //==============================================================================
 //                                                                        DEVICE
 //==============================================================================
 
-#define VERSION                 "IMUboard v 1.0.1"
+#define VERSION                 "IMUboard v 1.1"
 
-#define NUM_OF_ANALOG_INPUTS        1
 #define N_IMU_MAX                   17
+#define NUM_OF_DATA                 5       // accelerometers, gyroscopes, magnetometers, quaternion and temperature data
 
 //==============================================================================
 //                                                               SYNCHRONIZATION
@@ -67,7 +68,6 @@
 
 //Main frequency 1000 Hz
 #define CALIBRATION_DIV         10     // 100 Hz
-
 #define DIV_INIT_VALUE          1
 
 //==============================================================================
@@ -82,12 +82,18 @@
 //==============================================================================
 //                                                                     INTERRUPT
 //==============================================================================
-#define    WAIT_START   0
-#define    WAIT_ID      1
-#define    WAIT_LENGTH  2
-#define    RECEIVE      3
-#define    UNLOAD       4
+#define WAIT_START   0
+#define WAIT_ID      1
+#define WAIT_LENGTH  2
+#define RECEIVE      3
+#define UNLOAD       4
 
+//==============================================================================
+//                                                      SPI DELAY (MICROSECONDS)
+//==============================================================================
+#define SPI_DELAY_LOW       10
+#define SPI_DELAY_HIGH      100
+    
 //==============================================================================
 //                                                                         OTHER
 //==============================================================================
@@ -97,33 +103,10 @@
 
 #define DEFAULT_EEPROM_DISPLACEMENT 8   // in pages
 
-#define MAX_WATCHDOG_TIMER 250          // num * 2 [cs]
-
 //==============================================================================
 //                                                        structures definitions
 //==============================================================================
-
-//=========================================================     motor references
-
-//struct st_ref {
-//    int32 pos[NUM_OF_MOTORS];       // motor reference position
-//    int32 curr[NUM_OF_MOTORS];
-//    int32 pwm[NUM_OF_MOTORS];
-//    uint8 onoff;                    // enable flags
-//};
-//
-////=============================================================     measurements
-//
-//struct st_meas {
-//    int32 pos[NUM_OF_SENSORS];      // sensor position
-//
-//    int32 curr[NUM_OF_MOTORS];      // motor currents
-//
-//    int8 rot[NUM_OF_SENSORS];      // sensor rotations
-//
-//    int32 emg[NUM_OF_EMGS];         // EMG values
-//};
-
+    
 //==============================================================     data packet
 
 struct st_data {
@@ -138,16 +121,10 @@ struct st_data {
 struct st_mem {
     uint8   flag;                       // Device has been configured               1
     uint8   id;                         // device id                                1
-   
     uint8   baud_rate;                  // Baud Rate Setted                         1
-    uint8   watchdog_period;            // Watchdog period setted, 255 = disable    1                                                                //TOT           102 bytes
-    
-
+    uint8   SPI_read_delay;             // delay on SPI reading
+    uint8   IMU_conf[N_IMU_MAX][NUM_OF_DATA];     // IMU default configuration               85
 };
-
-
-//==============================================     hand calibration parameters
-
 
 //=================================================     emg status
 
@@ -156,6 +133,7 @@ struct st_imu {
     int16 accel_value[3];
     int16 gyro_value[3];
     int16 mag_value[3];
+    float quat_value[4];
     int16 temp_value;
 };
 
@@ -168,31 +146,12 @@ extern struct st_mem    g_mem, c_mem;               // memory
 extern uint32 timer_value;
 extern uint32 timer_value0;
 
-// Device Data
-
-extern int32   dev_tension;                         // Power supply tension
-extern uint8   dev_pwm_limit;
-
 // Bit Flag
-
-extern CYBIT reset_last_value_flag;
-extern CYBIT tension_valid;                         // tension validation bit
 extern CYBIT interrupt_flag;                        // interrupt flag enabler
-extern CYBIT watchdog_flag;                         // watchdog flag enabler
-extern float tau_feedback;
-
-// DMA Buffer
-
-extern int16 ADC_buf[1];
-
-// PWM value
-
-extern int8 pwm_sign;
 
 // IMU variables
 extern uint8 N_IMU_Connected;
 extern uint8 IMU_connected[N_IMU_MAX];
-extern uint8 IMU_conf[N_IMU_MAX][5];
 extern int imus_data_size;
 extern int single_imu_size[N_IMU_MAX];
 extern struct st_imu g_imu[N_IMU_MAX], g_imuNew[N_IMU_MAX];
@@ -202,7 +161,7 @@ extern uint8 Gyro[N_IMU_MAX][6];
 extern uint8 Mag[N_IMU_MAX][6];
 extern uint8 MagCal[N_IMU_MAX][3];
 extern uint8 Temp[N_IMU_MAX][2];
-
+extern float Quat[4];
 
 // -----------------------------------------------------------------------------
 

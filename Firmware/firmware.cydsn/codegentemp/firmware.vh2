@@ -2,7 +2,7 @@
 --	Conversion of firmware.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Wed Nov 15 19:00:29 2017
+--	Mon Feb 12 10:04:43 2018
 --
 
 USE cypress.cypress.all;
@@ -743,70 +743,6 @@ SIGNAL \MY_TIMER:TimerUDB:sT24:timerdp:f1_blk_stat_reg_2\ : bit;
 ATTRIBUTE port_state_att of \MY_TIMER:TimerUDB:sT24:timerdp:f1_blk_stat_reg_2\:SIGNAL IS 2;
 SIGNAL \MY_TIMER:Net_102\ : bit;
 SIGNAL \MY_TIMER:Net_266\ : bit;
-SIGNAL Net_6285 : bit;
-SIGNAL Net_3570 : bit;
-SIGNAL \WATCHDOG_COUNTER:Net_82\ : bit;
-SIGNAL \WATCHDOG_COUNTER:Net_91\ : bit;
-SIGNAL Net_6183 : bit;
-SIGNAL \WATCHDOG_COUNTER:Net_48\ : bit;
-SIGNAL \WATCHDOG_COUNTER:Net_54\ : bit;
-SIGNAL \WATCHDOG_COUNTER:Net_42\ : bit;
-SIGNAL Net_3571 : bit;
-SIGNAL \WATCHDOG_COUNTER:Net_89\ : bit;
-SIGNAL \WATCHDOG_COUNTER:Net_95\ : bit;
-SIGNAL \WATCHDOG_COUNTER:Net_102\ : bit;
-SIGNAL \WATCHDOG_ENABLER:clk\ : bit;
-SIGNAL \WATCHDOG_ENABLER:rst\ : bit;
-SIGNAL Net_6322 : bit;
-SIGNAL \WATCHDOG_ENABLER:control_out_0\ : bit;
-SIGNAL Net_3579 : bit;
-SIGNAL \WATCHDOG_ENABLER:control_out_1\ : bit;
-SIGNAL Net_3580 : bit;
-SIGNAL \WATCHDOG_ENABLER:control_out_2\ : bit;
-SIGNAL Net_3581 : bit;
-SIGNAL \WATCHDOG_ENABLER:control_out_3\ : bit;
-SIGNAL Net_3582 : bit;
-SIGNAL \WATCHDOG_ENABLER:control_out_4\ : bit;
-SIGNAL Net_3583 : bit;
-SIGNAL \WATCHDOG_ENABLER:control_out_5\ : bit;
-SIGNAL Net_3584 : bit;
-SIGNAL \WATCHDOG_ENABLER:control_out_6\ : bit;
-SIGNAL Net_3585 : bit;
-SIGNAL \WATCHDOG_ENABLER:control_out_7\ : bit;
-SIGNAL \WATCHDOG_ENABLER:control_7\ : bit;
-SIGNAL \WATCHDOG_ENABLER:control_6\ : bit;
-SIGNAL \WATCHDOG_ENABLER:control_5\ : bit;
-SIGNAL \WATCHDOG_ENABLER:control_4\ : bit;
-SIGNAL \WATCHDOG_ENABLER:control_3\ : bit;
-SIGNAL \WATCHDOG_ENABLER:control_2\ : bit;
-SIGNAL \WATCHDOG_ENABLER:control_1\ : bit;
-SIGNAL \WATCHDOG_ENABLER:control_0\ : bit;
-SIGNAL Net_3588 : bit;
-SIGNAL \WATCHDOG_REFRESH:clk\ : bit;
-SIGNAL \WATCHDOG_REFRESH:rst\ : bit;
-SIGNAL \WATCHDOG_REFRESH:control_out_0\ : bit;
-SIGNAL Net_3589 : bit;
-SIGNAL \WATCHDOG_REFRESH:control_out_1\ : bit;
-SIGNAL Net_3590 : bit;
-SIGNAL \WATCHDOG_REFRESH:control_out_2\ : bit;
-SIGNAL Net_3591 : bit;
-SIGNAL \WATCHDOG_REFRESH:control_out_3\ : bit;
-SIGNAL Net_3592 : bit;
-SIGNAL \WATCHDOG_REFRESH:control_out_4\ : bit;
-SIGNAL Net_3593 : bit;
-SIGNAL \WATCHDOG_REFRESH:control_out_5\ : bit;
-SIGNAL Net_3594 : bit;
-SIGNAL \WATCHDOG_REFRESH:control_out_6\ : bit;
-SIGNAL Net_3595 : bit;
-SIGNAL \WATCHDOG_REFRESH:control_out_7\ : bit;
-SIGNAL \WATCHDOG_REFRESH:control_7\ : bit;
-SIGNAL \WATCHDOG_REFRESH:control_6\ : bit;
-SIGNAL \WATCHDOG_REFRESH:control_5\ : bit;
-SIGNAL \WATCHDOG_REFRESH:control_4\ : bit;
-SIGNAL \WATCHDOG_REFRESH:control_3\ : bit;
-SIGNAL \WATCHDOG_REFRESH:control_2\ : bit;
-SIGNAL \WATCHDOG_REFRESH:control_1\ : bit;
-SIGNAL \WATCHDOG_REFRESH:control_0\ : bit;
 SIGNAL \SPI_IMU:Net_276\ : bit;
 SIGNAL \SPI_IMU:Net_288\ : bit;
 SIGNAL \SPI_IMU:BSPIM:clk_fin\ : bit;
@@ -1105,7 +1041,6 @@ SIGNAL tmpFB_0__CS00_net_0 : bit;
 SIGNAL tmpIO_0__CS00_net_0 : bit;
 TERMINAL tmpSIOVREF__CS00_net_0 : bit;
 SIGNAL tmpINTERRUPT_0__CS00_net_0 : bit;
-SIGNAL Net_3696 : bit;
 SIGNAL tmpOE__Opto_Pin_net_0 : bit;
 SIGNAL tmpFB_0__Opto_Pin_net_0 : bit;
 SIGNAL tmpIO_0__Opto_Pin_net_0 : bit;
@@ -1340,9 +1275,6 @@ cy_srff_1D <= ((not Net_3334 and cy_srff_1)
 	OR (not Net_3334 and Net_3240));
 
 \MY_TIMER:TimerUDB:status_tc\ <= ((\MY_TIMER:TimerUDB:control_7\ and \MY_TIMER:TimerUDB:per_zero\));
-
-Net_6183 <= (Net_3588
-	OR Net_6322);
 
 \SPI_IMU:BSPIM:load_rx_data\ <= ((not \SPI_IMU:BSPIM:count_4\ and not \SPI_IMU:BSPIM:count_3\ and not \SPI_IMU:BSPIM:count_2\ and not \SPI_IMU:BSPIM:count_1\ and \SPI_IMU:BSPIM:count_0\));
 
@@ -2522,50 +2454,6 @@ timer_clock:cy_clock_v1_0
 	PORT MAP(clock=>Net_3328,
 		sc_in=>Net_3264,
 		sc_out=>Net_3240);
-WATCHDOG_CLK:cy_clock_v1_0
-	GENERIC MAP(cy_registers=>"",
-		id=>"d2957b83-fe90-4cb8-9cda-579b204409f7",
-		source_clock_id=>"315365C3-2E3E-4f04-84A2-BB564A173261",
-		divisor=>4096,
-		period=>"0",
-		is_direct=>'0',
-		is_digital=>'1')
-	PORT MAP(clock_out=>Net_6285,
-		dig_domain_out=>open);
-ISR_WATCHDOG:cy_isr_v1_0
-	GENERIC MAP(int_type=>"10",
-		is_nmi=>'0')
-	PORT MAP(int_signal=>Net_3570);
-\WATCHDOG_COUNTER:CounterHW\:cy_psoc3_timer_v1_0
-	GENERIC MAP(cy_registers=>"")
-	PORT MAP(clock=>Net_6285,
-		kill=>Net_20,
-		enable=>Net_20,
-		capture=>Net_20,
-		timer_reset=>Net_6183,
-		tc=>\WATCHDOG_COUNTER:Net_48\,
-		compare=>\WATCHDOG_COUNTER:Net_54\,
-		interrupt=>Net_3570);
-\WATCHDOG_ENABLER:Sync:ctrl_reg\:cy_psoc3_control
-	GENERIC MAP(cy_init_value=>"00000000",
-		cy_force_order=>'1',
-		cy_ctrl_mode_1=>"00000000",
-		cy_ctrl_mode_0=>"00000000",
-		cy_ext_reset=>'0')
-	PORT MAP(reset=>Net_20,
-		clock=>Net_20,
-		control=>(\WATCHDOG_ENABLER:control_7\, \WATCHDOG_ENABLER:control_6\, \WATCHDOG_ENABLER:control_5\, \WATCHDOG_ENABLER:control_4\,
-			\WATCHDOG_ENABLER:control_3\, \WATCHDOG_ENABLER:control_2\, \WATCHDOG_ENABLER:control_1\, Net_6322));
-\WATCHDOG_REFRESH:Sync:ctrl_reg\:cy_psoc3_control
-	GENERIC MAP(cy_init_value=>"00000000",
-		cy_force_order=>'1',
-		cy_ctrl_mode_1=>"00000001",
-		cy_ctrl_mode_0=>"00000001",
-		cy_ext_reset=>'1')
-	PORT MAP(reset=>Net_20,
-		clock=>Net_6285,
-		control=>(\WATCHDOG_REFRESH:control_7\, \WATCHDOG_REFRESH:control_6\, \WATCHDOG_REFRESH:control_5\, \WATCHDOG_REFRESH:control_4\,
-			\WATCHDOG_REFRESH:control_3\, \WATCHDOG_REFRESH:control_2\, \WATCHDOG_REFRESH:control_1\, Net_3588));
 \SPI_IMU:IntClock\:cy_clock_v1_0
 	GENERIC MAP(cy_registers=>"",
 		id=>"2817f99e-c74a-4416-a7db-bc9d26f337bb/426fcbe0-714d-4404-8fa8-581ff40c30f1",
@@ -4108,20 +3996,6 @@ CS00:cy_psoc3_pins_v1_10
 		out_clock_en=>tmpOE__RS_485_EN_net_0,
 		out_reset=>Net_20,
 		interrupt=>tmpINTERRUPT_0__CS00_net_0);
-isr_clock:cy_clock_v1_0
-	GENERIC MAP(cy_registers=>"",
-		id=>"d4ff93eb-8174-4f1b-b12d-fce6fffb01ee",
-		source_clock_id=>"",
-		divisor=>0,
-		period=>"1000000000000",
-		is_direct=>'0',
-		is_digital=>'1')
-	PORT MAP(clock_out=>Net_3696,
-		dig_domain_out=>open);
-isr_imu:cy_isr_v1_0
-	GENERIC MAP(int_type=>"10",
-		is_nmi=>'0')
-	PORT MAP(int_signal=>Net_3696);
 Opto_Pin:cy_psoc3_pins_v1_10
 	GENERIC MAP(id=>"3bc7e7df-d366-484e-b567-9ca4d00a772a",
 		drive_mode=>"110",

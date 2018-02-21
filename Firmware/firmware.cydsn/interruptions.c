@@ -2,7 +2,7 @@
 // BSD 3-Clause License
 
 // Copyright (c) 2016, qbrobotics
-// Copyright (c) 2017, Centro "E.Piaggio"
+// Copyright (c) 2017-2018, Centro "E.Piaggio"
 // All rights reserved.
 
 // Redistribution and use in source and binary forms, with or without
@@ -36,19 +36,19 @@
 * \file         interruptions.c
 *
 * \brief        Interruption functions are in this file.
-* \date         October 01, 2017
+* \date         February 01, 2018
 * \author       _Centro "E.Piaggio"_
 * \copyright    (C) 2012-2016 qbrobotics. All rights reserved.
-* \copyright    (C) 2017 Centro "E.Piaggio". All rights reserved.
+* \copyright    (C) 2017-2018 Centro "E.Piaggio". All rights reserved.
 */
 
 
 //=================================================================     includes
-#include <interruptions.h>
-#include <command_processing.h>
-#include <globals.h>
-#include <utils.h>
-
+#include "interruptions.h"
+#include "command_processing.h"
+#include "globals.h"
+#include "utils.h"
+#include "IMU_functions.h"
 
 //==============================================================================
 //                                                            RS485 RX INTERRUPT
@@ -62,19 +62,6 @@
 // - 4:     Wait for another device end of transmission;
 //
 //==============================================================================
-
-
-//==============================================================================
-//                                                            WATCHDOG INTERRUPT
-//==============================================================================
-
-CY_ISR(ISR_WATCHDOG_Handler){
-
-    // Set WDT flag
-    
-    watchdog_flag = TRUE;
-
-}
 
 //==============================================================================
 //                                                            RS485 RX INTERRUPT
@@ -236,8 +223,6 @@ void interrupt_manager(){
 
 void function_scheduler() {
  
-    static uint16 counter_calibration = DIV_INIT_VALUE;
-
     timer_value0 = (uint32)MY_TIMER_ReadCounter();
     
     // Check Interrupt 
@@ -246,21 +231,12 @@ void function_scheduler() {
         interrupt_flag = FALSE;
         interrupt_manager();
     }
-  
-    readAllIMUs();
-    
-   
-    //---------------------------------- Update States
-    
-//    // Load k-1 state
-//    memcpy( &g_measOld, &g_meas, sizeof(g_meas) );
-//    memcpy( &g_refOld, &g_ref, sizeof(g_ref) );
-//
-//    // Load k+1 state
-//    memcpy( &g_ref, &g_refNew, sizeof(g_ref) );
-    
-    memcpy( &g_imu, &g_imuNew, sizeof(g_imu) );
 
+    ReadAllIMUs();      // IMU reading is atomic, no RS485 request is handled
+        
+    //---------------------------------- Update States     
+    memcpy( &g_imu, &g_imuNew, sizeof(g_imu) );
+    
     if (interrupt_flag){
         interrupt_flag = FALSE;
         interrupt_manager();
@@ -270,7 +246,5 @@ void function_scheduler() {
     MY_TIMER_WriteCounter(5000000);
 
 }
-
-
 
 /* [] END OF FILE */

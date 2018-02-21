@@ -27,24 +27,28 @@
 *  Place your includes, defines and code here 
 ********************************************************************************/
 /* `#START isr_imu_intc` */
+    
 #include <IMU_functions.h>
-#include <command_processing.h>
 
 extern uint8 N_IMU_Connected;
-extern uint8 IMU_connected[N_IMU_MAX];
+/*extern uint8 IMU_connected[N_IMU_MAX];
 extern uint8 IMU_conf[N_IMU_MAX][5];
 extern uint8 imu_send_flag;
 extern int imus_data_size;
 extern int single_imu_size[N_IMU_MAX];
-
+*/
+    
 extern uint8 Accel[N_IMU_MAX][6];
 extern uint8 Gyro[N_IMU_MAX][6];
 extern uint8 Mag[N_IMU_MAX][6];   
-extern struct st_imu g_imu[N_IMU_MAX];
+extern uint8 end_imu_reading;
+    /*
+    extern struct st_imu g_imu[N_IMU_MAX];
 
 extern float scaleAccFactor; 
 extern float scaleGyroFactor;
 extern float scaleMagFactor;
+*/
 /* `#END` */
 
 
@@ -173,41 +177,7 @@ CY_ISR(isr_imu_Interrupt)
 
     /*  Place your Interrupt code here. */
     /* `#START isr_imu_Interrupt` */
-    static uint8 k_imu = 0;
-    static struct st_imu g_imuTMP[N_IMU_MAX];
-    uint16 tmp = 0;
 
-    // Read k_imu IMU
-    ChipSelector(IMU_connected[k_imu]);
-    ReadIMU(IMU_connected[k_imu]);   
-   
-    tmp = Accel[IMU_connected[k_imu]][0];
-    g_imuTMP[k_imu].accel_value[0] = (int16)(tmp<<8 | Accel[IMU_connected[k_imu]][1]);
-    tmp = Accel[IMU_connected[k_imu]][2];
-    g_imuTMP[k_imu].accel_value[1] = (int16)(tmp<<8 | Accel[IMU_connected[k_imu]][3]);
-    tmp = Accel[IMU_connected[k_imu]][4];
-    g_imuTMP[k_imu].accel_value[2] = (int16)(tmp<<8 | Accel[IMU_connected[k_imu]][5]);
-    
-    tmp = Gyro[IMU_connected[k_imu]][0];
-    g_imuTMP[k_imu].gyro_value[0] = (int16)(tmp<<8 | Gyro[IMU_connected[k_imu]][1]);
-    tmp = Gyro[IMU_connected[k_imu]][2];
-    g_imuTMP[k_imu].gyro_value[1] = (int16)(tmp<<8 | Gyro[IMU_connected[k_imu]][3]);
-    tmp = Gyro[IMU_connected[k_imu]][4];
-    g_imuTMP[k_imu].gyro_value[2] = (int16)(tmp<<8 | Gyro[IMU_connected[k_imu]][5]);
-    
-    tmp = Mag[IMU_connected[k_imu]][0];
-    g_imuTMP[k_imu].mag_value[0] = (int16)(tmp<<8 | Mag[IMU_connected[k_imu]][1]);
-    tmp = Mag[IMU_connected[k_imu]][2];
-    g_imuTMP[k_imu].mag_value[1] = (int16)(tmp<<8 | Mag[IMU_connected[k_imu]][3]);
-    tmp = Mag[IMU_connected[k_imu]][4];
-    g_imuTMP[k_imu].mag_value[2] = (int16)(tmp<<8 | Mag[IMU_connected[k_imu]][5]);
-    
-    k_imu = (k_imu+1)%N_IMU_Connected;
-    
-    // A whole reading has been done (7 bytes for each IMU)
-    if (k_imu == 0){
-        memcpy( &g_imuNew, &g_imuTMP, sizeof(g_imuTMP) );
-    }
     
     /* `#END` */
 

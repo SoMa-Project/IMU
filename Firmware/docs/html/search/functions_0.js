@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['cmd_5fget_5fmeasurements',['cmd_get_measurements',['../command__processing_8c.html#af5ccd403f1d3e49c97bafd6e7713cff3',1,'cmd_get_measurements():&#160;command_processing.c'],['../command__processing_8h.html#af5ccd403f1d3e49c97bafd6e7713cff3',1,'cmd_get_measurements():&#160;command_processing.c']]]
+  ['cmd_5fset_5fbaudrate',['cmd_set_baudrate',['../command__processing_8c.html#aa86bf1f2fa69ab5927f7e4e40eb40581',1,'cmd_set_baudrate():&#160;command_processing.c'],['../command__processing_8h.html#aa86bf1f2fa69ab5927f7e4e40eb40581',1,'cmd_set_baudrate():&#160;command_processing.c']]]
 ];

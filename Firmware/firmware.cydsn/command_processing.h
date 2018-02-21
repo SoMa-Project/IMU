@@ -2,7 +2,7 @@
 // BSD 3-Clause License
 
 // Copyright (c) 2016, qbrobotics
-// Copyright (c) 2017, Centro "E.Piaggio"
+// Copyright (c) 2017-2018, Centro "E.Piaggio"
 // All rights reserved.
 
 // Redistribution and use in source and binary forms, with or without
@@ -36,10 +36,10 @@
 * \file         command_processing.h
 *
 * \brief        Definition of command processing functions.
-* \date         October 01, 2017
+* \date         February 01, 2018
 * \author       _Centro "E.Piaggio"_
 * \copyright    (C) 2012-2016 qbrobotics. All rights reserved.
-* \copyright    (C) 2017 Centro "E.Piaggio". All rights reserved.
+* \copyright    (C) 2017-2018 Centro "E.Piaggio". All rights reserved.
 */
 
 #ifndef COMMAND_PROCESSING_H_INCLUDED
@@ -47,16 +47,15 @@
 // ----------------------------------------------------------------------------
 
 //=================================================================     includes
-#include <globals.h> // ALL GLOBAL DEFINITIONS, STRUCTURES AND MACROS HERE
+#include "globals.h"
 
 //==============================================================================
 //                                                          function definitions
 //==============================================================================
 
-
-void	setZeros 			(void);
 void	get_param_list		(uint16 index); 
 void    infoPrepare        (unsigned char *);
+void    infoReading        (unsigned char *);
 void    infoSend           ();
 void    infoGet            (uint16);
 void    commProcess        ();
@@ -73,15 +72,7 @@ uint8   LCRChecksum        (uint8 *, uint8);
 //                                            Service Routine interrupt function
 //==============================================================================
 
-void cmd_activate();
-void cmd_set_inputs();
-void cmd_get_measurements();
-void cmd_get_currents();
-void cmd_get_emg();
-void cmd_set_watchdog();
-void cmd_get_activate();
 void cmd_set_baudrate();
-void cmd_get_inputs();
 void cmd_store_params();
 void cmd_ping();
 void cmd_get_imu_readings();

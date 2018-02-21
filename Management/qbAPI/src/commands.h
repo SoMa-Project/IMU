@@ -247,6 +247,7 @@ enum data_types {
 /** \name QB Move Information Strings */
 /** \{ */
 #define INFO_ALL        0 ///< All system information.
+#define INFO_READING    1 ///< IMUs reading information.
 
 /** \} */
 

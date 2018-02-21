@@ -284,7 +284,11 @@ static void mdlStart( SimStruct *S )
 	uint8_T aux_string[2000];
 	uint8_T PARAM_SLOT_BYTES = 50;
 	uint8_T n_imu_local;
-    uint8_T qbot_id;                                // qbot id's
+    uint8_T qbot_id;   		// qbot id's
+	uint8_T num_imus_id_params = 6;
+	uint8_T num_mag_cal_params = 0;
+	uint8_T first_imu_parameter = 2;
+	uint8_T i = 0;	
 
 //====================================================     should we keep going?
 
@@ -306,7 +310,7 @@ static void mdlStart( SimStruct *S )
 	commGetParamList(&comm_settings_t, qbot_id, 0, NULL, 0, 0, aux_string);
 	
 	//aux_string[6] <-> packet_data[2] on the firmware
-	n_imu_local = aux_string[1*PARAM_SLOT_BYTES + 8];
+	n_imu_local = aux_string[8];
 	printf("Number of connected IMUs: %d\n", n_imu_local);
 	
 	// Control on number of connected IMUs
@@ -316,28 +320,57 @@ static void mdlStart( SimStruct *S )
 		ssSetErrorStatus(S,msg);
 		return;
 	}
+	
+	// Compute number of read parameters depending on global_args.n_imu and
+	// update packet_length
+	num_mag_cal_params = (n_imu / 2);
+	if ( (n_imu - num_mag_cal_params*2) > 0 ) num_mag_cal_params++;
+
 		
 	imu_ids = (uint8_t *) calloc(n_imu, sizeof(uint8_t));
-	for (int i=0; i< n_imu; i++){
-		imu_ids[i] = aux_string[2*PARAM_SLOT_BYTES + 8 + i];
+	i = 0;
+	for (int k = 1; k <= num_imus_id_params; k++){
+		if (aux_string[k*PARAM_SLOT_BYTES + 8] != 0) {
+			imu_ids[i] = aux_string[k*PARAM_SLOT_BYTES + 8];
+			i++;
+		}
+		if (aux_string[k*PARAM_SLOT_BYTES + 9] != 0) {
+			imu_ids[i] = aux_string[k*PARAM_SLOT_BYTES + 9];
+			i++;
+		}
+		if (aux_string[k*PARAM_SLOT_BYTES + 10] != 0) {
+			imu_ids[i] = aux_string[k*PARAM_SLOT_BYTES + 10];
+			i++;
+		}
 	}
 	
 	// Retrieve magnetometer calibration parameters
 	mag_cal = (uint8_t *) calloc(n_imu, 3*sizeof(uint8_t));
-	for (int i=0; i< n_imu; i++){
-		mag_cal[3*i + 0] = aux_string[3*PARAM_SLOT_BYTES + 8 + 3*i];
-		mag_cal[3*i + 1] = aux_string[3*PARAM_SLOT_BYTES + 9 + 3*i];
-		mag_cal[3*i + 2] = aux_string[3*PARAM_SLOT_BYTES + 10 + 3*i];
+	i = 0;
+	for (int k=1; k <= num_mag_cal_params; k++) {
+		mag_cal[3*i + 0] = aux_string[num_imus_id_params*PARAM_SLOT_BYTES + k*PARAM_SLOT_BYTES + 8];
+		mag_cal[3*i + 1] = aux_string[num_imus_id_params*PARAM_SLOT_BYTES + k*PARAM_SLOT_BYTES + 9];
+		mag_cal[3*i + 2] = aux_string[num_imus_id_params*PARAM_SLOT_BYTES + k*PARAM_SLOT_BYTES + 10];
 		//printf("MAG PARAM: %d %d %d\n", mag_cal[3*i + 0], mag_cal[3*i + 1], mag_cal[3*i + 2]);
+		i++;
 		
+		if (aux_string[num_imus_id_params*PARAM_SLOT_BYTES + k*PARAM_SLOT_BYTES + 7] == 6) {
+			mag_cal[3*i + 0] = aux_string[num_imus_id_params*PARAM_SLOT_BYTES + k*PARAM_SLOT_BYTES + 11];
+			mag_cal[3*i + 1] = aux_string[num_imus_id_params*PARAM_SLOT_BYTES + k*PARAM_SLOT_BYTES + 12];
+			mag_cal[3*i + 2] = aux_string[num_imus_id_params*PARAM_SLOT_BYTES + k*PARAM_SLOT_BYTES + 13];
+			//printf("MAG PARAM: %d %d %d\n", mag_cal[3*i + 0], mag_cal[3*i + 1], mag_cal[3*i + 2]);
+			i++;
+		}
 	}
 	
+	first_imu_parameter = 1 + num_imus_id_params + num_mag_cal_params + 1;
 	imu_table = (uint8_t *) calloc(n_imu, 5*sizeof(uint8_t));
 	for (int i=0; i< n_imu; i++){
-		imu_table[5*i + 0] = aux_string[4*PARAM_SLOT_BYTES + 8 + 50*i];
-		imu_table[5*i + 1] = aux_string[4*PARAM_SLOT_BYTES + 9 + 50*i];
-		imu_table[5*i + 2] = aux_string[4*PARAM_SLOT_BYTES + 10 + 50*i];
-        imu_table[5*i + 4] = aux_string[4*PARAM_SLOT_BYTES + 12 + 50*i];
+		imu_table[5*i + 0] = aux_string[first_imu_parameter*PARAM_SLOT_BYTES + 8 + 50*i];
+		imu_table[5*i + 1] = aux_string[first_imu_parameter*PARAM_SLOT_BYTES + 9 + 50*i];
+		imu_table[5*i + 2] = aux_string[first_imu_parameter*PARAM_SLOT_BYTES + 10 + 50*i];
+        imu_table[5*i + 3] = aux_string[first_imu_parameter*PARAM_SLOT_BYTES + 11 + 50*i];
+        imu_table[5*i + 4] = aux_string[first_imu_parameter*PARAM_SLOT_BYTES + 12 + 50*i];
 		//printf("ID: %d  - %d, %d, %d, %d, %d\n", imu_ids[i], imu_table[5*i + 0], imu_table[5*i + 1], imu_table[5*i + 2], imu_table[5*i + 3], imu_table[5*i + 4]);
 		
 	}
@@ -440,8 +473,8 @@ static void mdlOutputs( SimStruct *S, int_T tid )
 		
 		
 		// Quaternion
-		for (int k=10; k<13; k++)
-			out(i)[k] = 0; 	// NaN
+		for (int k=9; k<13; k++)
+			out(i)[k] = (float)imu_values[(3*3+4+1)*i+k];
 		
 		// Temperature
 		out(i)[13] = (float)imu_values[(3*3+4+1)*i+13];

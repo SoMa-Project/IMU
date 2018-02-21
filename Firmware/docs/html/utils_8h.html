@@ -61,7 +61,6 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">utils.h File Reference</div>  </div>
@@ -86,66 +85,40 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="utils_8h__dep__incl.png" border="0" usemap="#utils_8hdep" alt=""/></div>
 <map name="utils_8hdep" id="utils_8hdep">
-<area shape="rect" id="node2" href="command__processing_8c.html" title="Command processing functions. " alt="" coords="5,80,165,107"/>
-<area shape="rect" id="node3" href="interruptions_8c.html" title="Interruption functions are in this file. " alt="" coords="189,80,293,107"/>
-<area shape="rect" id="node4" href="main_8c.html" title="Firmware main file. " alt="" coords="317,80,379,107"/>
+<area shape="rect" id="node2" href="globals_8h.html" title="Global definitions and macros are set in this file. " alt="" coords="213,80,288,107"/>
+<area shape="rect" id="node4" href="command__processing_8c.html" title="Command processing functions. " alt="" coords="5,229,165,256"/>
+<area shape="rect" id="node5" href="interruptions_8c.html" title="Interruption functions are in this file. " alt="" coords="195,229,299,256"/>
+<area shape="rect" id="node6" href="main_8c.html" title="Firmware main file. " alt="" coords="575,229,636,256"/>
+<area shape="rect" id="node3" href="command__processing_8h.html" title="Definition of command processing functions. " alt="" coords="171,155,331,181"/>
+<area shape="rect" id="node7" href="_i_m_u__functions_8h.html" title="Definition of IMU module functions. " alt="" coords="453,155,568,181"/>
+<area shape="rect" id="node9" href="globals_8c.html" title="Global variables. " alt="" coords="355,155,429,181"/>
+<area shape="rect" id="node8" href="_i_m_u__functions_8c.html" title="Implementation of IMU module functions. " alt="" coords="436,229,551,256"/>
 </map>
 </div>
 </div>
 <p><a href="utils_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a05ec5d63e2ba7621d706137124efca7d"><td class="memItemLeft" align="right" valign="top"><a id="a05ec5d63e2ba7621d706137124efca7d"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TIMER_CLOCK</b>&#160;&#160;&#160;10000</td></tr>
-<tr class="separator:a05ec5d63e2ba7621d706137124efca7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af5abd28c44c29b7397c84f1fec4b1d84"><td class="memItemLeft" align="right" valign="top"><a id="af5abd28c44c29b7397c84f1fec4b1d84"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ALPHA</b>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:af5abd28c44c29b7397c84f1fec4b1d84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b996515309fc3c03449912bb33046e3"><td class="memItemLeft" align="right" valign="top"><a id="a1b996515309fc3c03449912bb33046e3"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>BETA</b>&#160;&#160;&#160;50</td></tr>
-<tr class="separator:a1b996515309fc3c03449912bb33046e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c7db0cde6d591a5abad279ba92ef021"><td class="memItemLeft" align="right" valign="top"><a id="a8c7db0cde6d591a5abad279ba92ef021"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>SIGN</b>(A)&#160;&#160;&#160;(((A) &gt;=0) ? (1) : (-1))</td></tr>
-<tr class="separator:a8c7db0cde6d591a5abad279ba92ef021"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:af034fe9aa479d4adfc6e75e20b2f7ff3"><td class="memItemLeft" align="right" valign="top"><a id="af034fe9aa479d4adfc6e75e20b2f7ff3"></a>
-int32&#160;</td><td class="memItemRight" valign="bottom"><b>filter_v</b> (int32 new_value)</td></tr>
-<tr class="separator:af034fe9aa479d4adfc6e75e20b2f7ff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae143e439a41178d1cf10da4920488f86"><td class="memItemLeft" align="right" valign="top"><a id="ae143e439a41178d1cf10da4920488f86"></a>
-int32&#160;</td><td class="memItemRight" valign="bottom"><b>filter_ch1</b> (int32 value)</td></tr>
-<tr class="separator:ae143e439a41178d1cf10da4920488f86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45f7702bcbea56e0d255f6a615e6b8ae"><td class="memItemLeft" align="right" valign="top"><a id="a45f7702bcbea56e0d255f6a615e6b8ae"></a>
-int32&#160;</td><td class="memItemRight" valign="bottom"><b>filter_ch2</b> (int32 value)</td></tr>
-<tr class="separator:a45f7702bcbea56e0d255f6a615e6b8ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3588bc1aa14c6ea245387dda7eb7ffbe"><td class="memItemLeft" align="right" valign="top"><a id="a3588bc1aa14c6ea245387dda7eb7ffbe"></a>
-int32&#160;</td><td class="memItemRight" valign="bottom"><b>filter_i1</b> (int32 value)</td></tr>
-<tr class="separator:a3588bc1aa14c6ea245387dda7eb7ffbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ea4108a2c530470624ce2678e65dcef"><td class="memItemLeft" align="right" valign="top"><a id="a1ea4108a2c530470624ce2678e65dcef"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>my_round</b> (const double x)</td></tr>
-<tr class="separator:a1ea4108a2c530470624ce2678e65dcef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01d3bb6c1fd469a6c530fb296e4fe0fe"><td class="memItemLeft" align="right" valign="top"><a id="a01d3bb6c1fd469a6c530fb296e4fe0fe"></a>
-uint32&#160;</td><td class="memItemRight" valign="bottom"><b>my_mod</b> (int32 val, int32 divisor)</td></tr>
-<tr class="separator:a01d3bb6c1fd469a6c530fb296e4fe0fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f6aff189d5fbbb0be1fdd13e0e720c0"><td class="memItemLeft" align="right" valign="top"><a id="a8f6aff189d5fbbb0be1fdd13e0e720c0"></a>
-CYBIT&#160;</td><td class="memItemRight" valign="bottom"><b>check_enc_data</b> (const uint32 *)</td></tr>
-<tr class="separator:a8f6aff189d5fbbb0be1fdd13e0e720c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae960bf45f856281916be3903b7086a20"><td class="memItemLeft" align="right" valign="top"><a id="ae960bf45f856281916be3903b7086a20"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>calc_turns_fcn</b> (const int32, const int32)</td></tr>
-<tr class="separator:ae960bf45f856281916be3903b7086a20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d9dc88d64cd1f74a30fd0e404a3bb31"><td class="memItemLeft" align="right" valign="top"><a id="a6d9dc88d64cd1f74a30fd0e404a3bb31"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>calibration</b> ()</td></tr>
-<tr class="separator:a6d9dc88d64cd1f74a30fd0e404a3bb31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2fa6633b5385b65f8c63e730891d9781"><td class="memItemLeft" align="right" valign="top"><a id="a2fa6633b5385b65f8c63e730891d9781"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>torque_feedback</b> ()</td></tr>
-<tr class="separator:a2fa6633b5385b65f8c63e730891d9781"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e5346796220b271615a52428f6ec6ca"><td class="memItemLeft" align="right" valign="top"><a id="a5e5346796220b271615a52428f6ec6ca"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>invSqrt</b> (float x)</td></tr>
+<tr class="separator:a5e5346796220b271615a52428f6ec6ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88d150c696b69e576a1dfb193266ae6a"><td class="memItemLeft" align="right" valign="top"><a id="a88d150c696b69e576a1dfb193266ae6a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>v3_normalize</b> (float v3_in[3])</td></tr>
+<tr class="separator:a88d150c696b69e576a1dfb193266ae6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2965058da02ba33e26af00cff2fcfec2"><td class="memItemLeft" align="right" valign="top"><a id="a2965058da02ba33e26af00cff2fcfec2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>v4_normalize</b> (float v4_in[4])</td></tr>
+<tr class="separator:a2965058da02ba33e26af00cff2fcfec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Definition of utility functions. </p>
 <p>Declaration of utility functions.</p>
-<dl class="section date"><dt>Date</dt><dd>October 01, 2017 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>February 01, 2018 </dd></dl>
+<dl class="section author"><dt>Author</dt><dd><em>Centro "E.Piaggio"</em> </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>(C) 2012-2016 qbrobotics. All rights reserved. </dd>
+<dd>
+(C) 2017-2018 Centro "E.Piaggio". All rights reserved.</dd></dl>
+<dl class="section date"><dt>Date</dt><dd>February 01, 2018 </dd></dl>
 <dl class="section author"><dt>Author</dt><dd><em>Centro "E.Piaggio"</em> </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(C) 2012-2016 qbrobotics. All rights reserved. </dd>
 <dd>

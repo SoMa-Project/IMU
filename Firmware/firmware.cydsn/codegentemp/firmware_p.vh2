@@ -1,5 +1,5 @@
 -- Project:   firmware
--- Generated: 11/15/2017 19:00:31
+-- Generated: 02/12/2018 10:04:44
 -- PSoC Creator  4.1 Update 1
 
 ENTITY firmware IS
@@ -105,15 +105,10 @@ ARCHITECTURE __DEFAULT__ OF firmware IS
     SIGNAL Net_3240 : bit;
     SIGNAL Net_3264 : bit;
     SIGNAL Net_3334 : bit;
-    SIGNAL Net_3570 : bit;
-    SIGNAL Net_3588 : bit;
     SIGNAL Net_3669 : bit;
     SIGNAL Net_3670 : bit;
     SIGNAL Net_3671 : bit;
     SIGNAL Net_3672 : bit;
-    SIGNAL Net_3696 : bit;
-    ATTRIBUTE global_signal OF Net_3696 : SIGNAL IS true;
-    SIGNAL Net_3696_local : bit;
     SIGNAL Net_3794_0 : bit;
     SIGNAL Net_3794_1 : bit;
     SIGNAL Net_3798 : bit;
@@ -123,13 +118,8 @@ ARCHITECTURE __DEFAULT__ OF firmware IS
     SIGNAL Net_3982_3 : bit;
     SIGNAL Net_6020 : bit;
     SIGNAL Net_6117 : bit;
-    SIGNAL Net_6183 : bit;
     SIGNAL Net_6196 : bit;
     SIGNAL Net_6196_SYNCOUT : bit;
-    SIGNAL Net_6285 : bit;
-    ATTRIBUTE global_signal OF Net_6285 : SIGNAL IS true;
-    SIGNAL Net_6285_local : bit;
-    SIGNAL Net_6322 : bit;
     SIGNAL Opto_Pin(0)__PA : bit;
     SIGNAL RS485_RX(0)__PA : bit;
     SIGNAL RS485_TX(0)__PA : bit;
@@ -246,22 +236,6 @@ ARCHITECTURE __DEFAULT__ OF firmware IS
     SIGNAL \UART_RS485:BUART:tx_status_0\ : bit;
     SIGNAL \UART_RS485:BUART:tx_status_2\ : bit;
     SIGNAL \UART_RS485:BUART:txn\ : bit;
-    SIGNAL \WATCHDOG_COUNTER:Net_48\ : bit;
-    SIGNAL \WATCHDOG_COUNTER:Net_54\ : bit;
-    SIGNAL \WATCHDOG_ENABLER:control_1\ : bit;
-    SIGNAL \WATCHDOG_ENABLER:control_2\ : bit;
-    SIGNAL \WATCHDOG_ENABLER:control_3\ : bit;
-    SIGNAL \WATCHDOG_ENABLER:control_4\ : bit;
-    SIGNAL \WATCHDOG_ENABLER:control_5\ : bit;
-    SIGNAL \WATCHDOG_ENABLER:control_6\ : bit;
-    SIGNAL \WATCHDOG_ENABLER:control_7\ : bit;
-    SIGNAL \WATCHDOG_REFRESH:control_1\ : bit;
-    SIGNAL \WATCHDOG_REFRESH:control_2\ : bit;
-    SIGNAL \WATCHDOG_REFRESH:control_3\ : bit;
-    SIGNAL \WATCHDOG_REFRESH:control_4\ : bit;
-    SIGNAL \WATCHDOG_REFRESH:control_5\ : bit;
-    SIGNAL \WATCHDOG_REFRESH:control_6\ : bit;
-    SIGNAL \WATCHDOG_REFRESH:control_7\ : bit;
     SIGNAL __ONE__ : bit;
     ATTRIBUTE POWER OF __ONE__ : SIGNAL IS true;
     SIGNAL __ZERO__ : bit;
@@ -270,7 +244,6 @@ ARCHITECTURE __DEFAULT__ OF firmware IS
     SIGNAL tmpOE__RS_485_EN_net_0 : bit;
     ATTRIBUTE POWER OF tmpOE__RS_485_EN_net_0 : SIGNAL IS true;
     SIGNAL \ClockBlock.clk_bus_glb_ff__sig\ : bit;
-    SIGNAL \ClockBlock.dclk_glb_ff_1__sig\ : bit;
     SIGNAL \MY_TIMER:TimerUDB:sT24:timerdp:u0.ce0__sig\ : bit;
     SIGNAL \MY_TIMER:TimerUDB:sT24:timerdp:u0.cl0__sig\ : bit;
     SIGNAL \MY_TIMER:TimerUDB:sT24:timerdp:u0.z0__sig\ : bit;
@@ -357,30 +330,28 @@ ARCHITECTURE __DEFAULT__ OF firmware IS
     ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_status_4\ : LABEL IS "macrocell7";
     ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_status_5\ : LABEL IS "macrocell8";
     ATTRIBUTE lib_model OF \MY_TIMER:TimerUDB:status_tc\ : LABEL IS "macrocell9";
-    ATTRIBUTE lib_model OF Net_6183 : LABEL IS "macrocell10";
-    ATTRIBUTE lib_model OF \SPI_IMU:BSPIM:load_rx_data\ : LABEL IS "macrocell11";
-    ATTRIBUTE lib_model OF \SPI_IMU:BSPIM:tx_status_0\ : LABEL IS "macrocell12";
-    ATTRIBUTE lib_model OF \SPI_IMU:BSPIM:tx_status_4\ : LABEL IS "macrocell13";
-    ATTRIBUTE lib_model OF \SPI_IMU:BSPIM:rx_status_6\ : LABEL IS "macrocell14";
-    ATTRIBUTE lib_model OF Net_241 : LABEL IS "macrocell15";
-    ATTRIBUTE lib_model OF Net_243 : LABEL IS "macrocell16";
-    ATTRIBUTE lib_model OF Net_245 : LABEL IS "macrocell17";
-    ATTRIBUTE lib_model OF Net_250 : LABEL IS "macrocell18";
-    ATTRIBUTE lib_model OF Net_255 : LABEL IS "macrocell19";
-    ATTRIBUTE lib_model OF Net_257 : LABEL IS "macrocell20";
-    ATTRIBUTE lib_model OF Net_252 : LABEL IS "macrocell21";
-    ATTRIBUTE lib_model OF Net_248 : LABEL IS "macrocell22";
-    ATTRIBUTE lib_model OF Net_242 : LABEL IS "macrocell23";
-    ATTRIBUTE lib_model OF Net_244 : LABEL IS "macrocell24";
-    ATTRIBUTE lib_model OF Net_246 : LABEL IS "macrocell25";
-    ATTRIBUTE lib_model OF Net_254 : LABEL IS "macrocell26";
-    ATTRIBUTE lib_model OF Net_258 : LABEL IS "macrocell27";
-    ATTRIBUTE lib_model OF Net_256 : LABEL IS "macrocell28";
-    ATTRIBUTE lib_model OF Net_251 : LABEL IS "macrocell29";
-    ATTRIBUTE lib_model OF Net_247 : LABEL IS "macrocell30";
-    ATTRIBUTE lib_model OF Net_3798 : LABEL IS "macrocell31";
-    ATTRIBUTE lib_model OF __ZERO__ : LABEL IS "macrocell32";
-    ATTRIBUTE lib_model OF __ONE__ : LABEL IS "macrocell33";
+    ATTRIBUTE lib_model OF \SPI_IMU:BSPIM:load_rx_data\ : LABEL IS "macrocell10";
+    ATTRIBUTE lib_model OF \SPI_IMU:BSPIM:tx_status_0\ : LABEL IS "macrocell11";
+    ATTRIBUTE lib_model OF \SPI_IMU:BSPIM:tx_status_4\ : LABEL IS "macrocell12";
+    ATTRIBUTE lib_model OF \SPI_IMU:BSPIM:rx_status_6\ : LABEL IS "macrocell13";
+    ATTRIBUTE lib_model OF Net_241 : LABEL IS "macrocell14";
+    ATTRIBUTE lib_model OF Net_243 : LABEL IS "macrocell15";
+    ATTRIBUTE lib_model OF Net_245 : LABEL IS "macrocell16";
+    ATTRIBUTE lib_model OF Net_250 : LABEL IS "macrocell17";
+    ATTRIBUTE lib_model OF Net_255 : LABEL IS "macrocell18";
+    ATTRIBUTE lib_model OF Net_257 : LABEL IS "macrocell19";
+    ATTRIBUTE lib_model OF Net_252 : LABEL IS "macrocell20";
+    ATTRIBUTE lib_model OF Net_248 : LABEL IS "macrocell21";
+    ATTRIBUTE lib_model OF Net_242 : LABEL IS "macrocell22";
+    ATTRIBUTE lib_model OF Net_244 : LABEL IS "macrocell23";
+    ATTRIBUTE lib_model OF Net_246 : LABEL IS "macrocell24";
+    ATTRIBUTE lib_model OF Net_254 : LABEL IS "macrocell25";
+    ATTRIBUTE lib_model OF Net_258 : LABEL IS "macrocell26";
+    ATTRIBUTE lib_model OF Net_256 : LABEL IS "macrocell27";
+    ATTRIBUTE lib_model OF Net_251 : LABEL IS "macrocell28";
+    ATTRIBUTE lib_model OF Net_247 : LABEL IS "macrocell29";
+    ATTRIBUTE lib_model OF Net_3798 : LABEL IS "macrocell30";
+    ATTRIBUTE lib_model OF __ONE__ : LABEL IS "macrocell31";
     ATTRIBUTE lib_model OF \UART_RS485:BUART:sTX:TxShifter:u0\ : LABEL IS "datapathcell1";
     ATTRIBUTE lib_model OF \UART_RS485:BUART:sTX:sCLOCK:TxBitClkGen\ : LABEL IS "datapathcell2";
     ATTRIBUTE lib_model OF \UART_RS485:BUART:sTX:TxSts\ : LABEL IS "statusicell1";
@@ -395,39 +366,37 @@ ARCHITECTURE __DEFAULT__ OF firmware IS
     ATTRIBUTE lib_model OF \MY_TIMER:TimerUDB:sT24:timerdp:u0\ : LABEL IS "datapathcell4";
     ATTRIBUTE lib_model OF \MY_TIMER:TimerUDB:sT24:timerdp:u1\ : LABEL IS "datapathcell5";
     ATTRIBUTE lib_model OF \MY_TIMER:TimerUDB:sT24:timerdp:u2\ : LABEL IS "datapathcell6";
-    ATTRIBUTE lib_model OF \WATCHDOG_ENABLER:Sync:ctrl_reg\ : LABEL IS "controlcell5";
-    ATTRIBUTE lib_model OF \WATCHDOG_REFRESH:Sync:ctrl_reg\ : LABEL IS "controlcell6";
     ATTRIBUTE lib_model OF \SPI_IMU:BSPIM:TxStsReg\ : LABEL IS "statusicell4";
     ATTRIBUTE lib_model OF \SPI_IMU:BSPIM:RxStsReg\ : LABEL IS "statusicell5";
     ATTRIBUTE lib_model OF \SPI_IMU:BSPIM:sR8:Dp:u0\ : LABEL IS "datapathcell7";
-    ATTRIBUTE lib_model OF \Chip_Select_A:Sync:ctrl_reg\ : LABEL IS "controlcell7";
-    ATTRIBUTE lib_model OF \Chip_Select_B:Sync:ctrl_reg\ : LABEL IS "controlcell8";
-    ATTRIBUTE lib_model OF Net_6020 : LABEL IS "macrocell34";
-    ATTRIBUTE lib_model OF \UART_RS485:BUART:txn\ : LABEL IS "macrocell35";
-    ATTRIBUTE lib_model OF \UART_RS485:BUART:tx_state_1\ : LABEL IS "macrocell36";
-    ATTRIBUTE lib_model OF \UART_RS485:BUART:tx_state_0\ : LABEL IS "macrocell37";
-    ATTRIBUTE lib_model OF \UART_RS485:BUART:tx_state_2\ : LABEL IS "macrocell38";
-    ATTRIBUTE lib_model OF \UART_RS485:BUART:tx_bitclk\ : LABEL IS "macrocell39";
-    ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_state_1\ : LABEL IS "macrocell40";
-    ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_state_0\ : LABEL IS "macrocell41";
-    ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_load_fifo\ : LABEL IS "macrocell42";
-    ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_state_3\ : LABEL IS "macrocell43";
-    ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_state_2\ : LABEL IS "macrocell44";
-    ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_bitclk_enable\ : LABEL IS "macrocell45";
-    ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_state_stop1_reg\ : LABEL IS "macrocell46";
-    ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_status_1\ : LABEL IS "macrocell47";
-    ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_status_3\ : LABEL IS "macrocell48";
-    ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_break_detect\ : LABEL IS "macrocell49";
-    ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_last\ : LABEL IS "macrocell50";
-    ATTRIBUTE lib_model OF cy_srff_1 : LABEL IS "macrocell51";
-    ATTRIBUTE lib_model OF Net_3669 : LABEL IS "macrocell52";
-    ATTRIBUTE lib_model OF \SPI_IMU:BSPIM:state_2\ : LABEL IS "macrocell53";
-    ATTRIBUTE lib_model OF \SPI_IMU:BSPIM:state_1\ : LABEL IS "macrocell54";
-    ATTRIBUTE lib_model OF \SPI_IMU:BSPIM:state_0\ : LABEL IS "macrocell55";
-    ATTRIBUTE lib_model OF Net_3671 : LABEL IS "macrocell56";
-    ATTRIBUTE lib_model OF \SPI_IMU:BSPIM:load_cond\ : LABEL IS "macrocell57";
-    ATTRIBUTE lib_model OF \SPI_IMU:BSPIM:cnt_enable\ : LABEL IS "macrocell58";
-    ATTRIBUTE lib_model OF Net_3670 : LABEL IS "macrocell59";
+    ATTRIBUTE lib_model OF \Chip_Select_A:Sync:ctrl_reg\ : LABEL IS "controlcell5";
+    ATTRIBUTE lib_model OF \Chip_Select_B:Sync:ctrl_reg\ : LABEL IS "controlcell6";
+    ATTRIBUTE lib_model OF Net_6020 : LABEL IS "macrocell32";
+    ATTRIBUTE lib_model OF \UART_RS485:BUART:txn\ : LABEL IS "macrocell33";
+    ATTRIBUTE lib_model OF \UART_RS485:BUART:tx_state_1\ : LABEL IS "macrocell34";
+    ATTRIBUTE lib_model OF \UART_RS485:BUART:tx_state_0\ : LABEL IS "macrocell35";
+    ATTRIBUTE lib_model OF \UART_RS485:BUART:tx_state_2\ : LABEL IS "macrocell36";
+    ATTRIBUTE lib_model OF \UART_RS485:BUART:tx_bitclk\ : LABEL IS "macrocell37";
+    ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_state_1\ : LABEL IS "macrocell38";
+    ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_state_0\ : LABEL IS "macrocell39";
+    ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_load_fifo\ : LABEL IS "macrocell40";
+    ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_state_3\ : LABEL IS "macrocell41";
+    ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_state_2\ : LABEL IS "macrocell42";
+    ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_bitclk_enable\ : LABEL IS "macrocell43";
+    ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_state_stop1_reg\ : LABEL IS "macrocell44";
+    ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_status_1\ : LABEL IS "macrocell45";
+    ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_status_3\ : LABEL IS "macrocell46";
+    ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_break_detect\ : LABEL IS "macrocell47";
+    ATTRIBUTE lib_model OF \UART_RS485:BUART:rx_last\ : LABEL IS "macrocell48";
+    ATTRIBUTE lib_model OF cy_srff_1 : LABEL IS "macrocell49";
+    ATTRIBUTE lib_model OF Net_3669 : LABEL IS "macrocell50";
+    ATTRIBUTE lib_model OF \SPI_IMU:BSPIM:state_2\ : LABEL IS "macrocell51";
+    ATTRIBUTE lib_model OF \SPI_IMU:BSPIM:state_1\ : LABEL IS "macrocell52";
+    ATTRIBUTE lib_model OF \SPI_IMU:BSPIM:state_0\ : LABEL IS "macrocell53";
+    ATTRIBUTE lib_model OF Net_3671 : LABEL IS "macrocell54";
+    ATTRIBUTE lib_model OF \SPI_IMU:BSPIM:load_cond\ : LABEL IS "macrocell55";
+    ATTRIBUTE lib_model OF \SPI_IMU:BSPIM:cnt_enable\ : LABEL IS "macrocell56";
+    ATTRIBUTE lib_model OF Net_3670 : LABEL IS "macrocell57";
     COMPONENT clockblockcell
         PORT (
             dclk_0 : OUT std_ulogic;
@@ -831,16 +800,11 @@ BEGIN
             dsi_glb_div => open,
             dclk_glb_0 => Net_124,
             dclk_0 => Net_124_local,
-            dclk_glb_1 => Net_6285,
-            dclk_1 => Net_6285_local,
-            dclk_glb_2 => \SPI_IMU:Net_276\,
-            dclk_2 => \SPI_IMU:Net_276_local\,
-            dclk_glb_3 => Net_10,
-            dclk_3 => Net_10_local,
-            dclk_glb_4 => Net_3696,
-            dclk_4 => Net_3696_local,
-            clk_bus_glb_ff => \ClockBlock.clk_bus_glb_ff__sig\,
-            dclk_glb_ff_1 => \ClockBlock.dclk_glb_ff_1__sig\);
+            dclk_glb_1 => \SPI_IMU:Net_276\,
+            dclk_1 => \SPI_IMU:Net_276_local\,
+            dclk_glb_2 => Net_10,
+            dclk_2 => Net_10_local,
+            clk_bus_glb_ff => \ClockBlock.clk_bus_glb_ff__sig\);
 
     RS_485_EN:logicalport
         GENERIC MAP(
@@ -3316,16 +3280,6 @@ BEGIN
             main_0 => \MY_TIMER:TimerUDB:control_7\,
             main_1 => \MY_TIMER:TimerUDB:per_zero\);
 
-    Net_6183:macrocell
-        GENERIC MAP(
-            eqn_main => "(!main_0 * !main_1)",
-            regmode => 0,
-            clken_mode => 1)
-        PORT MAP(
-            q => Net_6183,
-            main_0 => Net_6322,
-            main_1 => Net_3588);
-
     \SPI_IMU:BSPIM:load_rx_data\:macrocell
         GENERIC MAP(
             eqn_main => "(!main_0 * !main_1 * !main_2 * !main_3 * main_4)",
@@ -3612,14 +3566,6 @@ BEGIN
             tc => Net_3264,
             cmp => \PACER_TIMER:Net_261\,
             irq => \PACER_TIMER:Net_57\);
-
-    __ZERO__:macrocell
-        GENERIC MAP(
-            eqn_main => "1'b0",
-            regmode => 0,
-            clken_mode => 1)
-        PORT MAP(
-            q => __ZERO__);
 
     __ONE__:macrocell
         GENERIC MAP(
@@ -4083,67 +4029,6 @@ BEGIN
             in => Net_3264,
             out => Net_3240);
 
-    ISR_WATCHDOG:interrupt
-        GENERIC MAP(
-            int_type => "10",
-            is_nmi => 0)
-        PORT MAP(
-            interrupt => Net_3570,
-            clock => ClockBlock_BUS_CLK);
-
-    \WATCHDOG_COUNTER:CounterHW\:timercell
-        GENERIC MAP(
-            cy_registers => "")
-        PORT MAP(
-            clock => \ClockBlock.dclk_glb_ff_1__sig\,
-            kill => open,
-            enable => __ZERO__,
-            capture => open,
-            timer_reset => Net_6183,
-            tc => \WATCHDOG_COUNTER:Net_48\,
-            cmp => \WATCHDOG_COUNTER:Net_54\,
-            irq => Net_3570);
-
-    \WATCHDOG_ENABLER:Sync:ctrl_reg\:controlcell
-        GENERIC MAP(
-            cy_ctrl_mode_0 => "00000000",
-            cy_ctrl_mode_1 => "00000000",
-            cy_ext_reset => 0,
-            cy_force_order => 1,
-            cy_init_value => "00000000",
-            clken_mode => 1)
-        PORT MAP(
-            control_7 => \WATCHDOG_ENABLER:control_7\,
-            control_6 => \WATCHDOG_ENABLER:control_6\,
-            control_5 => \WATCHDOG_ENABLER:control_5\,
-            control_4 => \WATCHDOG_ENABLER:control_4\,
-            control_3 => \WATCHDOG_ENABLER:control_3\,
-            control_2 => \WATCHDOG_ENABLER:control_2\,
-            control_1 => \WATCHDOG_ENABLER:control_1\,
-            control_0 => Net_6322,
-            busclk => ClockBlock_BUS_CLK);
-
-    \WATCHDOG_REFRESH:Sync:ctrl_reg\:controlcell
-        GENERIC MAP(
-            cy_ctrl_mode_0 => "00000001",
-            cy_ctrl_mode_1 => "00000001",
-            cy_ext_reset => 1,
-            cy_force_order => 1,
-            cy_init_value => "00000000",
-            clk_inv => '0',
-            clken_mode => 1)
-        PORT MAP(
-            clock => Net_6285,
-            control_7 => \WATCHDOG_REFRESH:control_7\,
-            control_6 => \WATCHDOG_REFRESH:control_6\,
-            control_5 => \WATCHDOG_REFRESH:control_5\,
-            control_4 => \WATCHDOG_REFRESH:control_4\,
-            control_3 => \WATCHDOG_REFRESH:control_3\,
-            control_2 => \WATCHDOG_REFRESH:control_2\,
-            control_1 => \WATCHDOG_REFRESH:control_1\,
-            control_0 => Net_3588,
-            busclk => ClockBlock_BUS_CLK);
-
     \SPI_IMU:BSPIM:BitCounter\:count7cell
         GENERIC MAP(
             cy_alt_mode => 0,
@@ -4259,14 +4144,6 @@ BEGIN
             control_1 => Net_3982_1,
             control_0 => Net_3982_0,
             busclk => ClockBlock_BUS_CLK);
-
-    isr_imu:interrupt
-        GENERIC MAP(
-            int_type => "10",
-            is_nmi => 0)
-        PORT MAP(
-            interrupt => Net_3696_local,
-            clock => ClockBlock_BUS_CLK);
 
     \Chip_Select_B:Sync:ctrl_reg\:controlcell
         GENERIC MAP(

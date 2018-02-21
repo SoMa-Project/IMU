@@ -32,6 +32,7 @@ static const struct option longOpts[] = {
     { "activate", no_argument, NULL, 'a' },
     { "deactivate", no_argument, NULL, 'd' },
     { "ping", no_argument, NULL, 'p' },
+	{ "reading_ping", no_argument, NULL, 'r' },
     { "serial_port", no_argument, NULL, 't' },
     { "verbose", no_argument, NULL, 'v' },
     { "help", no_argument, NULL, 'h' },
@@ -57,7 +58,7 @@ static const struct option longOpts[] = {
     { NULL, no_argument, NULL, 0 }
 };
 
-static const char *optString = "s:adgptvh?f:ljqxzkycbe:uoiW:PB:NMQY:XS";
+static const char *optString = "s:adgprtvh?f:ljqxzkycbe:uoiW:PB:NMQY:XS";
 
 struct global_args {
     int device_id;
@@ -66,6 +67,7 @@ struct global_args {
     int flag_activate;              ///< ./qbmove -a option 
     int flag_deactivate;            ///< ./qbmove -d option 
     int flag_ping;                  ///< ./qbmove -p option 
+	int flag_reading_ping;			///< ./qbmove -r option
     int flag_serial_port;           ///< ./qbmove -t option 
     int flag_verbose;               ///< ./qbmove -v option 
     int flag_file;                  ///< ./qbmove -f option 
@@ -195,6 +197,7 @@ int main (int argc, char **argv)
     global_args.device_id               = 0;
     global_args.flag_serial_port        = 0;
     global_args.flag_ping               = 0;
+	global_args.flag_reading_ping       = 0;
     global_args.flag_verbose            = 0;
     global_args.flag_activate           = 0;
     global_args.flag_deactivate         = 0;
@@ -253,6 +256,8 @@ int main (int argc, char **argv)
                 break;
             case 'p':
                 global_args.flag_ping = 1;
+			case 'r':
+                global_args.flag_reading_ping = 1;				
                 break;
             case 'v':
                 global_args.flag_verbose = 1;
@@ -375,13 +380,31 @@ int main (int argc, char **argv)
         if(global_args.flag_verbose)
             puts("Pinging serial port.");
 
-        if(global_args.device_id) {
-            commGetInfo(&comm_settings_1, global_args.device_id, INFO_ALL, aux_string);
-        } else {
-            RS485GetInfo(&comm_settings_1,  aux_string);
-        }
+		
+		if(global_args.device_id) {
+			commGetInfo(&comm_settings_1, global_args.device_id, INFO_ALL, aux_string);
+		}
+		else {
+			RS485GetInfo(&comm_settings_1,  aux_string);
+		}
+		
+		puts(aux_string);
 
-       puts(aux_string);
+        if(global_args.flag_verbose)
+            puts("Closing the application.");
+
+        return 0;
+    }
+	
+	if(global_args.flag_reading_ping)
+    {
+        if(global_args.flag_verbose)
+            puts("Pinging serial port.");
+
+		
+		commGetInfo(&comm_settings_1, global_args.device_id, INFO_READING, aux_string);
+		
+		puts(aux_string);
 
         if(global_args.flag_verbose)
             puts("Closing the application.");
@@ -1042,50 +1065,86 @@ int main (int argc, char **argv)
 //		uint8_t NUM_SF_PARAMS = 3;
 		int num_of_params;
 		float* imu_values;
-		
+		uint8_t num_imus_id_params = 6;
+		uint8_t num_mag_cal_params = 0;
+		uint8_t first_imu_parameter = 2;
+		int i = 0;
+
 		commGetParamList(&comm_settings_1, global_args.device_id, 0, NULL, 0, 0, aux_string);
         
 		num_of_params = aux_string[5];
 		
 		//aux_string[6] <-> packet_data[2] on the firmware
-		global_args.n_imu = aux_string[1*PARAM_SLOT_BYTES + 8];
+		global_args.n_imu = aux_string[8];
 		printf("Number of connected IMUs: %d\n", global_args.n_imu);
 		
+		// Compute number of read parameters depending on global_args.n_imu and
+		// update packet_length
+		num_mag_cal_params = (global_args.n_imu / 2);
+		if ( (global_args.n_imu - num_mag_cal_params*2) > 0 ) num_mag_cal_params++;
+
 		global_args.ids = (uint8_t *) calloc(global_args.n_imu, sizeof(uint8_t));
-		for (int i=0; i< global_args.n_imu; i++){
-			global_args.ids[i] = aux_string[2*PARAM_SLOT_BYTES + 8 + i];
+		i = 0;
+		for (int k = 1; k <= num_imus_id_params; k++){
+			if (aux_string[k*PARAM_SLOT_BYTES + 8] != 0) {
+				global_args.ids[i] = aux_string[k*PARAM_SLOT_BYTES + 8];
+				i++;
+			}
+			if (aux_string[k*PARAM_SLOT_BYTES + 9] != 0) {
+				global_args.ids[i] = aux_string[k*PARAM_SLOT_BYTES + 9];
+				i++;
+			}
+			if (aux_string[k*PARAM_SLOT_BYTES + 10] != 0) {
+				global_args.ids[i] = aux_string[k*PARAM_SLOT_BYTES + 10];
+				i++;
+			}
 		}
 		
 		// Retrieve magnetometer calibration parameters
 		global_args.mag_cal = (uint8_t *) calloc(global_args.n_imu, 3*sizeof(uint8_t));
-		for (int i=0; i< global_args.n_imu; i++){
-			global_args.mag_cal[3*i + 0] = aux_string[3*PARAM_SLOT_BYTES + 8 + 3*i];
-			global_args.mag_cal[3*i + 1] = aux_string[3*PARAM_SLOT_BYTES + 9 + 3*i];
-			global_args.mag_cal[3*i + 2] = aux_string[3*PARAM_SLOT_BYTES + 10 + 3*i];
+		i = 0;
+		for (int k=1; k <= num_mag_cal_params; k++) {
+			global_args.mag_cal[3*i + 0] = aux_string[num_imus_id_params*PARAM_SLOT_BYTES + k*PARAM_SLOT_BYTES + 8];
+			global_args.mag_cal[3*i + 1] = aux_string[num_imus_id_params*PARAM_SLOT_BYTES + k*PARAM_SLOT_BYTES + 9];
+			global_args.mag_cal[3*i + 2] = aux_string[num_imus_id_params*PARAM_SLOT_BYTES + k*PARAM_SLOT_BYTES + 10];
 			printf("MAG PARAM: %d %d %d\n", global_args.mag_cal[3*i + 0], global_args.mag_cal[3*i + 1], global_args.mag_cal[3*i + 2]);
+			i++;
 			
+			if (aux_string[num_imus_id_params*PARAM_SLOT_BYTES + k*PARAM_SLOT_BYTES + 7] == 6) {
+				global_args.mag_cal[3*i + 0] = aux_string[num_imus_id_params*PARAM_SLOT_BYTES + k*PARAM_SLOT_BYTES + 11];
+				global_args.mag_cal[3*i + 1] = aux_string[num_imus_id_params*PARAM_SLOT_BYTES + k*PARAM_SLOT_BYTES + 12];
+				global_args.mag_cal[3*i + 2] = aux_string[num_imus_id_params*PARAM_SLOT_BYTES + k*PARAM_SLOT_BYTES + 13];
+				printf("MAG PARAM: %d %d %d\n", global_args.mag_cal[3*i + 0], global_args.mag_cal[3*i + 1], global_args.mag_cal[3*i + 2]);
+				i++;
+			}
 		}
-		
+	
+		first_imu_parameter = 1 + num_imus_id_params + num_mag_cal_params + 1;
 		global_args.imu_table = (uint8_t *) calloc(global_args.n_imu, 5*sizeof(uint8_t));
 		for (int i=0; i< global_args.n_imu; i++){
-			global_args.imu_table[5*i + 0] = aux_string[4*PARAM_SLOT_BYTES + 8 + 50*i];
-			global_args.imu_table[5*i + 1] = aux_string[4*PARAM_SLOT_BYTES + 9 + 50*i];
-			global_args.imu_table[5*i + 2] = aux_string[4*PARAM_SLOT_BYTES + 10 + 50*i];
-			global_args.imu_table[5*i + 3] = aux_string[4*PARAM_SLOT_BYTES + 11 + 50*i];
-			global_args.imu_table[5*i + 4] = aux_string[4*PARAM_SLOT_BYTES + 12 + 50*i];
-			printf("ID: %d  - %d, %d, %d, %d, %d\n", global_args.ids[i], global_args.imu_table[5*i + 0], global_args.imu_table[5*i + 1], global_args.imu_table[5*i + 2], global_args.imu_table[5*i + 3], global_args.imu_table[5*i + 4]);
+			global_args.imu_table[5*i + 0] = aux_string[first_imu_parameter*PARAM_SLOT_BYTES + 8 + 50*i];
+			global_args.imu_table[5*i + 1] = aux_string[first_imu_parameter*PARAM_SLOT_BYTES + 9 + 50*i];
+			global_args.imu_table[5*i + 2] = aux_string[first_imu_parameter*PARAM_SLOT_BYTES + 10 + 50*i];
+			global_args.imu_table[5*i + 3] = aux_string[first_imu_parameter*PARAM_SLOT_BYTES + 11 + 50*i];
+			global_args.imu_table[5*i + 4] = aux_string[first_imu_parameter*PARAM_SLOT_BYTES + 12 + 50*i];
+			printf("ID: %d - %d, %d, %d, %d, %d\n", global_args.ids[i], global_args.imu_table[5*i + 0], global_args.imu_table[5*i + 1], global_args.imu_table[5*i + 2], global_args.imu_table[5*i + 3], global_args.imu_table[5*i + 4]);
 			
 		}
 		
 		// Imu values is a (3 sensors x 3 axes + 4 + 1) x n_imu values
 		imu_values = (float *) calloc(global_args.n_imu, 3*3*sizeof(float)+4*sizeof(float)+sizeof(float));
 		
+		if (global_args.n_imu > 1 && global_args.imu_table[5*0 + 3]){
+			printf("\n[WARNING] Quaternion will not be read as it is computed only if there is ONLY 1 IMU connected to the board.\n\n");
+			return -1;
+		}
+		
 		while(1){
 			
 			commGetImuReadings(&comm_settings_1, global_args.device_id, global_args.imu_table, global_args.mag_cal, global_args.n_imu, imu_values);
-			
+
 			for (i = 0; i < global_args.n_imu; i++) {
-				
+		
 				printf("IMU: %d\n", global_args.ids[i]);
 			
 				if (global_args.imu_table[5*i + 0]){
@@ -1100,14 +1159,17 @@ int main (int argc, char **argv)
 					printf("Magnetometer\n");
 					printf("%f, %f, %f\n", imu_values[(3*3+4+1)*i+6], imu_values[(3*3+4+1)*i+7], imu_values[(3*3+4+1)*i+8]);
 				}
+				if (global_args.imu_table[5*i + 3] ){
+					printf("Quaternion\n");
+					printf("%f, %f, %f, %f\n", imu_values[(3*3+4+1)*i+9], imu_values[(3*3+4+1)*i+10], imu_values[(3*3+4+1)*i+11], imu_values[(3*3+4+1)*i+12]);
+				}
 				if (global_args.imu_table[5*i + 4] ){
 					printf("Temperature\n");
 					printf("%f\n", imu_values[(3*3+4+1)*i+13]);
 				}
 				
-				printf("\n");
+				printf("\n");				
 			}
-			
 		}
 		
 	}
@@ -1577,7 +1639,8 @@ void display_usage( void )
     puts("--------------------------------------------------------------------------------");
     puts("Examples:");
     puts("");
-    puts("  qbadmin -p                      Get info on whatever device is connected.");
+    puts("  qbadmin -p 						Get generic info on connected IMUs.");
+	puts("  qbadmin -r 						Get info on last IMUs reading.");
     puts("  qbadmin -t                      Set up serial port.");
     puts("  qbadmin 65 -s 10,10             Set inputs of device 65 to 10 and 10.");
     puts("  qbadmin 65 -g                   Get measurements from device 65.");

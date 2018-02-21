@@ -2,7 +2,7 @@
 // BSD 3-Clause License
 
 // Copyright (c) 2016, qbrobotics
-// Copyright (c) 2017, Centro "E.Piaggio"
+// Copyright (c) 2017-2018, Centro "E.Piaggio"
 // All rights reserved.
 
 // Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@
 * \file         utils.h
 *
 * \brief        Declaration of utility functions.
-* \date         October 01, 2017
+* \date         February 01, 2018
 * \author       _Centro "E.Piaggio"_
 * \copyright    (C) 2012-2016 qbrobotics. All rights reserved.
 * \copyright    (C) 2017 Centro "E.Piaggio". All rights reserved.
@@ -48,31 +48,10 @@
 
 #include <globals.h>
 
-//------------------------------------------------------------------     DEFINES
-
-#define TIMER_CLOCK 10000
-
-#define ALPHA 3
-#define BETA 50
-
-#define SIGN(A) (((A) >=0) ? (1) : (-1))
-
 //-------------------------------------------------------------     DECLARATIONS
-
-int32 filter_v(int32 new_value);
-int32 filter_ch1(int32 value);
-int32 filter_ch2(int32 value);
-int32 filter_i1(int32 value);
-
-int my_round(const double x);
-uint32 my_mod(int32 val, int32 divisor);
-CYBIT check_enc_data(const uint32*);
-
-int calc_turns_fcn(const int32,const int32);
-
-void calibration();
-
-void torque_feedback();
+float invSqrt(float x);
+void v3_normalize(float v3_in[3]);
+void v4_normalize(float v4_in[4]);
 
 #endif
 

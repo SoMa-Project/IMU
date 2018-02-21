@@ -92,12 +92,13 @@ void commGetImuReadings(comm_settings *comm_settings_t, int id, uint8_t* imu_tab
 	char data_out[BUFFER_SIZE];         // output data buffer
     char package_in[BUFFER_SIZE];       // output data buffer
     int package_in_size;
-	float acc_sf = 0, gyro_sf = 0, mag_sf = 0;	
-	float temp_sf = 0, temp_off = 0, temp_div = 0; 
+	float acc_sf = 0, gyro_sf = 0, mag_sf = 0;
+	float temp_sf = 0, temp_off = 0, temp_div = 0;	
 	char* values;
 	int c = 0;
-	float aux_float[3];
+	float aux_float[4];
 	int16_t aux_si;
+	float aux_fl;
 
 #if (defined(_WIN32) || defined(_WIN64))
     DWORD package_size_out;             // for serial port access
@@ -130,18 +131,22 @@ void commGetImuReadings(comm_settings *comm_settings_t, int id, uint8_t* imu_tab
     if (package_in_size == -1)
         return;
 	
-	// acc_sf 	= 0.000061037 * 2;			// Ticks to G
 	acc_sf 	= 0.000061037;			// Ticks to G
-	// gyro_sf = 0.007629627 * 8;		// Ticks to deg/s with FS +/- 2000 °/s
-	gyro_sf = 0.007629627 *8;		// Ticks to deg/s with FS +/- 2000 °/s
+	gyro_sf = 0.007629627 * 8;		// Ticks to deg/s with FS +/- 2000 °/s
 	mag_sf 	= 0.1465;				// Ticks to uT
-
+	
 	temp_sf = 0.00294118; // 1/340 //0.001426;
 	temp_off = 36.53; //21.6;
 	temp_div = 2.0;
-		
-	values = &package_in[1];
 	
+	values = &package_in[1];
+	/*
+ 	printf("SIZE: %d\n", package_in_size);
+	for (int i=0; i< package_in_size; i++) {
+		printf("%d,", values[i]);
+	}
+	printf("\n"); 
+	*/
 	for (int i=0; i < n_imu; i++){
 
 		if (values[c] == ':'){
@@ -196,26 +201,38 @@ void commGetImuReadings(comm_settings *comm_settings_t, int id, uint8_t* imu_tab
 				imu_values[(3*3+4+1)*i+8] = aux_float[2];
 				c += 6;
 			}
+			
 			if (imu_table[5*i + 3]) {
-				((char *) &aux_si)[0] = values[c+2];
-				((char *) &aux_si)[1] = values[c+1];
-				aux_float[0] = (float) (aux_si);
-				((char *) &aux_si)[0] = values[c+4];
-				((char *) &aux_si)[1] = values[c+3];
-				aux_float[1] = (float) (aux_si);
-				((char *) &aux_si)[0] = values[c+6];
-				((char *) &aux_si)[1] = values[c+5];
-				aux_float[2] = (float) (aux_si);
-				((char *) &aux_si)[0] = values[c+8];
-				((char *) &aux_si)[1] = values[c+7];
-				aux_float[3] = (float) (aux_si);
-				
+
+				((char *) &aux_fl)[0] = values[c+4];
+				((char *) &aux_fl)[1] = values[c+3];
+				((char *) &aux_fl)[2] = values[c+2];
+				((char *) &aux_fl)[3] = values[c+1];
+				aux_float[0] = (float) (aux_fl);
+				((char *) &aux_fl)[0] = values[c+8];
+				((char *) &aux_fl)[1] = values[c+7];
+				((char *) &aux_fl)[2] = values[c+6];
+				((char *) &aux_fl)[3] = values[c+5];
+				aux_float[1] = (float) (aux_fl);
+				((char *) &aux_fl)[0] = values[c+12];
+				((char *) &aux_fl)[1] = values[c+11];
+				((char *) &aux_fl)[2] = values[c+10];
+				((char *) &aux_fl)[3] = values[c+9];
+				aux_float[2] = (float) (aux_fl);
+				((char *) &aux_fl)[0] = values[c+16];
+				((char *) &aux_fl)[1] = values[c+15];
+				((char *) &aux_fl)[2] = values[c+14];
+				((char *) &aux_fl)[3] = values[c+13];
+				aux_float[3] = (float) (aux_fl);
+
 				imu_values[(3*3+4+1)*i+9]  = aux_float[0];
 				imu_values[(3*3+4+1)*i+10] = aux_float[1];
 				imu_values[(3*3+4+1)*i+11] = aux_float[2];
 				imu_values[(3*3+4+1)*i+12] = aux_float[3];
-				c += 8;
+				c += 16;
+
 			}
+			
 			if (imu_table[5*i + 4]) {
 				((char *) &aux_si)[0] = values[c+2];
 				((char *) &aux_si)[1] = values[c+1];
@@ -223,9 +240,9 @@ void commGetImuReadings(comm_settings *comm_settings_t, int id, uint8_t* imu_tab
 				
 				imu_values[(3*3+4+1)*i+13] = aux_float[0];
 				c += 2;
-}
-			
-			// printf("\n");
+			}
+	
+			//printf("\n");
 			c = c + 1;
 		}
 		if (values[c] == ':')
@@ -235,8 +252,6 @@ void commGetImuReadings(comm_settings *comm_settings_t, int id, uint8_t* imu_tab
 			//printf("Break at %d\n", c);
 		}	
 	}
-
-// usleep(8000);
 }
 
 

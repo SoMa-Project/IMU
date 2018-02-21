@@ -2,7 +2,7 @@
 // BSD 3-Clause License
 
 // Copyright (c) 2016, qbrobotics
-// Copyright (c) 2017, Centro "E.Piaggio"
+// Copyright (c) 2017-2018, Centro "E.Piaggio"
 // All rights reserved.
 
 // Redistribution and use in source and binary forms, with or without
@@ -37,21 +37,20 @@
 *
 
 * \brief        Command processing functions.
-* \date         October 01, 2017
+* \date         February 01, 2018
 * \author       _Centro "E.Piaggio"_
 * \copyright    (C) 2012-2016 qbrobotics. All rights reserved.
-* \copyright    (C) 2017 Centro "E.Piaggio". All rights reserved.
+* \copyright    (C) 2017-2018 Centro "E.Piaggio". All rights reserved.
 */
 
 //=================================================================     includes
-#include <command_processing.h>
-#include <interruptions.h>
-#include <stdio.h>
-#include <utils.h>
-#include <IMU_functions.h>
-#include <globals.h>
-
+#include "command_processing.h"
+#include "interruptions.h"
+#include "utils.h"
+#include "globals.h"
 #include "commands.h"
+#include "IMU_functions.h"
+#include <STDIO.H>
 
 //================================================================     variables
 
@@ -81,71 +80,17 @@ void commProcess(){
 
 
     switch(rx_cmd) {
-
-//=============================================================     CMD_ACTIVATE
-        case CMD_ACTIVATE:
-            cmd_activate();
-            break;
-
-//===========================================================     CMD_SET_INPUTS
-
-        case CMD_SET_INPUTS:
-            cmd_set_inputs();
-            break;
-
-//=====================================================     CMD_GET_MEASUREMENTS
-
-        case CMD_GET_MEASUREMENTS:
-            cmd_get_measurements();
-            break;
-
-//=========================================================     CMD_GET_CURRENTS
-
-        case CMD_GET_CURRENTS:
-            cmd_get_currents();
-            break;
-
-
-//=========================================================     CMD_GET_EMG
-
-        case CMD_GET_EMG:
-            cmd_get_emg();
-            break;
-
-//=============================================================     CMD_WATCHDOG
-            
-        case CMD_SET_WATCHDOG:
-            cmd_set_watchdog();
-            break;
-            
-//=========================================================     CMD_GET_ACTIVATE
-            
-        case CMD_GET_ACTIVATE:
-            cmd_get_activate();
-            break;
-            
+       
 //=========================================================     CMD_SET_BAUDRATE
             
         case CMD_SET_BAUDRATE:
             cmd_set_baudrate();
             break;  
             
-//============================================================     CMD_GET_INPUT
-
-        case CMD_GET_INPUTS:
-            cmd_get_inputs();
-            break;
-
 //=============================================================     CMD_GET_INFO
 
         case CMD_GET_INFO:
             infoGet( *((uint16 *) &g_rx.buffer[1]));
-            break;
-
-//============================================================     CMD_SET_PARAM
-            
-        case CMD_SET_ZEROS:
-            setZeros();
             break;
 
 //============================================================     CMD_GET_PARAM
@@ -204,24 +149,17 @@ void commProcess(){
             Bootloadable_Load();
             break;
 
-//============================================================     CMD_CALIBRATE
-
-        case CMD_CALIBRATE:
-            break;
-            
 //=====================================================     CMD_GET_IMU_READINGS
 
         case CMD_GET_IMU_READINGS:
             cmd_get_imu_readings();
-            break;
-                 
+            break;                
             
 //=========================================================== ALL OTHER COMMANDS
         default:
             break;
             
     }
-    
 }
 
 
@@ -248,21 +186,15 @@ void infoGet(uint16 info_type) {
     switch (info_type) {
         case INFO_ALL:
             infoPrepare(packet_string);
+            UART_RS485_PutString(packet_string);  
+            break;
+        case INFO_READING:                        
+            infoReading(packet_string);
             UART_RS485_PutString(packet_string);
             break;
-
         default:
             break;
     }
-}
-
-//==============================================================================
-//                                                                     SET ZEROS
-//==============================================================================
-
-void setZeros()
-{
-    //nothing to do and nothing to say
 }
 
 //==============================================================================
@@ -272,132 +204,235 @@ void setZeros()
 void get_param_list(uint16 index)
 {
     //Package to be sent variables
-    uint8 packet_data[200 + 50*N_IMU_MAX +1] = "";
-    uint16 packet_lenght = 200 + (uint16)(50*N_IMU_Connected) +1;
+    uint8 packet_data[  PARAM_BYTE_SLOT   +     // Number of connected IMUs
+                        6*PARAM_BYTE_SLOT +     // IMUs ID
+                        9*PARAM_BYTE_SLOT +     // Mag cal parameters
+                        PARAM_BYTE_SLOT   +     // 1 - Device ID
+                        PARAM_BYTE_SLOT*N_IMU_MAX + // IMU configurations
+                        PARAM_BYTE_SLOT   +     // SPI read delay
+                        PARAM_MENU_SLOT   + PARAM_BYTE_SLOT + 1 ] = "";
+    uint16 num_imus_id_params = 6;
+    uint16 num_mag_cal_params = 0;
+    uint16 first_imu_parameter = 2;
+    uint16 packet_length = PARAM_BYTE_SLOT +
+                           num_imus_id_params*PARAM_BYTE_SLOT +
+                           num_mag_cal_params*PARAM_BYTE_SLOT +
+                           PARAM_BYTE_SLOT   + 
+                           (uint16)(PARAM_BYTE_SLOT*N_IMU_Connected) +
+                           PARAM_BYTE_SLOT + PARAM_MENU_SLOT + PARAM_BYTE_SLOT + 1;
 
     //Auxiliary variables
-    uint16 CYDATA i, j;
+    uint16 CYDATA i, j, k, h;
+    uint16 start_byte = 0;
 
     //Parameters menu string definitions
-    char id_str[15]             = "1 - Device ID:";
-    char n_imu_str[30]          = "2 - Number of connected IMUs:";
-    char ids_str[13]            = "3 - IMUs ID:";
-    char mag_param_str[24]      = "4 - Mag cal parameters:";
+    char n_imu_str[26]          = "Number of connected IMUs:";
+    char ids_str[11]            = "";
+    char mag_param_str[20]      = "Mag cal parameters:";
+    char id_str[16]             = "";
     char imu_table_str[42]      = "";
-
+    char spi_read_delay_str[26] = "";
+    
     //Strings lenghts
     uint8 CYDATA id_str_len = strlen(id_str);
     uint8 CYDATA n_imu_str_len = strlen(n_imu_str);
     uint8 CYDATA ids_str_len = strlen(ids_str);
     uint8 CYDATA mag_param_str_len = strlen(mag_param_str);
     uint8 CYDATA imu_table_str_len = strlen(imu_table_str);
+    uint8 CYDATA spi_read_delay_str_len = strlen(spi_read_delay_str);
+    
+    char spi_delay_menu[118]    = "";
+    uint8 CYDATA spi_delay_menu_len;
+    
+    sprintf(spi_delay_menu, "0 -> None\n1 -> Low (%u us delay for each 8-bit register read)\n2 -> High (%u us delay for each 8-bit register read)\n", (int)SPI_DELAY_LOW, (int)SPI_DELAY_HIGH);
+    spi_delay_menu_len = strlen(spi_delay_menu);
 
+    // Compute number of read parameters depending on N_IMU_Connected and
+    // update packet_length
+    num_mag_cal_params = (uint16)(N_IMU_Connected / 2);
+    if ( (N_IMU_Connected - num_mag_cal_params*2) > 0 ) num_mag_cal_params++;
+    
+    packet_length = PARAM_BYTE_SLOT +
+                    num_imus_id_params*PARAM_BYTE_SLOT +
+                    num_mag_cal_params*PARAM_BYTE_SLOT +
+                    PARAM_BYTE_SLOT   + 
+                    (uint16)(PARAM_BYTE_SLOT*N_IMU_Connected) +
+                    PARAM_MENU_SLOT + PARAM_BYTE_SLOT + 1;
+
+    first_imu_parameter = 1 + num_imus_id_params + num_mag_cal_params + 2;
     packet_data[0] = CMD_GET_PARAM_LIST;
-    packet_data[1] = 4 + (uint8)N_IMU_Connected;        // NUM_PARAMS
+    packet_data[1] = 1 + num_imus_id_params + num_mag_cal_params + 1 + (uint8)N_IMU_Connected + 1;        // NUM_PARAMS
 
     switch(index) {
         case 0:         //List of all parameters with relative types
-            /*-----------------ID-----------------*/
-
+            /*-------------N IMU--------------*/
+            start_byte = 0;
             packet_data[2] = TYPE_UINT8;
             packet_data[3] = 1;
-            packet_data[4] = c_mem.id;
-            for(i = id_str_len; i != 0; i--)
-                packet_data[5 + id_str_len - i] = id_str[id_str_len - i];
-
-            /*-------------N IMU--------------*/
-
-            packet_data[52] = TYPE_UINT8;
-            packet_data[53] = 1;
-            packet_data[54] = (uint8)N_IMU_Connected;
+            packet_data[4] = (uint8)N_IMU_Connected;
             for(i = n_imu_str_len; i != 0; i--)
-                packet_data[55 + n_imu_str_len - i] = n_imu_str[n_imu_str_len - i];
+                packet_data[5 + n_imu_str_len - i] = n_imu_str[n_imu_str_len - i];
                 
             /*-------------IMUS ID--------------*/
-
-            packet_data[102] = TYPE_UINT8;
-            packet_data[103] = (uint8)N_IMU_Connected;
-            for (i=0; i < N_IMU_Connected; i++) {
-                packet_data[104 + i] = (uint8)IMU_connected[i];
-            }
-            for(j = ids_str_len; j != 0; j--)
-                packet_data[104 + N_IMU_Connected + ids_str_len - j] = ids_str[ids_str_len - j];
+            start_byte = start_byte + PARAM_BYTE_SLOT;
+            i = 0;
+            for (k = 0; k < num_imus_id_params; k++){
+                sprintf(ids_str, "Port %u ID:", k);
+                h = 4;
+                ids_str_len = strlen(ids_str);
+                packet_data[2+start_byte + PARAM_BYTE_SLOT*k] = TYPE_UINT8;
+                packet_data[3+start_byte + PARAM_BYTE_SLOT*k] = 3;
                 
-            /*-------------GET MAG PARAM--------------*/
+                for (j = 3*k; j <= 3*k+2; j++) {  // for each possible imu on port k
+                    if (IMU_connected[i] == j) {
+                        packet_data[h+start_byte + PARAM_BYTE_SLOT*k] = (uint8)IMU_connected[i];               
+                        i++;
+                        h++;
+                    } 
+                    else {
+                        packet_data[h+start_byte + PARAM_BYTE_SLOT*k] = 0;
+                    }
+                }
 
-            packet_data[152] = TYPE_UINT8;
-            packet_data[153] = (uint8)(3*N_IMU_Connected);
-            for (i=0; i< N_IMU_Connected; i++) {
-                packet_data[154 + 3*i] = (uint8) MagCal[IMU_connected[i]][0];
-                packet_data[155 + 3*i] = (uint8) MagCal[IMU_connected[i]][1];
-                packet_data[156 + 3*i] = (uint8) MagCal[IMU_connected[i]][2];
+                //if (IMU_connected[i] >= 3*k && IMU_connected[i] <= 3*k + 2)
+                for(j = ids_str_len; j != 0; j--)
+                    packet_data[7+start_byte + PARAM_BYTE_SLOT*k + ids_str_len - j] = ids_str[ids_str_len - j];
             }
-            for(j = mag_param_str_len; j != 0; j--)
-                packet_data[154 + 3*N_IMU_Connected + mag_param_str_len - j] = mag_param_str[mag_param_str_len - j];
             
+            /*-------------GET MAG PARAM--------------*/
+            start_byte = start_byte + PARAM_BYTE_SLOT*num_imus_id_params;
+            for (k = 0; k < num_mag_cal_params; k++){
+                packet_data[2+start_byte + PARAM_BYTE_SLOT*k] = TYPE_UINT8;
+                
+                packet_data[3+start_byte + PARAM_BYTE_SLOT*k] = 3;
+                packet_data[4+start_byte + PARAM_BYTE_SLOT*k] = (uint8) MagCal[IMU_connected[2*k]][0];
+                packet_data[5+start_byte + PARAM_BYTE_SLOT*k] = (uint8) MagCal[IMU_connected[2*k]][1];
+                packet_data[6+start_byte + PARAM_BYTE_SLOT*k] = (uint8) MagCal[IMU_connected[2*k]][2];
+                
+                // check if there is a second value
+                if ( N_IMU_Connected < 2*(k+1) ) {
+                    // there is only one value
+                    for(j = mag_param_str_len; j != 0; j--)
+                        packet_data[7+start_byte + PARAM_BYTE_SLOT*k + mag_param_str_len - j] = mag_param_str[mag_param_str_len - j];
+                }
+                else {
+                    // fill the second value
+                    packet_data[3+start_byte + PARAM_BYTE_SLOT*k] = 6;
+                    packet_data[7+start_byte + PARAM_BYTE_SLOT*k] = (uint8) MagCal[IMU_connected[2*k+1]][0];
+                    packet_data[8+start_byte + PARAM_BYTE_SLOT*k] = (uint8) MagCal[IMU_connected[2*k+1]][1];
+                    packet_data[9+start_byte + PARAM_BYTE_SLOT*k] = (uint8) MagCal[IMU_connected[2*k+1]][2];
+                
+                    for(j = mag_param_str_len; j != 0; j--)
+                        packet_data[10+start_byte + PARAM_BYTE_SLOT*k + mag_param_str_len - j] = mag_param_str[mag_param_str_len - j];
+                }
+            }
+            
+            /*-----------------ID-----------------*/
+            
+            start_byte = start_byte + PARAM_BYTE_SLOT*num_mag_cal_params;
+            sprintf(id_str, "%u - Device ID:", first_imu_parameter-1);
+            id_str_len = strlen(id_str);
+            packet_data[2+start_byte] = TYPE_UINT8;
+            packet_data[3+start_byte] = 1;
+            packet_data[4+start_byte] = c_mem.id;
+            for(i = id_str_len; i != 0; i--)
+                packet_data[5+start_byte + id_str_len - i] = id_str[id_str_len - i];
+                
             /*-------------GET IMUS MODE-------------*/
-           for (i = 0; i < (uint8)N_IMU_Connected; i++){
-
-                sprintf(imu_table_str, "%u - IMU %d configuration:", 5+i, (int) IMU_connected[i]);
+            
+            start_byte = start_byte + PARAM_BYTE_SLOT;
+            for (i = 0; i < (uint8)N_IMU_Connected; i++){
+                sprintf(imu_table_str, "%u - IMU %d configuration:", first_imu_parameter + i, (int) IMU_connected[i]);
                 imu_table_str_len = strlen(imu_table_str);
             
-                packet_data[(uint16)(202 + 50*i)] = TYPE_UINT8;
-                packet_data[(uint16)(203 + 50*i)] = 5;
+                packet_data[(uint16)(2 + start_byte + PARAM_BYTE_SLOT*i)] = TYPE_UINT8;
+                packet_data[(uint16)(3 + start_byte + PARAM_BYTE_SLOT*i)] = 5;
                 
-                packet_data[(uint16)(204 + 50*i)] = (uint8)(IMU_conf[IMU_connected[i]][0]);
-                packet_data[(uint16)(205 + 50*i)] = (uint8)(IMU_conf[IMU_connected[i]][1]);
-                packet_data[(uint16)(206 + 50*i)] = (uint8)(IMU_conf[IMU_connected[i]][2]);
-                packet_data[(uint16)(207 + 50*i)] = (uint8)(IMU_conf[IMU_connected[i]][3]);
-                packet_data[(uint16)(208 + 50*i)] = (uint8)(IMU_conf[IMU_connected[i]][4]);
+                packet_data[(uint16)(4 + start_byte + PARAM_BYTE_SLOT*i)] = (uint8)(c_mem.IMU_conf[IMU_connected[i]][0]);
+                packet_data[(uint16)(5 + start_byte + PARAM_BYTE_SLOT*i)] = (uint8)(c_mem.IMU_conf[IMU_connected[i]][1]);
+                packet_data[(uint16)(6 + start_byte + PARAM_BYTE_SLOT*i)] = (uint8)(c_mem.IMU_conf[IMU_connected[i]][2]);
+                packet_data[(uint16)(7 + start_byte + PARAM_BYTE_SLOT*i)] = (uint8)(c_mem.IMU_conf[IMU_connected[i]][3]);
+                packet_data[(uint16)(8 + start_byte + PARAM_BYTE_SLOT*i)] = (uint8)(c_mem.IMU_conf[IMU_connected[i]][4]);
 
                 for(j = imu_table_str_len; j != 0; j--)
-                    packet_data[(uint16)(209 + 50*i + imu_table_str_len - j)] = imu_table_str[imu_table_str_len - j];
+                    packet_data[(uint16)(9 + start_byte + PARAM_BYTE_SLOT*i + imu_table_str_len - j)] = imu_table_str[imu_table_str_len - j];
             }  
           
 
+            /*-----------------SPI DELAY-----------------*/
+            
+            start_byte = start_byte + (uint16)(PARAM_BYTE_SLOT*N_IMU_Connected) ;
+            sprintf(spi_read_delay_str, "%u - SPI read delay:", first_imu_parameter+N_IMU_Connected);
+            packet_data[2+start_byte] = TYPE_FLAG;
+            packet_data[3+start_byte] = 1;
+            packet_data[4+start_byte] = c_mem.SPI_read_delay;
+            switch(c_mem.SPI_read_delay) {
+                case 0: 
+                    strcat(spi_read_delay_str, " None"); 
+                    spi_read_delay_str_len = 26;
+                    break;
+                case 1: 
+                    strcat(spi_read_delay_str, " Low"); 
+                    spi_read_delay_str_len = 25;
+                    break;
+                case 2: 
+                    strcat(spi_read_delay_str, " High");
+                    spi_read_delay_str_len = 26;
+                    break;
+                default:
+                    break;
+            }            
+            for(i = spi_read_delay_str_len; i != 0; i--)
+                packet_data[5+start_byte + spi_read_delay_str_len - i] = spi_read_delay_str[spi_read_delay_str_len - i];
+            //The following byte indicates the number of menus at the end of the packet to send
+            packet_data[5+start_byte + spi_read_delay_str_len] = 1;
+                  
+            
             /*------------PARAMETERS MENU-----------*/
+            start_byte = start_byte + PARAM_BYTE_SLOT;
+            for(i = spi_delay_menu_len; i!= 0; i--)
+                packet_data[(uint16)(2 + start_byte) + spi_delay_menu_len - i] = spi_delay_menu[spi_delay_menu_len - i];
 
-            packet_data[packet_lenght - 1] = LCRChecksum(packet_data,packet_lenght - 1);
-            commWrite(packet_data, packet_lenght);
+            packet_data[packet_length - 1] = LCRChecksum(packet_data,packet_length - 1);
+            commWrite(packet_data, packet_length);
             UART_RS485_ClearTxBuffer();
         break;
 
-//===================================================================     set_id
-        case 1:         //ID - uint8
-            g_mem.id = g_rx.buffer[3];
-        break;
-        
-//=========================================================     n_imu
-        case 2:         //N imu - uint8 (read only)
-        break;
-
-//=========================================================     imus_id
-        case 3:         //IMUs ID - uint8 (read only)
-        break;
+//=========================================================     other_params
+        default: 
             
-//=========================================================     get_mag_param
-        case 4:         //get_mag_param - (read only)
-        break;
-
-//=========================================================     set_imu_mode
-        default:         //Set Imu table (index > = 5)
-            IMU_conf[IMU_connected[index-5]][0] = g_rx.buffer[3];
-            IMU_conf[IMU_connected[index-5]][1] = g_rx.buffer[4];
-            IMU_conf[IMU_connected[index-5]][2] = g_rx.buffer[5];
-            IMU_conf[IMU_connected[index-5]][3] = g_rx.buffer[6];
-            IMU_conf[IMU_connected[index-5]][4] = g_rx.buffer[7];
+            if (index < first_imu_parameter-1)
+                break;
             
-            // Recompute IMU packets dimension
-            imus_data_size = 1; //header    
-            for (i = 0; i < N_IMU_Connected; i++)
-            {
-                single_imu_size[IMU_connected[i]] = 1 + 6*IMU_conf[IMU_connected[i]][0] + 6*IMU_conf[IMU_connected[i]][1] + 6*IMU_conf[IMU_connected[i]][2] + 2*IMU_conf[IMU_connected[i]][4]+ 1;
-                imus_data_size = imus_data_size + single_imu_size[IMU_connected[i]];
+            if (index == first_imu_parameter+N_IMU_Connected) {
+                g_mem.SPI_read_delay = g_rx.buffer[3];  //SPI read delay - uint8
+                break;
             }
-            imus_data_size = imus_data_size + 1;    //checksum
+            
+            if (index == first_imu_parameter-1) {
+                g_mem.id = g_rx.buffer[3];          //ID - uint8
+            }
+            else {
+            
+                //Set Imu table (index > = first_imu_parameter)
+                g_mem.IMU_conf[IMU_connected[index-first_imu_parameter]][0] = g_rx.buffer[3];
+                g_mem.IMU_conf[IMU_connected[index-first_imu_parameter]][1] = g_rx.buffer[4];
+                g_mem.IMU_conf[IMU_connected[index-first_imu_parameter]][2] = g_rx.buffer[5];
+                g_mem.IMU_conf[IMU_connected[index-first_imu_parameter]][3] = g_rx.buffer[6];
+                g_mem.IMU_conf[IMU_connected[index-first_imu_parameter]][4] = g_rx.buffer[7];
+                
+                // Recompute IMU packets dimension
+                imus_data_size = 1; //header    
+                for (i = 0; i < N_IMU_Connected; i++)
+                {
+                    single_imu_size[IMU_connected[i]] = 1 + 6*g_mem.IMU_conf[IMU_connected[i]][0] + 6*g_mem.IMU_conf[IMU_connected[i]][1] + 6*g_mem.IMU_conf[IMU_connected[i]][2] + 16*g_mem.IMU_conf[IMU_connected[i]][3] + 2*g_mem.IMU_conf[IMU_connected[i]][4]+ 1;
+                    imus_data_size = imus_data_size + single_imu_size[IMU_connected[i]];
+                }
+                imus_data_size = imus_data_size + 1;    //checksum
+            
+            }
             
         break;
-            
     }
 }
 
@@ -409,8 +444,8 @@ void get_param_list(uint16 index)
 void infoPrepare(unsigned char *info_string)
 {
     int i;
+    unsigned char str[100];
     if(c_mem.id != 250){                //To avoid dummy board ping
-        unsigned char str[100];
         strcpy(info_string, "");
         strcat(info_string, "\r\n");
         strcat(info_string, "Firmware version: ");
@@ -426,69 +461,46 @@ void infoPrepare(unsigned char *info_string)
         
         strcat(info_string, "\r\n");
         
-        
         strcat(info_string, "IMUs CONFIGURATION\r\n");
         for (i=0; i<N_IMU_Connected; i++){
             sprintf(str, "Imu %d \r\n\tID: %d\r\n", i, (int) IMU_connected[i]);
             strcat(info_string, str);
             
             sprintf(str, "\tAccelerometers: ");
-            if ((IMU_conf[IMU_connected[i]][0]))
+            if ((c_mem.IMU_conf[IMU_connected[i]][0]))
                 strcat(str, "YES\r\n");
             else
                 strcat(str, "NO\r\n"); 
             strcat(str, "\tGyroscopes: ");
-            if ((IMU_conf[IMU_connected[i]][1]))
+            if ((c_mem.IMU_conf[IMU_connected[i]][1]))
                 strcat(str, "YES\r\n");
             else
                 strcat(str, "NO\r\n"); 
             strcat(str, "\tMagnetometers: ");
-            if ((IMU_conf[IMU_connected[i]][2]))
+            if ((c_mem.IMU_conf[IMU_connected[i]][2]))
                 strcat(str, "YES\r\n");
             else
                 strcat(str, "NO\r\n");
             strcat(str, "\tQuaternion: ");                
-            if ((IMU_conf[IMU_connected[i]][3]))
+            if ((c_mem.IMU_conf[IMU_connected[i]][3]))
                 strcat(str, "YES\r\n");
             else
                 strcat(str, "NO\r\n");
             strcat(str, "\tTemperature: ");
-            if ((IMU_conf[IMU_connected[i]][4]))
+            if ((c_mem.IMU_conf[IMU_connected[i]][4]))
                 strcat(str, "YES\r\n");
             else
                 strcat(str, "NO\r\n");
-            
+                 
             strcat(info_string, str);
         }       
         
         strcat(info_string, "\r\n");
-            
-        strcat(info_string, "SENSORS INFO\r\n");
-        for (i=0; i<N_IMU_Connected; i++){
-            sprintf(str, "Imu %d \r\n\tID: %d\r\n", i, (int) IMU_connected[i]);
-            strcat(info_string, str);
-            
-            if ((IMU_conf[IMU_connected[i]][0])){
-                sprintf(str, "\tAcc: %d\t%d\t%d\r\n", (int16) g_imu[i].accel_value[0], (int16) g_imu[i].accel_value[1],(int16) g_imu[i].accel_value[2]);
-                strcat(info_string, str);
-            }
-
-            if ((IMU_conf[IMU_connected[i]][1])){
-                sprintf(str, "\tGyro: %d\t%d\t%d\r\n", (int16) g_imu[i].gyro_value[0], (int16) g_imu[i].gyro_value[1],(int16) g_imu[i].gyro_value[2]);
-                strcat(info_string, str);
-            }
-
-            if ((IMU_conf[IMU_connected[i]][2])){
-                sprintf(str, "\tMag: %d\t%d\t%d\r\n", (int16) g_imu[i].mag_value[0], (int16) g_imu[i].mag_value[1],(int16) g_imu[i].mag_value[2]);
-                strcat(info_string, str);
-            }
-            
-            if ((IMU_conf[IMU_connected[i]][4])){
-                sprintf(str, "\tTemperature: %d\r\n", (int16) g_imu[i].temp_value);
-                strcat(info_string, str);
-            }
         
-        }
+        sprintf(str, "Time between two reading cycles: %.3f ms", (float)(((uint32)timer_value0 - (uint32)timer_value)/1000.0));
+        strcat(info_string, str);
+        strcat(info_string, "\r\n");
+        strcat(info_string, "\r\n");
         
         sprintf(str, "debug: %ld", (uint32)timer_value0 - (uint32)timer_value); //5000001
         strcat(info_string, str);
@@ -497,6 +509,45 @@ void infoPrepare(unsigned char *info_string)
     }
 }
 
+
+void infoReading(unsigned char* info_string)
+{
+    int i;
+    unsigned char str[100];
+    
+    strcpy(info_string, "");
+    strcat(info_string, "\r\n");           
+    strcat(info_string, "SENSORS INFO\r\n");
+    for (i=0; i<N_IMU_Connected; i++){
+        sprintf(str, "Imu %d \r\n\tID: %d\r\n", i, (int) IMU_connected[i]);
+        strcat(info_string, str);
+        
+        if ((c_mem.IMU_conf[IMU_connected[i]][0])){
+            sprintf(str, "\tAcc: %d\t%d\t%d\r\n", (int16) g_imu[i].accel_value[0], (int16) g_imu[i].accel_value[1],(int16) g_imu[i].accel_value[2]);
+            strcat(info_string, str);
+        }
+
+        if ((c_mem.IMU_conf[IMU_connected[i]][1])){
+            sprintf(str, "\tGyro: %d\t%d\t%d\r\n", (int16) g_imu[i].gyro_value[0], (int16) g_imu[i].gyro_value[1],(int16) g_imu[i].gyro_value[2]);
+            strcat(info_string, str);
+        }
+
+        if ((c_mem.IMU_conf[IMU_connected[i]][2])){
+            sprintf(str, "\tMag: %d\t%d\t%d\r\n", (int16) g_imu[i].mag_value[0], (int16) g_imu[i].mag_value[1],(int16) g_imu[i].mag_value[2]);
+            strcat(info_string, str);
+        }
+        
+        if ((c_mem.IMU_conf[IMU_connected[i]][3])){
+            sprintf(str, "\tQuat: %.3f\t%.3f\t%.3f\t%.3f\r\n", (float) g_imu[i].quat_value[0], (float) g_imu[i].quat_value[1],(float) g_imu[i].quat_value[2], (float) g_imu[i].quat_value[3]);
+            strcat(info_string, str);
+        }
+        
+        if ((c_mem.IMU_conf[IMU_connected[i]][4])){
+            sprintf(str, "\tTemperature: %d\r\n", (int16) g_imu[i].temp_value);
+            strcat(info_string, str);
+        }
+    }
+}
 //==============================================================================
 //                                                      WRITE FUNCTION FOR RS485
 //==============================================================================
@@ -661,13 +712,27 @@ uint8 memRestore() {
 
 uint8 memInit()
 {
-  
+    uint8 i;
+    //uint8 j;
+    
     //initialize memory settings
     g_mem.id            = 1;
 
     
     // set the initialized flag to show EEPROM has been populated
     g_mem.flag = TRUE;
+    
+    // Default value
+    for (i = 0; i< N_IMU_MAX; i++){
+        g_mem.IMU_conf[i][0] = 1;
+        g_mem.IMU_conf[i][1] = 1;
+        g_mem.IMU_conf[i][2] = 0;
+        g_mem.IMU_conf[i][3] = 0;
+        g_mem.IMU_conf[i][4] = 0;
+        //for (j=0; j< NUM_OF_DATA; j++) {
+        //    g_mem.IMU_conf[i][j] = 0;
+        //}
+    }
     
     //write that configuration to EEPROM
     return ( memStore(0) && memStore(DEFAULT_EEPROM_DISPLACEMENT) );
@@ -679,30 +744,6 @@ uint8 memInit()
 /**
 * Bunch of functions used on request from UART communication
 **/
-
-void cmd_get_measurements(){
-   //nothing to do and nothing to say 
-}
-
-void cmd_set_inputs(){
-   //nothing to do and nothing to say
-}
-
-void cmd_activate(){
-    //nothing to do and nothing to say
-}
-
-void cmd_get_activate(){
-    //nothing to do and nothing to say
-}
-
-void cmd_get_curr_and_meas(){
-    //nothing to do and nothing to say   
-}
-
-void cmd_get_currents(){
-    //nothing to do and nothing to say
-}
 
 void cmd_set_baudrate(){
     
@@ -732,41 +773,12 @@ void cmd_ping(){
     commWrite(packet_data, 2);
 }
 
-void cmd_set_watchdog(){
-      
-    if (g_rx.buffer[1] <= 0){
-        // Deactivate Watchdog
-        WATCHDOG_ENABLER_Write(1); 
-        g_mem.watchdog_period = 0;   
-    }
-    else{
-        // Activate Watchdog        
-        if (g_rx.buffer[1] > MAX_WATCHDOG_TIMER)
-            g_rx.buffer[1] = MAX_WATCHDOG_TIMER;
-            
-        // Period * Time_CLK = WDT
-        // Period = WTD / Time_CLK =     (WTD    )  / ( ( 1 / Freq_CLK ) )
-        // Set request watchdog period - (WTD * 2)  * (250 / 1024        )
-        g_mem.watchdog_period = (uint8) (((uint32) g_rx.buffer[1] * 2 * 250 ) >> 10);   
-        WATCHDOG_COUNTER_WritePeriod(g_mem.watchdog_period); 
-        WATCHDOG_ENABLER_Write(0); 
-    }
-}
-
-void cmd_get_inputs(){
-    //nothing to do and nothing to say
-}
-
 void cmd_store_params(){
    
     if(memStore(0))
         sendAcknowledgment(ACK_OK);
     else
         sendAcknowledgment(ACK_ERROR);
-}
-
-void cmd_get_emg(){
-    //nothing to do and nothing to say
 }
 
 void cmd_get_imu_readings(){
@@ -781,9 +793,6 @@ void cmd_get_imu_readings(){
     uint8 packet_data[350];
     uint8 single_packet[22];
     
-    // Packet to send is handled here (in this way you work with last consistent data)
-    //isr_imu_Disable();
-    
     //Header package 
     packet_data[0] = CMD_GET_IMU_READINGS;
  
@@ -791,25 +800,32 @@ void cmd_get_imu_readings(){
     {	
         
         single_packet[0] = (uint8) 0x3A; //':';
-        if (IMU_conf[IMU_connected[k_imu]][0]){
+        if (c_mem.IMU_conf[IMU_connected[k_imu]][0]){
             *((int16 *) &single_packet[c]) = (int16) g_imu[k_imu].accel_value[0];
             *((int16 *) &single_packet[c+2]) = (int16) g_imu[k_imu].accel_value[1];
             *((int16 *) &single_packet[c+4]) = (int16) g_imu[k_imu].accel_value[2];
             c = c + 6;
         }
-        if (IMU_conf[IMU_connected[k_imu]][1]){
+        if (c_mem.IMU_conf[IMU_connected[k_imu]][1]){
             *((int16 *) &single_packet[c])   = (int16) g_imu[k_imu].gyro_value[0];
             *((int16 *) &single_packet[c+2]) = (int16) g_imu[k_imu].gyro_value[1];
             *((int16 *) &single_packet[c+4]) = (int16) g_imu[k_imu].gyro_value[2];
             c = c + 6;
         }
-        if (IMU_conf[IMU_connected[k_imu]][2]){
+        if (c_mem.IMU_conf[IMU_connected[k_imu]][2]){
             *((int16 *) &single_packet[c])   = (int16) g_imu[k_imu].mag_value[0];
             *((int16 *) &single_packet[c+2]) = (int16) g_imu[k_imu].mag_value[1];
             *((int16 *) &single_packet[c+4]) = (int16) g_imu[k_imu].mag_value[2];
             c = c + 6;
         }
-        if (IMU_conf[IMU_connected[k_imu]][4]){
+        if (c_mem.IMU_conf[IMU_connected[k_imu]][3]){
+            *((float *) &single_packet[c])   = (float) g_imu[k_imu].quat_value[0];
+            *((float *) &single_packet[c+4]) = (float) g_imu[k_imu].quat_value[1];
+            *((float *) &single_packet[c+8]) = (float) g_imu[k_imu].quat_value[2];
+            *((float *) &single_packet[c+12]) = (float) g_imu[k_imu].quat_value[3];
+            c = c + 16;
+        }
+        if (c_mem.IMU_conf[IMU_connected[k_imu]][4]){
             *((int16 *) &single_packet[c])   = (int16) g_imu[k_imu].temp_value;
             c = c + 2;
         }
@@ -828,8 +844,6 @@ void cmd_get_imu_readings(){
     // Calculate Checksum and send message to UART 
     packet_data[imus_data_size-1] = LCRChecksum (packet_data, imus_data_size-1);
     commWrite(packet_data, imus_data_size);
-    
-    //isr_imu_Enable();
 }
 
 

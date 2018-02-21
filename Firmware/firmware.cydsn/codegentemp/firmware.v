@@ -1,6 +1,6 @@
 // ======================================================================
 // firmware.v generated from TopDesign.cysch
-// 11/15/2017 at 19:00
+// 02/12/2018 at 10:04
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -469,103 +469,6 @@ endmodule
 `include "C:\Program Files (x86)\Cypress\PSoC Creator\4.1\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_sync_v1_0\cy_sync_v1_0.v"
 `endif
 
-// Counter_v3_0(CaptureMode=0, CaptureModeSoftware=0, ClockMode=0, CompareMode=1, CompareModeSoftware=0, CompareStatusEdgeSense=true, CompareValue=3, CONTROL3=1, ControlRegRemoved=0, CyGetRegReplacementString=CY_GET_REG8, CySetRegReplacementString=CY_SET_REG8, EnableMode=0, FF16=false, FF8=true, FixedFunction=true, FixedFunctionUsed=1, InitCounterValue=0, InterruptOnCapture=false, InterruptOnCompare=false, InterruptOnOverUnderFlow=false, InterruptOnTC=true, Period=127, RegDefReplacementString=reg8, RegSizeReplacementString=uint8, ReloadOnCapture=false, ReloadOnCompare=false, ReloadOnOverUnder=true, ReloadOnReset=true, Resolution=8, RunMode=0, UDB16=false, UDB24=false, UDB32=false, UDB8=false, UDBControlReg=false, UseInterrupt=true, VerilogSectionReplacementString=sC8, CY_API_CALLBACK_HEADER_INCLUDE=, CY_COMMENT=, CY_COMPONENT_NAME=Counter_v3_0, CY_CONST_CONFIG=true, CY_CONTROL_FILE=<:default:>, CY_DATASHEET_FILE=<:default:>, CY_FITTER_NAME=WATCHDOG_COUNTER, CY_INSTANCE_SHORT_NAME=WATCHDOG_COUNTER, CY_MAJOR_VERSION=3, CY_MINOR_VERSION=0, CY_PDL_DRIVER_NAME=, CY_PDL_DRIVER_REQ_VERSION=, CY_PDL_DRIVER_SUBGROUP=, CY_PDL_DRIVER_VARIANT=, CY_REMOVE=false, CY_SUPPRESS_API_GEN=false, CY_VERSION=PSoC Creator  4.1 Update 1, INSTANCE_NAME=WATCHDOG_COUNTER, )
-module Counter_v3_0_3 (
-    reset,
-    tc,
-    comp,
-    clock,
-    interrupt,
-    enable,
-    capture,
-    upCnt,
-    downCnt,
-    up_ndown,
-    count);
-    input       reset;
-    output      tc;
-    output      comp;
-    input       clock;
-    output      interrupt;
-    input       enable;
-    input       capture;
-    input       upCnt;
-    input       downCnt;
-    input       up_ndown;
-    input       count;
-
-    parameter CaptureMode = 0;
-    parameter ClockMode = 0;
-    parameter CompareMode = 1;
-    parameter CompareStatusEdgeSense = 1;
-    parameter EnableMode = 0;
-    parameter ReloadOnCapture = 0;
-    parameter ReloadOnCompare = 0;
-    parameter ReloadOnOverUnder = 1;
-    parameter ReloadOnReset = 1;
-    parameter Resolution = 8;
-    parameter RunMode = 0;
-    parameter UseInterrupt = 1;
-
-          wire  Net_54;
-          wire  Net_102;
-          wire  Net_95;
-          wire  Net_82;
-          wire  Net_91;
-          wire  Net_89;
-          wire  Net_49;
-          wire  Net_48;
-          wire  Net_42;
-          wire  Net_43;
-
-    cy_psoc3_timer_v1_0 CounterHW (
-        .timer_reset(reset),
-        .capture(capture),
-        .enable(Net_91),
-        .kill(Net_82),
-        .clock(clock),
-        .tc(Net_48),
-        .compare(Net_54),
-        .interrupt(Net_42));
-
-	// int_vm (cy_virtualmux_v1_0)
-	assign interrupt = Net_42;
-
-	// TC_vm (cy_virtualmux_v1_0)
-	assign tc = Net_48;
-
-    ZeroTerminal ZeroTerminal_1 (
-        .z(Net_82));
-
-	// VirtualMux_1 (cy_virtualmux_v1_0)
-	assign Net_89 = up_ndown;
-
-    ZeroTerminal ZeroTerminal_2 (
-        .z(Net_95));
-
-	// vmEnableMode (cy_virtualmux_v1_0)
-	assign Net_91 = enable;
-
-    OneTerminal OneTerminal_1 (
-        .o(Net_102));
-
-
-
-endmodule
-
-// Component: or_v1_0
-`ifdef CY_BLK_DIR
-`undef CY_BLK_DIR
-`endif
-
-`ifdef WARP
-`define CY_BLK_DIR "C:\Program Files (x86)\Cypress\PSoC Creator\4.1\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\or_v1_0"
-`include "C:\Program Files (x86)\Cypress\PSoC Creator\4.1\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\or_v1_0\or_v1_0.v"
-`else
-`define CY_BLK_DIR "C:\Program Files (x86)\Cypress\PSoC Creator\4.1\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\or_v1_0"
-`include "C:\Program Files (x86)\Cypress\PSoC Creator\4.1\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\or_v1_0\or_v1_0.v"
-`endif
-
 // Component: B_SPI_Master_v2_50
 `ifdef CY_BLK_DIR
 `undef CY_BLK_DIR
@@ -580,7 +483,7 @@ endmodule
 `endif
 
 // SPI_Master_v2_50(BidirectMode=false, ClockInternal=true, CtlModeReplacementString=SyncCtl, CyGetRegReplacementString=CY_GET_REG8, CySetRegReplacementString=CY_SET_REG8, DesiredBitRate=1000000, HighSpeedMode=false, InternalClockUsed=1, InternalInterruptEnabled=0, InternalRxInterruptEnabled=0, InternalTxInterruptEnabled=0, InterruptOnByteComplete=false, InterruptOnRXFull=false, InterruptOnRXNotEmpty=false, InterruptOnRXOverrun=false, InterruptOnSPIDone=false, InterruptOnSPIIdle=false, InterruptOnTXEmpty=false, InterruptOnTXNotFull=false, IntOnByteComp=0, IntOnRXFull=0, IntOnRXNotEmpty=0, IntOnRXOver=0, IntOnSPIDone=0, IntOnSPIIdle=0, IntOnTXEmpty=0, IntOnTXNotFull=0, Mode=4, ModeUseZero=0, NumberOfDataBits=8, RegDefReplacementString=reg8, RegSizeReplacementString=uint8, RxBufferSize=4, ShiftDir=0, TxBufferSize=4, UseInternalInterrupt=false, UseRxInternalInterrupt=false, UseTxInternalInterrupt=false, VerilogSectionReplacementString=sR8, CY_API_CALLBACK_HEADER_INCLUDE=, CY_COMMENT=, CY_COMPONENT_NAME=SPI_Master_v2_50, CY_CONST_CONFIG=true, CY_CONTROL_FILE=<:default:>, CY_DATASHEET_FILE=<:default:>, CY_FITTER_NAME=SPI_IMU, CY_INSTANCE_SHORT_NAME=SPI_IMU, CY_MAJOR_VERSION=2, CY_MINOR_VERSION=50, CY_PDL_DRIVER_NAME=, CY_PDL_DRIVER_REQ_VERSION=, CY_PDL_DRIVER_SUBGROUP=, CY_PDL_DRIVER_VARIANT=, CY_REMOVE=false, CY_SUPPRESS_API_GEN=false, CY_VERSION=PSoC Creator  4.1 Update 1, INSTANCE_NAME=SPI_IMU, )
-module SPI_Master_v2_50_4 (
+module SPI_Master_v2_50_3 (
     mosi,
     sclk,
     ss,
@@ -712,8 +615,6 @@ module top ;
           wire  Net_4108;
           wire  Net_4107;
           wire  Net_3980;
-          wire  Net_3698;
-          wire  Net_3696;
           wire  Net_3979;
           wire  Net_3978;
           wire  Net_3977;
@@ -742,34 +643,6 @@ module top ;
           wire  Net_3672;
           wire  Net_3670;
           wire  Net_3669;
-          wire  Net_3596;
-          wire  Net_3595;
-          wire  Net_3594;
-          wire  Net_3593;
-          wire  Net_3592;
-          wire  Net_3591;
-          wire  Net_3590;
-          wire  Net_3589;
-          wire  Net_3588;
-          wire  Net_3587;
-          wire  Net_3586;
-          wire  Net_3585;
-          wire  Net_3584;
-          wire  Net_3583;
-          wire  Net_3582;
-          wire  Net_3581;
-          wire  Net_3580;
-          wire  Net_3579;
-          wire  Net_3578;
-          wire  Net_3577;
-          wire  Net_3576;
-          wire  Net_3575;
-          wire  Net_3574;
-          wire  Net_3573;
-          wire  Net_3572;
-          wire  Net_3571;
-          wire  Net_3570;
-          wire  Net_3663;
           wire  Net_3190;
           wire  Net_3187;
           wire  Net_3186;
@@ -827,11 +700,12 @@ module top ;
           wire  Net_3251;
           wire  Net_3357;
           wire  Net_3652;
-          wire [1:0] Net_3794;
           wire  Net_3790;
+          wire [1:0] Net_3794;
           wire  Net_3791;
-          wire  Net_46;
           wire  Net_247;
+          wire  Net_3798;
+          wire  Net_46;
           wire [3:0] Net_3982;
           wire  Net_241;
           wire  Net_207;
@@ -855,7 +729,6 @@ module top ;
           wire  Net_258;
           wire  Net_246;
           wire  Net_254;
-          wire  Net_3798;
           wire  Net_3671;
           wire  Net_2627;
           wire  Net_6196;
@@ -863,9 +736,6 @@ module top ;
           wire  Net_6020;
           wire  Net_20;
           wire  Net_124;
-          wire  Net_6183;
-          wire  Net_6322;
-          wire  Net_6285;
           wire  Net_3334;
           wire  Net_3328;
           wire  Net_3249;
@@ -1466,102 +1336,7 @@ module top ;
         .s_out(Net_3240));
     defparam Sync_1.SignalWidth = 1;
 
-
-	cy_clock_v1_0
-		#(.id("d2957b83-fe90-4cb8-9cda-579b204409f7"),
-		  .source_clock_id("315365C3-2E3E-4f04-84A2-BB564A173261"),
-		  .divisor(4096),
-		  .period("0"),
-		  .is_direct(0),
-		  .is_digital(1))
-		WATCHDOG_CLK
-		 (.clock_out(Net_6285));
-
-
-
-	cy_isr_v1_0
-		#(.int_type(2'b10))
-		ISR_WATCHDOG
-		 (.int_signal(Net_3570));
-
-
-    Counter_v3_0_3 WATCHDOG_COUNTER (
-        .reset(Net_6183),
-        .tc(Net_3571),
-        .comp(Net_3572),
-        .clock(Net_6285),
-        .interrupt(Net_3570),
-        .enable(1'b0),
-        .capture(1'b0),
-        .upCnt(1'b0),
-        .downCnt(1'b0),
-        .up_ndown(1'b1),
-        .count(1'b0));
-    defparam WATCHDOG_COUNTER.CaptureMode = 0;
-    defparam WATCHDOG_COUNTER.ClockMode = 0;
-    defparam WATCHDOG_COUNTER.CompareMode = 1;
-    defparam WATCHDOG_COUNTER.CompareStatusEdgeSense = 1;
-    defparam WATCHDOG_COUNTER.EnableMode = 0;
-    defparam WATCHDOG_COUNTER.ReloadOnCapture = 0;
-    defparam WATCHDOG_COUNTER.ReloadOnCompare = 0;
-    defparam WATCHDOG_COUNTER.ReloadOnOverUnder = 1;
-    defparam WATCHDOG_COUNTER.ReloadOnReset = 1;
-    defparam WATCHDOG_COUNTER.Resolution = 8;
-    defparam WATCHDOG_COUNTER.RunMode = 0;
-    defparam WATCHDOG_COUNTER.UseInterrupt = 1;
-
-    CyControlReg_v1_80 WATCHDOG_ENABLER (
-        .control_1(Net_3579),
-        .control_2(Net_3580),
-        .control_3(Net_3581),
-        .control_0(Net_6322),
-        .control_4(Net_3582),
-        .control_5(Net_3583),
-        .control_6(Net_3584),
-        .control_7(Net_3585),
-        .clock(1'b0),
-        .reset(1'b0));
-    defparam WATCHDOG_ENABLER.Bit0Mode = 0;
-    defparam WATCHDOG_ENABLER.Bit1Mode = 0;
-    defparam WATCHDOG_ENABLER.Bit2Mode = 0;
-    defparam WATCHDOG_ENABLER.Bit3Mode = 0;
-    defparam WATCHDOG_ENABLER.Bit4Mode = 0;
-    defparam WATCHDOG_ENABLER.Bit5Mode = 0;
-    defparam WATCHDOG_ENABLER.Bit6Mode = 0;
-    defparam WATCHDOG_ENABLER.Bit7Mode = 0;
-    defparam WATCHDOG_ENABLER.BitValue = 0;
-    defparam WATCHDOG_ENABLER.BusDisplay = 0;
-    defparam WATCHDOG_ENABLER.ExtrReset = 0;
-    defparam WATCHDOG_ENABLER.NumOutputs = 1;
-
-
-    assign Net_6183 = Net_3588 | Net_6322;
-
-    CyControlReg_v1_80 WATCHDOG_REFRESH (
-        .control_1(Net_3589),
-        .control_2(Net_3590),
-        .control_3(Net_3591),
-        .control_0(Net_3588),
-        .control_4(Net_3592),
-        .control_5(Net_3593),
-        .control_6(Net_3594),
-        .control_7(Net_3595),
-        .clock(Net_6285),
-        .reset(1'b0));
-    defparam WATCHDOG_REFRESH.Bit0Mode = 3;
-    defparam WATCHDOG_REFRESH.Bit1Mode = 0;
-    defparam WATCHDOG_REFRESH.Bit2Mode = 0;
-    defparam WATCHDOG_REFRESH.Bit3Mode = 0;
-    defparam WATCHDOG_REFRESH.Bit4Mode = 0;
-    defparam WATCHDOG_REFRESH.Bit5Mode = 0;
-    defparam WATCHDOG_REFRESH.Bit6Mode = 0;
-    defparam WATCHDOG_REFRESH.Bit7Mode = 0;
-    defparam WATCHDOG_REFRESH.BitValue = 0;
-    defparam WATCHDOG_REFRESH.BusDisplay = 0;
-    defparam WATCHDOG_REFRESH.ExtrReset = 1;
-    defparam WATCHDOG_REFRESH.NumOutputs = 1;
-
-    SPI_Master_v2_50_4 SPI_IMU (
+    SPI_Master_v2_50_3 SPI_IMU (
         .mosi(Net_3669),
         .sclk(Net_3670),
         .ss(Net_3671),
@@ -3199,25 +2974,6 @@ module top ;
 		  .out_reset({1'b0}));
 
 	assign tmpOE__CS00_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
-
-
-	cy_clock_v1_0
-		#(.id("d4ff93eb-8174-4f1b-b12d-fce6fffb01ee"),
-		  .source_clock_id(""),
-		  .divisor(0),
-		  .period("1000000000000"),
-		  .is_direct(0),
-		  .is_digital(1))
-		isr_clock
-		 (.clock_out(Net_3696));
-
-
-
-	cy_isr_v1_0
-		#(.int_type(2'b10))
-		isr_imu
-		 (.int_signal(Net_3696));
-
 
 	wire [0:0] tmpOE__Opto_Pin_net;
 	wire [0:0] tmpFB_0__Opto_Pin_net;

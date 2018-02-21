@@ -2,7 +2,7 @@
 // BSD 3-Clause License
 
 // Copyright (c) 2016, qbrobotics
-// Copyright (c) 2017, Centro "E.Piaggio"
+// Copyright (c) 2017-2018, Centro "E.Piaggio"
 // All rights reserved.
 
 // Redistribution and use in source and binary forms, with or without
@@ -36,10 +36,10 @@
 * \file         utils.h
 *
 * \brief        Definition of utility functions.
-* \date         October 01, 2017
+* \date         February 01, 2018
 * \author       _Centro "E.Piaggio"_
 * \copyright    (C) 2012-2016 qbrobotics. All rights reserved.
-* \copyright    (C) 2017 Centro "E.Piaggio". All rights reserved.
+* \copyright    (C) 2017-2018 Centro "E.Piaggio". All rights reserved.
 */
 
 #include <utils.h>
@@ -47,147 +47,42 @@
 
 //--------------------------------------------------------------     DEFINITIONS
 
-
-
-int32 filter_v(int32 new_value) {
-
-    static int32 old_value, aux;
-
-    aux = (old_value * (1024 - ALPHA) + (new_value << 6) * (ALPHA)) >> 10;
-
-    old_value = aux;
-
-    return (aux >> 6);
-}
-
-int32 filter_i1(int32 new_value) {
-
-    static int32 old_value, aux;
-
-    aux = (old_value * (1024 - ALPHA) + (new_value << 6) * (ALPHA)) >> 10;
-
-    old_value = aux;
-
-    return (aux >> 6);
-}
-
-
-int32 filter_ch1(int32 new_value) {
-
-    static int32 old_value, aux;
-
-    aux = (old_value * (1024 - BETA) + (new_value << 6) * (BETA)) / 1024;
-
-    old_value = aux;
-
-    return (aux >> 6);
-}
-
-int32 filter_ch2(int32 new_value) {
-
-    static int32 old_value, aux;
-
-    aux = (old_value * (1024 - BETA) + (new_value << 6) * (BETA)) / 1024;
-
-    old_value = aux;
-
-    return (aux >> 6);
+//==============================================================================
+//                                                                       INVSQRT
+//==============================================================================
+float invSqrt(float x) {
+	float halfx = 0.5f * x;
+	float y = x;
+	long i = *(long*)&y;
+	i = 0x5f3759df - (i>>1);
+	y = *(float*)&i;
+	y = y * (1.5f - (halfx * y * y));
+	return y;
 }
 
 //==============================================================================
-//                                                                CHECK ENC DATA
+//                                                                  V3_NORMALIZE
 //==============================================================================
-
-// Returns 1 if the encoder data is correct, 0 otherwise
-
-CYBIT check_enc_data(const uint32 *value) {
-
-    const uint8* CYIDATA p = (const uint8*)value;
-    uint8 CYDATA a = *p;
-
-    a = a ^ *(++p);
-    a = a ^ *(++p);
-    a = a ^ *(++p);
-    a = (a & 0x0F) ^ (a>>4);
-
-    return (0x9669 >> a) & 0x01;
-    //0x9669 is a bit vector representing the !(bitwise XOR) of 4bits
-}
-
-//==============================================================================
-//                                                                ROUND_FUNCTION
-//==============================================================================
-
-int my_round(const double x) {
-
-    if (x < 0.0)
-        return (int)(x - 0.5);
-    else
-        return (int)(x + 0.5);
-}
-
-//==============================================================================
-//                                                                        MODULE
-//==============================================================================
-
-uint32 my_mod(int32 val, int32 divisor) {
-
-    if (val >= 0) 
-        return (int32)(val % divisor);
-    else 
-        return (int32)(divisor - (-val % divisor));
-}
-
-
-//==============================================================================
-//                                                                     CALIBRATE
-//==============================================================================
-
-void calibration() {
+void v3_normalize(float v3_in[3]){
+    // Vector 3 normalization
+    float norm = invSqrt(v3_in[0] * v3_in[0] + v3_in[1] * v3_in[1] + v3_in[2] * v3_in[2]);
     
+    v3_in[0] = v3_in[0]*norm;
+    v3_in[1] = v3_in[1]*norm;
+    v3_in[2] = v3_in[2]*norm;
 }
-
-
+ 
 //==============================================================================
-//                                                      DOUBLE ENCODER CALC TURN
+//                                                                  V4_NORMALIZE
 //==============================================================================
-
-// Use this matlab function to calculate I1 and I2
-//
-// function [inv_a, inv_b] = mod_mul_inv(a, b)
-//     a = int32(a);
-//     b = int32(b);
-//     if b == 0
-//         inv_a = 1;
-//         inv_b = 0;
-//         return
-//     else
-//         q = idivide(a,b,'floor');
-//         r = mod(a,b);
-//         [s, t] = mod_mul_inv(b, r);
-//     end
-//     inv_a = t;
-//     inv_b = s - q * t;
-// return
-
-// Number of teeth of the two wheels
-#define N1 28
-#define N2 27
-
-#define I1 1
-#define I2 (-1)
-
-// Number of ticks per turn
-#define M 65536
-
-
-int calc_turns_fcn(const int32 pos1, const int32 pos2) {
+void v4_normalize(float v4_in[4]){
+    // Vector 4 normalization
+    float norm = invSqrt(v4_in[0] * v4_in[0] + v4_in[1] * v4_in[1] + v4_in[2] * v4_in[2] + v4_in[3] * v4_in[3]);
     
-    int32 x = (my_mod( - N2*pos2 - N1*pos1, M*N2) + M/2) / M;
-
-    int32 aux = my_mod(x*I1, N2);
-    
-    return (my_mod(aux + N2/2, N2) - N2/2);
+    v4_in[0] = v4_in[0]*norm;
+    v4_in[1] = v4_in[1]*norm;
+    v4_in[2] = v4_in[2]*norm;
+    v4_in[3] = v4_in[3]*norm;
 }
 
 /* [] END OF FILE */

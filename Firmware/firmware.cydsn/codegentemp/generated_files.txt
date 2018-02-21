@@ -54,19 +54,6 @@
   <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\MY_TIMER_PM.c" value="SOURCE_C;DP8051;;;;MY_TIMER" />
   <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\timer_clock.c" value="SOURCE_C;DP8051;;;;timer_clock" />
   <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\timer_clock.h" value="HEADER;;;;;timer_clock" />
-  <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\WATCHDOG_CLK.c" value="SOURCE_C;DP8051;;;;WATCHDOG_CLK" />
-  <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\WATCHDOG_CLK.h" value="HEADER;;;;;WATCHDOG_CLK" />
-  <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\ISR_WATCHDOG.c" value="SOURCE_C;DP8051;;;;ISR_WATCHDOG" />
-  <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\ISR_WATCHDOG.h" value="HEADER;;;;;ISR_WATCHDOG" />
-  <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\WATCHDOG_COUNTER.c" value="SOURCE_C;DP8051;;;;WATCHDOG_COUNTER" />
-  <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\WATCHDOG_COUNTER.h" value="HEADER;;;;;WATCHDOG_COUNTER" />
-  <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\WATCHDOG_COUNTER_PM.c" value="SOURCE_C;DP8051;;;;WATCHDOG_COUNTER" />
-  <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\WATCHDOG_ENABLER.h" value="HEADER;;;;;WATCHDOG_ENABLER" />
-  <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\WATCHDOG_ENABLER.c" value="SOURCE_C;DP8051;;;;WATCHDOG_ENABLER" />
-  <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\WATCHDOG_ENABLER_PM.c" value="SOURCE_C;DP8051;;;;WATCHDOG_ENABLER" />
-  <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\WATCHDOG_REFRESH.h" value="HEADER;;;;;WATCHDOG_REFRESH" />
-  <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\WATCHDOG_REFRESH.c" value="SOURCE_C;DP8051;;;;WATCHDOG_REFRESH" />
-  <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\WATCHDOG_REFRESH_PM.c" value="SOURCE_C;DP8051;;;;WATCHDOG_REFRESH" />
   <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\SPI_IMU.c" value="SOURCE_C;DP8051;;;;SPI_IMU" />
   <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\SPI_IMU.h" value="HEADER;;;;;SPI_IMU" />
   <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\SPI_IMU_PM.c" value="SOURCE_C;DP8051;;;;SPI_IMU" />
@@ -135,10 +122,6 @@
   <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\CS00.c" value="SOURCE_C;DP8051;;;;CS00" />
   <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\CS00.h" value="HEADER;;;;;CS00" />
   <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\CS00_aliases.h" value="HEADER;;;;;CS00" />
-  <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\isr_clock.c" value="SOURCE_C;DP8051;;;;isr_clock" />
-  <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\isr_clock.h" value="HEADER;;;;;isr_clock" />
-  <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\isr_imu.c" value="SOURCE_C;DP8051;;;;isr_imu" />
-  <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\isr_imu.h" value="HEADER;;;;;isr_imu" />
   <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\Opto_Pin.c" value="SOURCE_C;DP8051;;;;Opto_Pin" />
   <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\Opto_Pin.h" value="HEADER;;;;;Opto_Pin" />
   <file name="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\codegentemp\Opto_Pin_aliases.h" value="HEADER;;;;;Opto_Pin" />

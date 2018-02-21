@@ -23,47 +23,20 @@ struct \textbf{ st\+\_\+data} {\bfseries g\+\_\+rx}
 \mbox{\label{globals_8c_a44c3cbd8e234e0816f0334e29646a800}} 
 struct \textbf{ st\+\_\+mem} g\+\_\+mem {\bfseries c\+\_\+mem}
 \item 
-\mbox{\label{globals_8c_a894b799ffe45f442a6a897580ab7e98e}} 
-float {\bfseries tau\+\_\+feedback}
-\item 
 \mbox{\label{globals_8c_ad47cd0e4d0fcf5739a88e52e949a8084}} 
 uint32 {\bfseries timer\+\_\+value}
 \item 
 \mbox{\label{globals_8c_a9bab7f1b1cf2ba38d5968eee42644c32}} 
 uint32 {\bfseries timer\+\_\+value0}
 \item 
-\mbox{\label{globals_8c_a53a494e9edc739a4f7c884778d1a93b1}} 
-int32 {\bfseries dev\+\_\+tension}
-\item 
-\mbox{\label{globals_8c_a21f4f67e4203dea0b9956589eaa6cef3}} 
-uint8 {\bfseries dev\+\_\+pwm\+\_\+limit}
-\item 
-\mbox{\label{globals_8c_aa89a782cfe75ce7970236babd308fe69}} 
-C\+Y\+B\+IT {\bfseries reset\+\_\+last\+\_\+value\+\_\+flag}
-\item 
-\mbox{\label{globals_8c_ac42fa606610c2600210d9b7b2c1d0882}} 
-C\+Y\+B\+IT {\bfseries tension\+\_\+valid}
-\item 
 \mbox{\label{globals_8c_a1e6fda88dfdabc63859f8907eb702920}} 
 C\+Y\+B\+IT {\bfseries interrupt\+\_\+flag}
-\item 
-\mbox{\label{globals_8c_a156a860c465529ff2f515725ab816a58}} 
-C\+Y\+B\+IT {\bfseries watchdog\+\_\+flag}
-\item 
-\mbox{\label{globals_8c_a56c9d5eb4a24dbc15f90f8b7bad5f8df}} 
-int16 {\bfseries A\+D\+C\+\_\+buf} [1]
-\item 
-\mbox{\label{globals_8c_a8ac7ad7c894db750e93bc745818e26ca}} 
-int8 {\bfseries pwm\+\_\+sign}
 \item 
 \mbox{\label{globals_8c_a47118db87acd24ae6dac18b036f360ec}} 
 uint8 {\bfseries N\+\_\+\+I\+M\+U\+\_\+\+Connected}
 \item 
 \mbox{\label{globals_8c_a99668f3210aba0be3baec19486621bce}} 
 uint8 {\bfseries I\+M\+U\+\_\+connected} [N\+\_\+\+I\+M\+U\+\_\+\+M\+AX]
-\item 
-\mbox{\label{globals_8c_a9e908aa8750ba310d61de278c5d8525c}} 
-uint8 {\bfseries I\+M\+U\+\_\+conf} [N\+\_\+\+I\+M\+U\+\_\+\+M\+AX][5]
 \item 
 \mbox{\label{globals_8c_a86272fcfcab512d38a11824196df4bbc}} 
 int {\bfseries imus\+\_\+data\+\_\+size}
@@ -92,17 +65,8 @@ uint8 {\bfseries Mag\+Cal} [N\+\_\+\+I\+M\+U\+\_\+\+M\+AX][3]
 \mbox{\label{globals_8c_af5f2d49e123a057d358297a34194ebdc}} 
 uint8 {\bfseries Temp} [N\+\_\+\+I\+M\+U\+\_\+\+M\+AX][2]
 \item 
-\mbox{\label{globals_8c_a01e9fc6c5fda91487808e8f9942b5384}} 
-int {\bfseries frs\+Acc\+Reg}
-\item 
-\mbox{\label{globals_8c_a1ebf4e2ea7e01931802b38fa889f45a7}} 
-int {\bfseries frs\+Gyro\+Reg}
-\item 
-\mbox{\label{globals_8c_a0f84fea35715705043209a7e7360dd35}} 
-uint8 {\bfseries rate\+Acc}
-\item 
-\mbox{\label{globals_8c_a64d7e6e59390bf4071bcf43346301dbe}} 
-uint8 {\bfseries rate\+Gyro}
+\mbox{\label{globals_8c_ac0c4d3f055f976340a0e604e58b95a8a}} 
+float {\bfseries Quat} [4] = \{1,0,0,0\}
 \end{DoxyCompactItemize}
 
 
@@ -110,7 +74,7 @@ uint8 {\bfseries rate\+Gyro}
 Global variables. 
 
 \begin{DoxyDate}{Date}
-October 01, 2017 
+February 01, 2018 
 \end{DoxyDate}
 \begin{DoxyAuthor}{Author}
 {\itshape Centro \char`\"{}\+E.\+Piaggio\char`\"{}} 
@@ -118,5 +82,5 @@ October 01, 2017
 \begin{DoxyCopyright}{Copyright}
 (C) 2012-\/2016 qbrobotics. All rights reserved. 
 
-(C) 2017 Centro \char`\"{}\+E.\+Piaggio\char`\"{}. All rights reserved. 
+(C) 2017-\/2018 Centro \char`\"{}\+E.\+Piaggio\char`\"{}. All rights reserved. 
 \end{DoxyCopyright}

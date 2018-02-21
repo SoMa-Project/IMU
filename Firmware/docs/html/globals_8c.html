@@ -75,9 +75,10 @@ Include dependency graph for globals.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="globals_8c__incl.png" border="0" usemap="#globals_8c" alt=""/></div>
 <map name="globals_8c" id="globals_8c">
-<area shape="rect" id="node2" href="globals_8h.html" title="Global definitions and macros are set in this file. " alt="" coords="139,80,213,107"/>
+<area shape="rect" id="node2" href="globals_8h.html" title="Global definitions and macros are set in this file. " alt="" coords="235,80,309,107"/>
 <area shape="rect" id="node3" href="device_8h_source.html" title="device.h" alt="" coords="7,155,76,181"/>
 <area shape="rect" id="node7" href="commands_8h.html" title="Definitions for commands, parameters and packages. " alt="" coords="275,155,373,181"/>
+<area shape="rect" id="node8" href="utils_8h.html" title="Definition of utility functions. " alt="" coords="397,155,454,181"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -89,48 +90,21 @@ struct <a class="el" href="structst__data.html">st_data</a>&#160;</td><td class=
 <tr class="memitem:a44c3cbd8e234e0816f0334e29646a800"><td class="memItemLeft" align="right" valign="top"><a id="a44c3cbd8e234e0816f0334e29646a800"></a>
 struct <a class="el" href="structst__mem.html">st_mem</a> g_mem&#160;</td><td class="memItemRight" valign="bottom"><b>c_mem</b></td></tr>
 <tr class="separator:a44c3cbd8e234e0816f0334e29646a800"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a894b799ffe45f442a6a897580ab7e98e"><td class="memItemLeft" align="right" valign="top"><a id="a894b799ffe45f442a6a897580ab7e98e"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>tau_feedback</b></td></tr>
-<tr class="separator:a894b799ffe45f442a6a897580ab7e98e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad47cd0e4d0fcf5739a88e52e949a8084"><td class="memItemLeft" align="right" valign="top"><a id="ad47cd0e4d0fcf5739a88e52e949a8084"></a>
 uint32&#160;</td><td class="memItemRight" valign="bottom"><b>timer_value</b></td></tr>
 <tr class="separator:ad47cd0e4d0fcf5739a88e52e949a8084"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9bab7f1b1cf2ba38d5968eee42644c32"><td class="memItemLeft" align="right" valign="top"><a id="a9bab7f1b1cf2ba38d5968eee42644c32"></a>
 uint32&#160;</td><td class="memItemRight" valign="bottom"><b>timer_value0</b></td></tr>
 <tr class="separator:a9bab7f1b1cf2ba38d5968eee42644c32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53a494e9edc739a4f7c884778d1a93b1"><td class="memItemLeft" align="right" valign="top"><a id="a53a494e9edc739a4f7c884778d1a93b1"></a>
-int32&#160;</td><td class="memItemRight" valign="bottom"><b>dev_tension</b></td></tr>
-<tr class="separator:a53a494e9edc739a4f7c884778d1a93b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21f4f67e4203dea0b9956589eaa6cef3"><td class="memItemLeft" align="right" valign="top"><a id="a21f4f67e4203dea0b9956589eaa6cef3"></a>
-uint8&#160;</td><td class="memItemRight" valign="bottom"><b>dev_pwm_limit</b></td></tr>
-<tr class="separator:a21f4f67e4203dea0b9956589eaa6cef3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa89a782cfe75ce7970236babd308fe69"><td class="memItemLeft" align="right" valign="top"><a id="aa89a782cfe75ce7970236babd308fe69"></a>
-CYBIT&#160;</td><td class="memItemRight" valign="bottom"><b>reset_last_value_flag</b></td></tr>
-<tr class="separator:aa89a782cfe75ce7970236babd308fe69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac42fa606610c2600210d9b7b2c1d0882"><td class="memItemLeft" align="right" valign="top"><a id="ac42fa606610c2600210d9b7b2c1d0882"></a>
-CYBIT&#160;</td><td class="memItemRight" valign="bottom"><b>tension_valid</b></td></tr>
-<tr class="separator:ac42fa606610c2600210d9b7b2c1d0882"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e6fda88dfdabc63859f8907eb702920"><td class="memItemLeft" align="right" valign="top"><a id="a1e6fda88dfdabc63859f8907eb702920"></a>
 CYBIT&#160;</td><td class="memItemRight" valign="bottom"><b>interrupt_flag</b></td></tr>
 <tr class="separator:a1e6fda88dfdabc63859f8907eb702920"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a156a860c465529ff2f515725ab816a58"><td class="memItemLeft" align="right" valign="top"><a id="a156a860c465529ff2f515725ab816a58"></a>
-CYBIT&#160;</td><td class="memItemRight" valign="bottom"><b>watchdog_flag</b></td></tr>
-<tr class="separator:a156a860c465529ff2f515725ab816a58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56c9d5eb4a24dbc15f90f8b7bad5f8df"><td class="memItemLeft" align="right" valign="top"><a id="a56c9d5eb4a24dbc15f90f8b7bad5f8df"></a>
-int16&#160;</td><td class="memItemRight" valign="bottom"><b>ADC_buf</b> [1]</td></tr>
-<tr class="separator:a56c9d5eb4a24dbc15f90f8b7bad5f8df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ac7ad7c894db750e93bc745818e26ca"><td class="memItemLeft" align="right" valign="top"><a id="a8ac7ad7c894db750e93bc745818e26ca"></a>
-int8&#160;</td><td class="memItemRight" valign="bottom"><b>pwm_sign</b></td></tr>
-<tr class="separator:a8ac7ad7c894db750e93bc745818e26ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47118db87acd24ae6dac18b036f360ec"><td class="memItemLeft" align="right" valign="top"><a id="a47118db87acd24ae6dac18b036f360ec"></a>
 uint8&#160;</td><td class="memItemRight" valign="bottom"><b>N_IMU_Connected</b></td></tr>
 <tr class="separator:a47118db87acd24ae6dac18b036f360ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99668f3210aba0be3baec19486621bce"><td class="memItemLeft" align="right" valign="top"><a id="a99668f3210aba0be3baec19486621bce"></a>
 uint8&#160;</td><td class="memItemRight" valign="bottom"><b>IMU_connected</b> [N_IMU_MAX]</td></tr>
 <tr class="separator:a99668f3210aba0be3baec19486621bce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e908aa8750ba310d61de278c5d8525c"><td class="memItemLeft" align="right" valign="top"><a id="a9e908aa8750ba310d61de278c5d8525c"></a>
-uint8&#160;</td><td class="memItemRight" valign="bottom"><b>IMU_conf</b> [N_IMU_MAX][5]</td></tr>
-<tr class="separator:a9e908aa8750ba310d61de278c5d8525c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86272fcfcab512d38a11824196df4bbc"><td class="memItemLeft" align="right" valign="top"><a id="a86272fcfcab512d38a11824196df4bbc"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>imus_data_size</b></td></tr>
 <tr class="separator:a86272fcfcab512d38a11824196df4bbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -158,26 +132,17 @@ uint8&#160;</td><td class="memItemRight" valign="bottom"><b>MagCal</b> [N_IMU_MA
 <tr class="memitem:af5f2d49e123a057d358297a34194ebdc"><td class="memItemLeft" align="right" valign="top"><a id="af5f2d49e123a057d358297a34194ebdc"></a>
 uint8&#160;</td><td class="memItemRight" valign="bottom"><b>Temp</b> [N_IMU_MAX][2]</td></tr>
 <tr class="separator:af5f2d49e123a057d358297a34194ebdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01e9fc6c5fda91487808e8f9942b5384"><td class="memItemLeft" align="right" valign="top"><a id="a01e9fc6c5fda91487808e8f9942b5384"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>frsAccReg</b></td></tr>
-<tr class="separator:a01e9fc6c5fda91487808e8f9942b5384"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ebf4e2ea7e01931802b38fa889f45a7"><td class="memItemLeft" align="right" valign="top"><a id="a1ebf4e2ea7e01931802b38fa889f45a7"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>frsGyroReg</b></td></tr>
-<tr class="separator:a1ebf4e2ea7e01931802b38fa889f45a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f84fea35715705043209a7e7360dd35"><td class="memItemLeft" align="right" valign="top"><a id="a0f84fea35715705043209a7e7360dd35"></a>
-uint8&#160;</td><td class="memItemRight" valign="bottom"><b>rateAcc</b></td></tr>
-<tr class="separator:a0f84fea35715705043209a7e7360dd35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64d7e6e59390bf4071bcf43346301dbe"><td class="memItemLeft" align="right" valign="top"><a id="a64d7e6e59390bf4071bcf43346301dbe"></a>
-uint8&#160;</td><td class="memItemRight" valign="bottom"><b>rateGyro</b></td></tr>
-<tr class="separator:a64d7e6e59390bf4071bcf43346301dbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0c4d3f055f976340a0e604e58b95a8a"><td class="memItemLeft" align="right" valign="top"><a id="ac0c4d3f055f976340a0e604e58b95a8a"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>Quat</b> [4] = {1,0,0,0}</td></tr>
+<tr class="separator:ac0c4d3f055f976340a0e604e58b95a8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Global variables. </p>
-<dl class="section date"><dt>Date</dt><dd>October 01, 2017 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>February 01, 2018 </dd></dl>
 <dl class="section author"><dt>Author</dt><dd><em>Centro "E.Piaggio"</em> </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(C) 2012-2016 qbrobotics. All rights reserved. </dd>
 <dd>
-(C) 2017 Centro "E.Piaggio". All rights reserved. </dd></dl>
+(C) 2017-2018 Centro "E.Piaggio". All rights reserved. </dd></dl>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

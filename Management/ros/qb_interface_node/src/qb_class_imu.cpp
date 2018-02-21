@@ -52,8 +52,8 @@ qb_class_imu::qb_class_imu(){
 	imuboard_pub_acc_  = node_->advertise<qb_interface::inertialSensorArray>("/qb_class_imu/acc", 1);
 	imuboard_pub_gyro_ = node_->advertise<qb_interface::inertialSensorArray>("/qb_class_imu/gyro", 1);
 	imuboard_pub_mag_  = node_->advertise<qb_interface::inertialSensorArray>("/qb_class_imu/mag", 1);
-	imuboard_pub_quat_ = node_->advertise<qb_interface::inertialSensor>("/qb_class_imu/quat", 1);
-	imuboard_pub_temp_ = node_->advertise<qb_interface::inertialSensor>("/qb_class_imu/temp", 1);
+	imuboard_pub_quat_ = node_->advertise<qb_interface::quaternionArray>("/qb_class_imu/quat", 1);
+	imuboard_pub_temp_ = node_->advertise<qb_interface::temperatureArray>("/qb_class_imu/temp", 1);
 
 	Acc_.resize(imuboard_chain_[0]->n_imu_,3);
 	Acc_old_.resize(imuboard_chain_[0]->n_imu_,3);
@@ -144,15 +144,14 @@ bool qb_class_imu::readIMU(){
 				mag.m.push_back(tmp_mag);
 			}
 
-
 			
 			if (imuboard_chain_[k]->imu_table_[5*i+3])
 			{
 				tmp_quat.id = imuboard_chain_[k]->ids_[i];
-				tmp_quat.x  = imuboard_chain_[k]->imu_values_[(3*3+4+1)*i+9];
-				tmp_quat.y  = imuboard_chain_[k]->imu_values_[(3*3+4+1)*i+10];
-				tmp_quat.z  = imuboard_chain_[k]->imu_values_[(3*3+4+1)*i+11];
-				tmp_quat.w  = imuboard_chain_[k]->imu_values_[(3*3+4+1)*i+12];
+				tmp_quat.w  = imuboard_chain_[k]->imu_values_[(3*3+4+1)*i+9];
+				tmp_quat.x  = imuboard_chain_[k]->imu_values_[(3*3+4+1)*i+10];
+				tmp_quat.y  = imuboard_chain_[k]->imu_values_[(3*3+4+1)*i+11];
+				tmp_quat.z  = imuboard_chain_[k]->imu_values_[(3*3+4+1)*i+12];
 				quat.m.push_back(tmp_quat);
 			}
 			
@@ -175,8 +174,8 @@ bool qb_class_imu::readIMU(){
 		imuboard_pub_acc_.publish(acc);
 		imuboard_pub_gyro_.publish(gyro);			
 		imuboard_pub_mag_.publish(mag);	
-		// imuboard_pub_quat_.publish(quat);
-		// imuboard_pub_temp_.publish(temp);
+		imuboard_pub_quat_.publish(quat);
+		imuboard_pub_temp_.publish(temp);
  	}
 
  	Acc_old_ = Acc_;

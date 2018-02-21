@@ -2,7 +2,7 @@
 // BSD 3-Clause License
 
 // Copyright (c) 2016, qbrobotics
-// Copyright (c) 2017, Centro "E.Piaggio"
+// Copyright (c) 2017-2018, Centro "E.Piaggio"
 // All rights reserved.
 
 // Redistribution and use in source and binary forms, with or without
@@ -36,10 +36,10 @@
 * \file         interruptions.h
 *
 * \brief        Interruptions header file.
-* \date         October 01, 2017
+* \date         February 01, 2018
 * \author       _Centro "E.Piaggio"_
 * \copyright    (C) 2012-2016 qbrobotics. All rights reserved.
-* \copyright    (C) 2017 Centro "E.Piaggio". All rights reserved.
+* \copyright    (C) 2017-2018 Centro "E.Piaggio". All rights reserved.
 */
 
 #ifndef INTERRUPTIONS_H_INCLUDED
@@ -47,21 +47,14 @@
 
 //==================================================================     include
 #include <device.h>
-#include <IMU_functions.h>
 //=====================================================        Interrupt Handler
     
 CY_ISR_PROTO(ISR_RS485_RX_ExInterrupt);
-CY_ISR_PROTO(ISR_WATCHDOG_Handler);
 
 //=====================================================     function declaration
 
 void function_scheduler();
-
-void analog_read_end();
-
-
 void interrupt_manager();
-
 
 // ----------------------------------------------------------------------------
 

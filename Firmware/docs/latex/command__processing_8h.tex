@@ -5,7 +5,7 @@
 Definition of command processing functions.  
 
 
-{\ttfamily \#include $<$globals.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}globals.\+h\char`\"{}}\newline
 Include dependency graph for command\+\_\+processing.\+h\+:
 \nopagebreak
 \begin{figure}[H]
@@ -25,14 +25,14 @@ This graph shows which files directly or indirectly include this file\+:
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\label{command__processing_8h_abb781ac00e0752ce772a75f7b5d1a5b7}} 
-void {\bfseries set\+Zeros} (void)
-\item 
 \mbox{\label{command__processing_8h_a5ef086c932682ca5f7549b74ead732aa}} 
 void {\bfseries get\+\_\+param\+\_\+list} (uint16 index)
 \item 
 \mbox{\label{command__processing_8h_a6fda7bc0be24d261f9cb09e77616b1be}} 
 void {\bfseries info\+Prepare} (unsigned char $\ast$)
+\item 
+\mbox{\label{command__processing_8h_a065ff61e3097bf916aea076a8decb92b}} 
+void {\bfseries info\+Reading} (unsigned char $\ast$)
 \item 
 \mbox{\label{command__processing_8h_af5dcf9e6d2a6421fbe636487e7f9f240}} 
 void {\bfseries info\+Send} ()
@@ -60,31 +60,7 @@ uint8 \textbf{ mem\+Init} ()
 \mbox{\label{command__processing_8h_a6e19f1d501b0105e925c376d93f06a70}} 
 uint8 {\bfseries L\+C\+R\+Checksum} (uint8 $\ast$, uint8)
 \item 
-\mbox{\label{command__processing_8h_a107fc9f2982f9a953bdd82aa07279499}} 
-void {\bfseries cmd\+\_\+activate} ()
-\item 
-\mbox{\label{command__processing_8h_a2d8a4542f55af960a27f875b00aad6a1}} 
-void {\bfseries cmd\+\_\+set\+\_\+inputs} ()
-\item 
-void \textbf{ cmd\+\_\+get\+\_\+measurements} ()
-\item 
-\mbox{\label{command__processing_8h_aaf613e251c1e14fe4fffe3e9e033f9f7}} 
-void {\bfseries cmd\+\_\+get\+\_\+currents} ()
-\item 
-\mbox{\label{command__processing_8h_ae579c6ac56fef33632f9c9f2c42b90a0}} 
-void {\bfseries cmd\+\_\+get\+\_\+emg} ()
-\item 
-\mbox{\label{command__processing_8h_aa94cd9c2e2fbfc5b98e84f67569cfe82}} 
-void {\bfseries cmd\+\_\+set\+\_\+watchdog} ()
-\item 
-\mbox{\label{command__processing_8h_a554d563001517bfbc44400a1e999b393}} 
-void {\bfseries cmd\+\_\+get\+\_\+activate} ()
-\item 
-\mbox{\label{command__processing_8h_aa86bf1f2fa69ab5927f7e4e40eb40581}} 
-void {\bfseries cmd\+\_\+set\+\_\+baudrate} ()
-\item 
-\mbox{\label{command__processing_8h_a20db4694e8caa572ec479f73ce8b3b02}} 
-void {\bfseries cmd\+\_\+get\+\_\+inputs} ()
+void \textbf{ cmd\+\_\+set\+\_\+baudrate} ()
 \item 
 \mbox{\label{command__processing_8h_a1a2493bfc2f30171d7e7a3bd5aebab14}} 
 void {\bfseries cmd\+\_\+store\+\_\+params} ()
@@ -101,7 +77,7 @@ void {\bfseries cmd\+\_\+get\+\_\+imu\+\_\+readings} ()
 Definition of command processing functions. 
 
 \begin{DoxyDate}{Date}
-October 01, 2017 
+February 01, 2018 
 \end{DoxyDate}
 \begin{DoxyAuthor}{Author}
 {\itshape Centro \char`\"{}\+E.\+Piaggio\char`\"{}} 
@@ -109,16 +85,16 @@ October 01, 2017
 \begin{DoxyCopyright}{Copyright}
 (C) 2012-\/2016 qbrobotics. All rights reserved. 
 
-(C) 2017 Centro \char`\"{}\+E.\+Piaggio\char`\"{}. All rights reserved. 
+(C) 2017-\/2018 Centro \char`\"{}\+E.\+Piaggio\char`\"{}. All rights reserved. 
 \end{DoxyCopyright}
 
 
 \subsection{Function Documentation}
-\mbox{\label{command__processing_8h_af5ccd403f1d3e49c97bafd6e7713cff3}} 
-\index{command\+\_\+processing.\+h@{command\+\_\+processing.\+h}!cmd\+\_\+get\+\_\+measurements@{cmd\+\_\+get\+\_\+measurements}}
-\index{cmd\+\_\+get\+\_\+measurements@{cmd\+\_\+get\+\_\+measurements}!command\+\_\+processing.\+h@{command\+\_\+processing.\+h}}
-\subsubsection{cmd\+\_\+get\+\_\+measurements()}
-{\footnotesize\ttfamily void cmd\+\_\+get\+\_\+measurements (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+\mbox{\label{command__processing_8h_aa86bf1f2fa69ab5927f7e4e40eb40581}} 
+\index{command\+\_\+processing.\+h@{command\+\_\+processing.\+h}!cmd\+\_\+set\+\_\+baudrate@{cmd\+\_\+set\+\_\+baudrate}}
+\index{cmd\+\_\+set\+\_\+baudrate@{cmd\+\_\+set\+\_\+baudrate}!command\+\_\+processing.\+h@{command\+\_\+processing.\+h}}
+\subsubsection{cmd\+\_\+set\+\_\+baudrate()}
+{\footnotesize\ttfamily void cmd\+\_\+set\+\_\+baudrate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 Bunch of functions used on request from U\+A\+RT communication \mbox{\label{command__processing_8h_afe52941f8bc21271e811fb0d9f265f38}} 
 \index{command\+\_\+processing.\+h@{command\+\_\+processing.\+h}!mem\+Init@{mem\+Init}}

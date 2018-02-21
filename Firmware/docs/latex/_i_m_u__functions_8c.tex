@@ -48,6 +48,9 @@ void {\bfseries Read\+Mag} (int n)
 \mbox{\label{_i_m_u__functions_8c_aad3b4856a76c623025484fe5b931bdd4}} 
 void {\bfseries Read\+Mag\+Cal} (int n)
 \item 
+\mbox{\label{_i_m_u__functions_8c_a8eeecefb2efe7e01711fb9448c31ae76}} 
+void {\bfseries Read\+Quat} (int n)
+\item 
 \mbox{\label{_i_m_u__functions_8c_a27bf3026dfe4cb0d6d255decc9944d71}} 
 void {\bfseries Read\+All\+I\+M\+Us} ()
 \item 
@@ -55,12 +58,13 @@ void {\bfseries Read\+All\+I\+M\+Us} ()
 void {\bfseries Read\+Temp} (int n)
 \item 
 \mbox{\label{_i_m_u__functions_8c_af429837786eebd63058e26b3c86ac17a}} 
-void \textbf{ Write\+Control\+Register} (uint8 address, uint8 dta)
-\begin{DoxyCompactList}\small\item\em 
-
- \end{DoxyCompactList}\item 
+void {\bfseries Write\+Control\+Register} (uint8 address, uint8 dta)
+\item 
 \mbox{\label{_i_m_u__functions_8c_a209b21711f8765bb41e1823aab7b995b}} 
 uint8 {\bfseries Read\+Control\+Register} (uint8 address)
+\item 
+\mbox{\label{_i_m_u__functions_8c_a26f85d9c393e73879461861d2ac87379}} 
+void {\bfseries S\+P\+I\+\_\+delay} ()
 \end{DoxyCompactItemize}
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
@@ -83,7 +87,7 @@ uint8 {\bfseries Mag\+Cal} [N\+\_\+\+I\+M\+U\+\_\+\+M\+AX][3]
 Implementation of I\+MU module functions. 
 
 \begin{DoxyDate}{Date}
-October 01, 2017 
+February 01, 2018 
 \end{DoxyDate}
 \begin{DoxyAuthor}{Author}
 {\itshape Centro \char`\"{}\+E.\+Piaggio\char`\"{}} 
@@ -91,5 +95,5 @@ October 01, 2017
 \begin{DoxyCopyright}{Copyright}
 (C) 2012-\/2016 qbrobotics. All rights reserved. 
 
-(C) 2017 Centro \char`\"{}\+E.\+Piaggio\char`\"{}. All rights reserved. 
+(C) 2017-\/2018 Centro \char`\"{}\+E.\+Piaggio\char`\"{}. All rights reserved. 
 \end{DoxyCopyright}

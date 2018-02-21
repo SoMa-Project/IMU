@@ -6,9 +6,9 @@ Definition of I\+MU module functions.
 
 
 {\ttfamily \#include $<$project.\+h$>$}\newline
-{\ttfamily \#include $<$stdlib.\+h$>$}\newline
-{\ttfamily \#include $<$stdio.\+h$>$}\newline
 {\ttfamily \#include $<$globals.\+h$>$}\newline
+{\ttfamily \#include $<$S\+T\+D\+L\+I\+B.\+H$>$}\newline
+{\ttfamily \#include $<$S\+T\+D\+I\+O.\+H$>$}\newline
 Include dependency graph for I\+M\+U\+\_\+functions.\+h\+:
 \nopagebreak
 \begin{figure}[H]
@@ -225,6 +225,18 @@ This graph shows which files directly or indirectly include this file\+:
 \item 
 \mbox{\label{_i_m_u__functions_8h_a212460e743fecb084d717bb2180c5a56}} 
 \#define {\bfseries D\+E\+G\+\_\+\+T\+O\+\_\+\+R\+AD}~(3.\+14159265359 / 180.\+0)
+\item 
+\mbox{\label{_i_m_u__functions_8h_a447fa9b5c261de8bd2c70d7bb68f9fad}} 
+\#define {\bfseries T\+I\+C\+K2\+G\+Y\+RO}~0.\+000133158
+\item 
+\mbox{\label{_i_m_u__functions_8h_a553b95dd1fedb0cc5c10f6291e5e1516}} 
+\#define {\bfseries T\+I\+C\+K2\+A\+CC}~0.\+000061037
+\item 
+\mbox{\label{_i_m_u__functions_8h_a1b996515309fc3c03449912bb33046e3}} 
+\#define {\bfseries B\+E\+TA}~100000.\+0
+\item 
+\mbox{\label{_i_m_u__functions_8h_a11f6bcc58aee4b8a1346110de1046108}} 
+\#define {\bfseries G\+Y\+R\+O\+\_\+\+T\+HR}~0.\+2618
 \end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
@@ -253,6 +265,9 @@ void {\bfseries Read\+Mag} (int n)
 \mbox{\label{_i_m_u__functions_8h_aad3b4856a76c623025484fe5b931bdd4}} 
 void {\bfseries Read\+Mag\+Cal} (int n)
 \item 
+\mbox{\label{_i_m_u__functions_8h_a8eeecefb2efe7e01711fb9448c31ae76}} 
+void {\bfseries Read\+Quat} (int n)
+\item 
 \mbox{\label{_i_m_u__functions_8h_ab0883cd12ebf2937fd6da478ac3ab976}} 
 void {\bfseries Read\+Temp} (int n)
 \item 
@@ -262,25 +277,17 @@ void {\bfseries Read\+I\+MU} (int n)
 \mbox{\label{_i_m_u__functions_8h_a27bf3026dfe4cb0d6d255decc9944d71}} 
 void {\bfseries Read\+All\+I\+M\+Us} ()
 \item 
-\mbox{\label{_i_m_u__functions_8h_aedf370e8317a01e05be04c137b24c663}} 
-void {\bfseries L\+F\+\_\+\+Frequency\+\_\+\+Change\+\_\+\+Accel\+\_\+\+And\+\_\+\+Gyro} (int d\+\_\+frequency, int n\+\_\+imu)
-\item 
-\mbox{\label{_i_m_u__functions_8h_abb751a71b7e833c6026896dbbcaf2559}} 
-void {\bfseries L\+F\+\_\+\+Frequency\+\_\+\+Change\+\_\+\+Accel} (int d\+\_\+frequency, int n\+\_\+imu)
-\item 
-\mbox{\label{_i_m_u__functions_8h_aa59b6641f60e4cbcf11ddd98a31c7d4c}} 
-void {\bfseries L\+F\+\_\+\+Frequency\+\_\+\+Change\+\_\+\+Gyro} (int d\+\_\+frequency, int n\+\_\+imu)
-\item 
 \mbox{\label{_i_m_u__functions_8h_a209b21711f8765bb41e1823aab7b995b}} 
 uint8 {\bfseries Read\+Control\+Register} (uint8 address)
 \item 
 \mbox{\label{_i_m_u__functions_8h_af429837786eebd63058e26b3c86ac17a}} 
-void \textbf{ Write\+Control\+Register} (uint8 address, uint8 dta)
-\begin{DoxyCompactList}\small\item\em 
-
- \end{DoxyCompactList}\item 
+void {\bfseries Write\+Control\+Register} (uint8 address, uint8 dta)
+\item 
 \mbox{\label{_i_m_u__functions_8h_a3bb201c102e53b1b56398272fa105fbb}} 
 void {\bfseries Chip\+Selector} (int n)
+\item 
+\mbox{\label{_i_m_u__functions_8h_a26f85d9c393e73879461861d2ac87379}} 
+void {\bfseries S\+P\+I\+\_\+delay} ()
 \end{DoxyCompactItemize}
 
 
@@ -288,7 +295,7 @@ void {\bfseries Chip\+Selector} (int n)
 Definition of I\+MU module functions. 
 
 \begin{DoxyDate}{Date}
-October 01, 2017 
+February 01, 2018 
 \end{DoxyDate}
 \begin{DoxyAuthor}{Author}
 {\itshape Centro \char`\"{}\+E.\+Piaggio\char`\"{}} 
@@ -296,5 +303,5 @@ October 01, 2017
 \begin{DoxyCopyright}{Copyright}
 (C) 2012-\/2016 qbrobotics. All rights reserved. 
 
-(C) 2017 Centro \char`\"{}\+E.\+Piaggio\char`\"{}. All rights reserved. 
+(C) 2017-\/2018 Centro \char`\"{}\+E.\+Piaggio\char`\"{}. All rights reserved. 
 \end{DoxyCopyright}

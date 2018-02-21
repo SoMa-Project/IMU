@@ -6,7 +6,7 @@
 
 #Build Date:         Jul 19 2017 14:31:00
 
-#File Generated:     Nov 15 2017 19:00:31
+#File Generated:     Feb 12 2018 10:04:44
 
 #Purpose:            
 
@@ -44,17 +44,17 @@ Phase 2
 Phase 3
 
 Design Statistics after Packing
-    Number of Combinational MCs 	:	33
+    Number of Combinational MCs 	:	31
     Number of Sequential MCs    	:	26
     Number of DPs               	:	7
-    Number of Controls          	:	10
+    Number of Controls          	:	8
     Number of Status            	:	6
     Number of SyncCells         	:	2
     Number of count7cells       	:	2
 
 Device Utilization Summary after Packing
-    Macrocells                  :	59/192
-    UDBS                        :	13/24
+    Macrocells                  :	57/192
+    UDBS                        :	12/24
     IOs                         :	26/72
 
 
@@ -79,63 +79,55 @@ analysis after routing.
 ######################################################################
                      Clock Summary 
 ======================================================================
-Number of clocks: 13
-Clock: CLOCK_UART           | Frequency:  52.3 MHz | Target:  16.0 MHz
-Clock: CyBUS_CLK            | Frequency:  66.3 MHz | Target:  48.0 MHz
+Number of clocks: 9
+Clock: CLOCK_UART           | Frequency:  51.5 MHz | Target:  16.0 MHz
+Clock: CyBUS_CLK            | Frequency:  53.7 MHz | Target:  48.0 MHz
 Clock: CyBUS_CLK(fixed-function) | Frequency: N/A       | Target:  48.0 MHz
 Clock: CyILO                | Frequency: N/A       | Target:   0.1 MHz
 Clock: CyIMO                | Frequency: N/A       | Target:  24.0 MHz
 Clock: CyMASTER_CLK         | Frequency: N/A       | Target:  48.0 MHz
 Clock: CyPLL_OUT            | Frequency: N/A       | Target:  48.0 MHz
-Clock: SPI_IMU_IntClock     | Frequency:  55.6 MHz | Target:   2.0 MHz
-Clock: WATCHDOG_CLK         | Frequency: N/A       | Target:   0.0 MHz
-Clock: WATCHDOG_CLK(fixed-function) | Frequency: N/A       | Target:   0.0 MHz
-Clock: isr_clock            | Frequency: N/A       | Target:   0.0 MHz
-Clock: isr_clock(routed)    | Frequency: N/A       | Target:   0.0 MHz
+Clock: SPI_IMU_IntClock     | Frequency:  54.6 MHz | Target:   2.0 MHz
 Clock: timer_clock          | Frequency:  43.5 MHz | Target:   1.0 MHz
 
 ======================================================================
                      End of Clock Summary
 ######################################################################
 
-D2088: Phase 6, elapsed time : 0.0 (sec)
+D2088: Phase 6, elapsed time : 0.1 (sec)
 
 Phase 7
 ######################################################################
                      Clock Summary 
 ======================================================================
-Number of clocks: 13
-Clock: CLOCK_UART           | Frequency:  50.1 MHz | Target:  16.0 MHz
-Clock: CyBUS_CLK            | Frequency:  66.6 MHz | Target:  48.0 MHz
+Number of clocks: 9
+Clock: CLOCK_UART           | Frequency:  41.8 MHz | Target:  16.0 MHz
+Clock: CyBUS_CLK            | Frequency:  69.4 MHz | Target:  48.0 MHz
 Clock: CyBUS_CLK(fixed-function) | Frequency: N/A       | Target:  48.0 MHz
 Clock: CyILO                | Frequency: N/A       | Target:   0.1 MHz
 Clock: CyIMO                | Frequency: N/A       | Target:  24.0 MHz
 Clock: CyMASTER_CLK         | Frequency: N/A       | Target:  48.0 MHz
 Clock: CyPLL_OUT            | Frequency: N/A       | Target:  48.0 MHz
-Clock: SPI_IMU_IntClock     | Frequency:  55.6 MHz | Target:   2.0 MHz
-Clock: WATCHDOG_CLK         | Frequency: N/A       | Target:   0.0 MHz
-Clock: WATCHDOG_CLK(fixed-function) | Frequency: N/A       | Target:   0.0 MHz
-Clock: isr_clock            | Frequency: N/A       | Target:   0.0 MHz
-Clock: isr_clock(routed)    | Frequency: N/A       | Target:   0.0 MHz
+Clock: SPI_IMU_IntClock     | Frequency:  69.0 MHz | Target:   2.0 MHz
 Clock: timer_clock          | Frequency:  43.5 MHz | Target:   1.0 MHz
 
 ======================================================================
                      End of Clock Summary
 ######################################################################
-D2088: Phase 7, elapsed time : 0.9 (sec)
+D2088: Phase 7, elapsed time : 1.1 (sec)
 
 Final Design Statistics
-    Number of Combinational MCs 	:	33
+    Number of Combinational MCs 	:	31
     Number of Sequential MCs    	:	26
     Number of DPs               	:	7
-    Number of Controls          	:	10
+    Number of Controls          	:	8
     Number of Status            	:	6
     Number of SyncCells         	:	2
     Number of count7cells       	:	2
     Number of IOs       	:	26
 
 Device Utilization Summary
-    Macrocells                  :	59/192
+    Macrocells                  :	57/192
     IOs                         :	26/72
 
 
@@ -152,7 +144,7 @@ analysis after routing.
 ######################################################################
                      Clock Summary 
 ======================================================================
-Number of clocks: 13
+Number of clocks: 9
 Clock: CLOCK_UART           | Frequency:   8.0 MHz | Target:  17.5 MHz
 Clock: CyBUS_CLK            | Frequency:   8.0 MHz | Target:  52.6 MHz
 Clock: CyBUS_CLK(fixed-function) | Frequency: N/A       | Target:  48.0 MHz
@@ -160,11 +152,7 @@ Clock: CyILO                | Frequency: N/A       | Target:   0.1 MHz
 Clock: CyIMO                | Frequency: N/A       | Target:  24.0 MHz
 Clock: CyMASTER_CLK         | Frequency: N/A       | Target:  48.0 MHz
 Clock: CyPLL_OUT            | Frequency: N/A       | Target:  48.0 MHz
-Clock: SPI_IMU_IntClock     | Frequency:  55.6 MHz | Target:   2.2 MHz
-Clock: WATCHDOG_CLK         | Frequency: N/A       | Target:   0.0 MHz
-Clock: WATCHDOG_CLK(fixed-function) | Frequency: N/A       | Target:   0.0 MHz
-Clock: isr_clock            | Frequency: N/A       | Target:   0.0 MHz
-Clock: isr_clock(routed)    | Frequency: N/A       | Target:   0.0 MHz
+Clock: SPI_IMU_IntClock     | Frequency:  50.9 MHz | Target:   2.2 MHz
 Clock: timer_clock          | Frequency:  43.5 MHz | Target:   1.1 MHz
 
 ======================================================================

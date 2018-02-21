@@ -30,7 +30,7 @@ old_file = strcat(old_file, ver);
 new_file = strcat('', lib);
 new_file = strcat(new_file, 'IMUboard_library');
 
-if ( (str2double(ver(1:end-1)) >= 2015) )
+if ( (str2double(ver(1:end-1)) >= 2013) )
     old_file = strcat(old_file, '.slx');
     new_file = strcat(new_file, '.slx');
     

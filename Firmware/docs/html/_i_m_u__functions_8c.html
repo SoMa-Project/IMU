@@ -77,10 +77,11 @@ Include dependency graph for IMU_functions.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="_i_m_u__functions_8c__incl.png" border="0" usemap="#_i_m_u__functions_8c" alt=""/></div>
 <map name="_i_m_u__functions_8c" id="_i_m_u__functions_8c">
-<area shape="rect" id="node2" href="_i_m_u__functions_8h.html" title="Definition of IMU module functions. " alt="" coords="19,80,133,107"/>
-<area shape="rect" id="node6" href="globals_8h.html" title="Global definitions and macros are set in this file. " alt="" coords="165,155,240,181"/>
-<area shape="rect" id="node7" href="device_8h_source.html" title="device.h" alt="" coords="108,229,177,256"/>
-<area shape="rect" id="node9" href="commands_8h.html" title="Definitions for commands, parameters and packages. " alt="" coords="289,229,386,256"/>
+<area shape="rect" id="node2" href="_i_m_u__functions_8h.html" title="Definition of IMU module functions. " alt="" coords="249,80,364,107"/>
+<area shape="rect" id="node4" href="globals_8h.html" title="Global definitions and macros are set in this file. " alt="" coords="219,155,293,181"/>
+<area shape="rect" id="node5" href="device_8h_source.html" title="device.h" alt="" coords="43,229,112,256"/>
+<area shape="rect" id="node8" href="commands_8h.html" title="Definitions for commands, parameters and packages. " alt="" coords="311,229,409,256"/>
+<area shape="rect" id="node9" href="utils_8h.html" title="Definition of utility functions. " alt="" coords="433,229,490,256"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -116,6 +117,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>ReadMag</b> (int n)</
 <tr class="memitem:aad3b4856a76c623025484fe5b931bdd4"><td class="memItemLeft" align="right" valign="top"><a id="aad3b4856a76c623025484fe5b931bdd4"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ReadMagCal</b> (int n)</td></tr>
 <tr class="separator:aad3b4856a76c623025484fe5b931bdd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8eeecefb2efe7e01711fb9448c31ae76"><td class="memItemLeft" align="right" valign="top"><a id="a8eeecefb2efe7e01711fb9448c31ae76"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ReadQuat</b> (int n)</td></tr>
+<tr class="separator:a8eeecefb2efe7e01711fb9448c31ae76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a27bf3026dfe4cb0d6d255decc9944d71"><td class="memItemLeft" align="right" valign="top"><a id="a27bf3026dfe4cb0d6d255decc9944d71"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ReadAllIMUs</b> ()</td></tr>
 <tr class="separator:a27bf3026dfe4cb0d6d255decc9944d71"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -123,13 +127,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>ReadAllIMUs</b> ()</t
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ReadTemp</b> (int n)</td></tr>
 <tr class="separator:ab0883cd12ebf2937fd6da478ac3ab976"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af429837786eebd63058e26b3c86ac17a"><td class="memItemLeft" align="right" valign="top"><a id="af429837786eebd63058e26b3c86ac17a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_m_u__functions_8c.html#af429837786eebd63058e26b3c86ac17a">WriteControlRegister</a> (uint8 address, uint8 dta)</td></tr>
-<tr class="memdesc:af429837786eebd63058e26b3c86ac17a"><td class="mdescLeft">&#160;</td><td class="mdescRight"><hr/>
- <br /></td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>WriteControlRegister</b> (uint8 address, uint8 dta)</td></tr>
 <tr class="separator:af429837786eebd63058e26b3c86ac17a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a209b21711f8765bb41e1823aab7b995b"><td class="memItemLeft" align="right" valign="top"><a id="a209b21711f8765bb41e1823aab7b995b"></a>
 uint8&#160;</td><td class="memItemRight" valign="bottom"><b>ReadControlRegister</b> (uint8 address)</td></tr>
 <tr class="separator:a209b21711f8765bb41e1823aab7b995b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26f85d9c393e73879461861d2ac87379"><td class="memItemLeft" align="right" valign="top"><a id="a26f85d9c393e73879461861d2ac87379"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SPI_delay</b> ()</td></tr>
+<tr class="separator:a26f85d9c393e73879461861d2ac87379"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -148,11 +153,11 @@ uint8&#160;</td><td class="memItemRight" valign="bottom"><b>MagCal</b> [N_IMU_MA
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implementation of IMU module functions. </p>
-<dl class="section date"><dt>Date</dt><dd>October 01, 2017 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>February 01, 2018 </dd></dl>
 <dl class="section author"><dt>Author</dt><dd><em>Centro "E.Piaggio"</em> </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(C) 2012-2016 qbrobotics. All rights reserved. </dd>
 <dd>
-(C) 2017 Centro "E.Piaggio". All rights reserved. </dd></dl>
+(C) 2017-2018 Centro "E.Piaggio". All rights reserved. </dd></dl>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

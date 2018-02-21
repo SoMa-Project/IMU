@@ -71,17 +71,18 @@ $(function() {
 <p>Definition of IMU module functions.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;project.h&gt;</code><br />
-<code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;<a class="el" href="globals_8h_source.html">globals.h</a>&gt;</code><br />
+<code>#include &lt;STDLIB.H&gt;</code><br />
+<code>#include &lt;STDIO.H&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for IMU_functions.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_i_m_u__functions_8h__incl.png" border="0" usemap="#_i_m_u__functions_8h" alt=""/></div>
 <map name="_i_m_u__functions_8h" id="_i_m_u__functions_8h">
-<area shape="rect" id="node5" href="globals_8h.html" title="Global definitions and macros are set in this file. " alt="" coords="165,80,240,107"/>
-<area shape="rect" id="node6" href="device_8h_source.html" title="device.h" alt="" coords="108,155,177,181"/>
-<area shape="rect" id="node8" href="commands_8h.html" title="Definitions for commands, parameters and packages. " alt="" coords="289,155,386,181"/>
+<area shape="rect" id="node3" href="globals_8h.html" title="Global definitions and macros are set in this file. " alt="" coords="219,80,293,107"/>
+<area shape="rect" id="node4" href="device_8h_source.html" title="device.h" alt="" coords="43,155,112,181"/>
+<area shape="rect" id="node7" href="commands_8h.html" title="Definitions for commands, parameters and packages. " alt="" coords="311,155,409,181"/>
+<area shape="rect" id="node8" href="utils_8h.html" title="Definition of utility functions. " alt="" coords="433,155,490,181"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -89,11 +90,10 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="_i_m_u__functions_8h__dep__incl.png" border="0" usemap="#_i_m_u__functions_8hdep" alt=""/></div>
 <map name="_i_m_u__functions_8hdep" id="_i_m_u__functions_8hdep">
-<area shape="rect" id="node2" href="interruptions_8h.html" title="Interruptions header file. " alt="" coords="189,80,293,107"/>
-<area shape="rect" id="node3" href="command__processing_8c.html" title="Command processing functions. " alt="" coords="5,155,165,181"/>
-<area shape="rect" id="node5" href="main_8c.html" title="Firmware main file. " alt="" coords="317,155,379,181"/>
-<area shape="rect" id="node6" href="_i_m_u__functions_8c.html" title="Implementation of IMU module functions. " alt="" coords="368,80,483,107"/>
-<area shape="rect" id="node4" href="interruptions_8c.html" title="Interruption functions are in this file. " alt="" coords="189,155,293,181"/>
+<area shape="rect" id="node2" href="command__processing_8c.html" title="Command processing functions. " alt="" coords="5,80,165,107"/>
+<area shape="rect" id="node3" href="_i_m_u__functions_8c.html" title="Implementation of IMU module functions. " alt="" coords="189,80,304,107"/>
+<area shape="rect" id="node4" href="interruptions_8c.html" title="Interruption functions are in this file. " alt="" coords="328,80,432,107"/>
+<area shape="rect" id="node5" href="main_8c.html" title="Firmware main file. " alt="" coords="456,80,517,107"/>
 </map>
 </div>
 </div>
@@ -299,6 +299,18 @@ Macros</h2></td></tr>
 <tr class="memitem:a212460e743fecb084d717bb2180c5a56"><td class="memItemLeft" align="right" valign="top"><a id="a212460e743fecb084d717bb2180c5a56"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>DEG_TO_RAD</b>&#160;&#160;&#160;(3.14159265359 / 180.0)</td></tr>
 <tr class="separator:a212460e743fecb084d717bb2180c5a56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a447fa9b5c261de8bd2c70d7bb68f9fad"><td class="memItemLeft" align="right" valign="top"><a id="a447fa9b5c261de8bd2c70d7bb68f9fad"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TICK2GYRO</b>&#160;&#160;&#160;0.000133158</td></tr>
+<tr class="separator:a447fa9b5c261de8bd2c70d7bb68f9fad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a553b95dd1fedb0cc5c10f6291e5e1516"><td class="memItemLeft" align="right" valign="top"><a id="a553b95dd1fedb0cc5c10f6291e5e1516"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TICK2ACC</b>&#160;&#160;&#160;0.000061037</td></tr>
+<tr class="separator:a553b95dd1fedb0cc5c10f6291e5e1516"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b996515309fc3c03449912bb33046e3"><td class="memItemLeft" align="right" valign="top"><a id="a1b996515309fc3c03449912bb33046e3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BETA</b>&#160;&#160;&#160;100000.0</td></tr>
+<tr class="separator:a1b996515309fc3c03449912bb33046e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11f6bcc58aee4b8a1346110de1046108"><td class="memItemLeft" align="right" valign="top"><a id="a11f6bcc58aee4b8a1346110de1046108"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>GYRO_THR</b>&#160;&#160;&#160;0.2618</td></tr>
+<tr class="separator:a11f6bcc58aee4b8a1346110de1046108"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -326,6 +338,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>ReadMag</b> (int n)</
 <tr class="memitem:aad3b4856a76c623025484fe5b931bdd4"><td class="memItemLeft" align="right" valign="top"><a id="aad3b4856a76c623025484fe5b931bdd4"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ReadMagCal</b> (int n)</td></tr>
 <tr class="separator:aad3b4856a76c623025484fe5b931bdd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8eeecefb2efe7e01711fb9448c31ae76"><td class="memItemLeft" align="right" valign="top"><a id="a8eeecefb2efe7e01711fb9448c31ae76"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ReadQuat</b> (int n)</td></tr>
+<tr class="separator:a8eeecefb2efe7e01711fb9448c31ae76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0883cd12ebf2937fd6da478ac3ab976"><td class="memItemLeft" align="right" valign="top"><a id="ab0883cd12ebf2937fd6da478ac3ab976"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ReadTemp</b> (int n)</td></tr>
 <tr class="separator:ab0883cd12ebf2937fd6da478ac3ab976"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -335,34 +350,26 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>ReadIMU</b> (int n)</
 <tr class="memitem:a27bf3026dfe4cb0d6d255decc9944d71"><td class="memItemLeft" align="right" valign="top"><a id="a27bf3026dfe4cb0d6d255decc9944d71"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ReadAllIMUs</b> ()</td></tr>
 <tr class="separator:a27bf3026dfe4cb0d6d255decc9944d71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aedf370e8317a01e05be04c137b24c663"><td class="memItemLeft" align="right" valign="top"><a id="aedf370e8317a01e05be04c137b24c663"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>LF_Frequency_Change_Accel_And_Gyro</b> (int d_frequency, int n_imu)</td></tr>
-<tr class="separator:aedf370e8317a01e05be04c137b24c663"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb751a71b7e833c6026896dbbcaf2559"><td class="memItemLeft" align="right" valign="top"><a id="abb751a71b7e833c6026896dbbcaf2559"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>LF_Frequency_Change_Accel</b> (int d_frequency, int n_imu)</td></tr>
-<tr class="separator:abb751a71b7e833c6026896dbbcaf2559"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa59b6641f60e4cbcf11ddd98a31c7d4c"><td class="memItemLeft" align="right" valign="top"><a id="aa59b6641f60e4cbcf11ddd98a31c7d4c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>LF_Frequency_Change_Gyro</b> (int d_frequency, int n_imu)</td></tr>
-<tr class="separator:aa59b6641f60e4cbcf11ddd98a31c7d4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a209b21711f8765bb41e1823aab7b995b"><td class="memItemLeft" align="right" valign="top"><a id="a209b21711f8765bb41e1823aab7b995b"></a>
 uint8&#160;</td><td class="memItemRight" valign="bottom"><b>ReadControlRegister</b> (uint8 address)</td></tr>
 <tr class="separator:a209b21711f8765bb41e1823aab7b995b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af429837786eebd63058e26b3c86ac17a"><td class="memItemLeft" align="right" valign="top"><a id="af429837786eebd63058e26b3c86ac17a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_i_m_u__functions_8h.html#af429837786eebd63058e26b3c86ac17a">WriteControlRegister</a> (uint8 address, uint8 dta)</td></tr>
-<tr class="memdesc:af429837786eebd63058e26b3c86ac17a"><td class="mdescLeft">&#160;</td><td class="mdescRight"><hr/>
- <br /></td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>WriteControlRegister</b> (uint8 address, uint8 dta)</td></tr>
 <tr class="separator:af429837786eebd63058e26b3c86ac17a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3bb201c102e53b1b56398272fa105fbb"><td class="memItemLeft" align="right" valign="top"><a id="a3bb201c102e53b1b56398272fa105fbb"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ChipSelector</b> (int n)</td></tr>
 <tr class="separator:a3bb201c102e53b1b56398272fa105fbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26f85d9c393e73879461861d2ac87379"><td class="memItemLeft" align="right" valign="top"><a id="a26f85d9c393e73879461861d2ac87379"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SPI_delay</b> ()</td></tr>
+<tr class="separator:a26f85d9c393e73879461861d2ac87379"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Definition of IMU module functions. </p>
-<dl class="section date"><dt>Date</dt><dd>October 01, 2017 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>February 01, 2018 </dd></dl>
 <dl class="section author"><dt>Author</dt><dd><em>Centro "E.Piaggio"</em> </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(C) 2012-2016 qbrobotics. All rights reserved. </dd>
 <dd>
-(C) 2017 Centro "E.Piaggio". All rights reserved. </dd></dl>
+(C) 2017-2018 Centro "E.Piaggio". All rights reserved. </dd></dl>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

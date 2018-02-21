@@ -1,11 +1,11 @@
 var indexSectionsWithContent =
 {
-  0: "cfgimpqsuw",
+  0: "cfgimqsu",
   1: "s",
   2: "cgimu",
-  3: "cmw",
+  3: "cm",
   4: "q",
-  5: "cip",
+  5: "c",
   6: "i",
   7: "f"
 };

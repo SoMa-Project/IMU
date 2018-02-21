@@ -2,7 +2,7 @@
 // BSD 3-Clause License
 
 // Copyright (c) 2016, qbrobotics
-// Copyright (c) 2017, Centro "E.Piaggio"
+// Copyright (c) 2017-2018, Centro "E.Piaggio"
 // All rights reserved.
 
 // Redistribution and use in source and binary forms, with or without
@@ -36,10 +36,10 @@
 * \file         IMU_functions.c
 *
 * \brief        Implementation of IMU module functions.
-* \date         October 01, 2017
+* \date         February 01, 2018
 * \author       _Centro "E.Piaggio"_
 * \copyright    (C) 2012-2016 qbrobotics. All rights reserved.
-* \copyright    (C) 2017 Centro "E.Piaggio". All rights reserved.
+* \copyright    (C) 2017-2018 Centro "E.Piaggio". All rights reserved.
 */
 
 #include <IMU_functions.h>
@@ -54,22 +54,14 @@ extern uint8 MagCal[N_IMU_MAX][3];
 * Function Name: Imus Reset
 *********************************************************************************/	
 void ImusReset() {
-	
-    int k_imu;
-	isr_imu_Stop();		// Disable Time Interrupt
-	isr_imu_Disable();
 
     Opto_Pin_Write(0);
     CyDelay(10);
     Opto_Pin_Write(1);
     CyDelay(10);
     InitIMUgeneral();
-   
-    // Restart Time Interrupt
-    isr_imu_Start();
-	isr_imu_Enable();		
-	CyDelay(10);
 
+    CyDelay(10);
 }
 
 /*******************************************************************************
@@ -77,42 +69,42 @@ void ImusReset() {
 *********************************************************************************/
 void InitIMU(){	
     
-			WriteControlRegister(MPU9250_PWR_MGMT_1, 0x10); 
-			CyDelay(10);	
-			WriteControlRegister(MPU9250_USER_CTRL, 0x20);  //I2C master enable - disable I2C (prima 0x30)
-			CyDelay(10);
-            WriteControlRegister(MPU9250_CONFIG, 0x06); //Gyro & Temp Low Pass Filter 0x01 = 184Hz, 0x02 = 92Hz, 0x04 = 20Hz, 0x05 = 10Hz
-            CyDelay(10);	
-			WriteControlRegister(MPU9250_GYRO_CONFIG , GYRO_SF_2000); //Gyro full scale select 0x00=250°/s 0x80=500°/s 0x18=2000°/s 
-			CyDelay(10);
-            WriteControlRegister(MPU9250_ACCEL_CONFIG, ACC_SF_2G); // Acc full scale select 0x00 = 2g 0x08 = 4g 0x10 = 8g 0x18 = 16g
-            CyDelay(10);
-            WriteControlRegister(MPU9250_ACCEL_CONFIG2, 0x05);
-            CyDelay(10);
-			//mag register
-			WriteControlRegister(MPU9250_I2C_MST_CTRL, 0x0D); //set slave I2C speed
-			CyDelay(10);
-			//SLV0 (use to write)
-			WriteControlRegister(MPU9250_I2C_SLV0_ADDR, 0x0C); //set compass address
-			CyDelay(10);			
-			WriteControlRegister(MPU9250_I2C_SLV0_REG, AK8936_CNTL); //compass mode register
-			CyDelay(10);	
-			// Istruction used to read Compass
-			WriteControlRegister(MPU9250_I2C_SLV0_D0, 0x16); //0x12 continuous mode1  0x16 continuous mode2
-			CyDelay(10);
-			WriteControlRegister(MPU9250_I2C_SLV0_CTRL, 0x81); //enable data from register + 1 bit to write
-			CyDelay(10);
-			//SLV0 (use to read)
-			WriteControlRegister(MPU9250_I2C_SLV0_ADDR, 0x8C); // RCR  | AK8963_address (0x0C) 
-			CyDelay(10);
-			// Istruction used to read Compass
-			WriteControlRegister(MPU9250_I2C_SLV0_REG, 0x03); // 0x03:start from Xout Low in case of calibration 0x10:start from ASAX
-			CyDelay(10);
-			// Istruction used to read Compass
-			WriteControlRegister(MPU9250_I2C_SLV0_CTRL, 0x8D); //How many bits read  SEMPRE DISPARI 0x8D era quella che funzionava
-			CyDelay(10);
-			WriteControlRegister(MPU9250_PWR_MGMT_1, 0x00); 
-			CyDelay(20);
+	WriteControlRegister(MPU9250_PWR_MGMT_1, 0x10); 
+	CyDelay(10);	
+	WriteControlRegister(MPU9250_USER_CTRL, 0x20);  //I2C master enable - disable I2C (prima 0x30)
+	CyDelay(10);
+    WriteControlRegister(MPU9250_CONFIG, 0x06); //Gyro & Temp Low Pass Filter 0x01 = 184Hz, 0x02 = 92Hz, 0x04 = 20Hz, 0x05 = 10Hz
+    CyDelay(10);	
+	WriteControlRegister(MPU9250_GYRO_CONFIG , GYRO_SF_2000); //Gyro full scale select 0x00=250°/s 0x80=500°/s 0x18=2000°/s 
+	CyDelay(10);
+    WriteControlRegister(MPU9250_ACCEL_CONFIG, ACC_SF_2G); // Acc full scale select 0x00 = 2g 0x08 = 4g 0x10 = 8g 0x18 = 16g
+    CyDelay(10);
+    WriteControlRegister(MPU9250_ACCEL_CONFIG2, 0x05);
+    CyDelay(10);
+	//mag register
+	WriteControlRegister(MPU9250_I2C_MST_CTRL, 0x0D); //set slave I2C speed
+	CyDelay(10);
+	//SLV0 (use to write)
+	WriteControlRegister(MPU9250_I2C_SLV0_ADDR, 0x0C); //set compass address
+	CyDelay(10);			
+	WriteControlRegister(MPU9250_I2C_SLV0_REG, AK8936_CNTL); //compass mode register
+	CyDelay(10);	
+	// Istruction used to read Compass
+	WriteControlRegister(MPU9250_I2C_SLV0_D0, 0x16); //0x12 continuous mode1  0x16 continuous mode2
+	CyDelay(10);
+	WriteControlRegister(MPU9250_I2C_SLV0_CTRL, 0x81); //enable data from register + 1 bit to write
+	CyDelay(10);
+	//SLV0 (use to read)
+	WriteControlRegister(MPU9250_I2C_SLV0_ADDR, 0x8C); // RCR  | AK8963_address (0x0C) 
+	CyDelay(10);
+	// Istruction used to read Compass
+	WriteControlRegister(MPU9250_I2C_SLV0_REG, 0x03); // 0x03:start from Xout Low in case of calibration 0x10:start from ASAX
+	CyDelay(10);
+	// Istruction used to read Compass
+	WriteControlRegister(MPU9250_I2C_SLV0_CTRL, 0x8D); //How many bits read  SEMPRE DISPARI 0x8D era quella che funzionava
+	CyDelay(10);
+	WriteControlRegister(MPU9250_PWR_MGMT_1, 0x00); 
+	CyDelay(20);
 }	
 
 /*******************************************************************************
@@ -120,39 +112,39 @@ void InitIMU(){
 *********************************************************************************/
 void InitIMUMagCal(){	
     
-			WriteControlRegister(MPU9250_PWR_MGMT_1, 0x10); 
-			CyDelay(10);	
-			WriteControlRegister(MPU9250_USER_CTRL, 0x20);  //I2C master enable - disable I2C (prima 0x30)
-			CyDelay(10);
-            WriteControlRegister(MPU9250_CONFIG, 0x06); //Gyro & Temp Low Pass Filter 0x01 = 184Hz, 0x02 = 92Hz, 0x04 = 20Hz, 0x05 = 10Hz
-            CyDelay(10);	
-			WriteControlRegister(MPU9250_GYRO_CONFIG , GYRO_SF_2000); //Gyro full scale select 0x00=250°/s 0x80=500°/s 0x18=2000°/s 
-			CyDelay(10);
-            WriteControlRegister(MPU9250_ACCEL_CONFIG, ACC_SF_2G); // Acc full scale select 0x00 = 2g 0x08 = 4g 0x10 = 8g 0x18 = 16g
-            CyDelay(10);
-            WriteControlRegister(MPU9250_ACCEL_CONFIG2, 0x05);
-            CyDelay(10);
-			//mag register
-			WriteControlRegister(MPU9250_I2C_MST_CTRL, 0x0D); //set slave I2C speed
-			CyDelay(10);
-			//SLV0 (use to write)
-			WriteControlRegister(MPU9250_I2C_SLV0_ADDR, 0x0C); //set compass address
-			CyDelay(10);			
-			WriteControlRegister(MPU9250_I2C_SLV0_REG, AK8936_CNTL); //compass mode register
-			CyDelay(10);	
-			WriteControlRegister(MPU9250_I2C_SLV0_D0, 0x1F); //0x1F ROM access
-			CyDelay(10);
-			WriteControlRegister(MPU9250_I2C_SLV0_CTRL, 0x81); //enable data from register + 1 bit to write
-			CyDelay(10);
-			//SLV0 (use to read)
-			WriteControlRegister(MPU9250_I2C_SLV0_ADDR, 0x8C); // RCR  | AK8963_address (0x0C) 
-			CyDelay(10);
-			WriteControlRegister(MPU9250_I2C_SLV0_REG, 0x10); // 0x10:start from ASAX
-			CyDelay(10);
-			WriteControlRegister(MPU9250_I2C_SLV0_CTRL, 0x83);
-			CyDelay(10);
-			WriteControlRegister(MPU9250_PWR_MGMT_1, 0x00); 
-			CyDelay(20);
+	WriteControlRegister(MPU9250_PWR_MGMT_1, 0x10); 
+	CyDelay(10);	
+	WriteControlRegister(MPU9250_USER_CTRL, 0x20);  //I2C master enable - disable I2C (prima 0x30)
+	CyDelay(10);
+    WriteControlRegister(MPU9250_CONFIG, 0x06); //Gyro & Temp Low Pass Filter 0x01 = 184Hz, 0x02 = 92Hz, 0x04 = 20Hz, 0x05 = 10Hz
+    CyDelay(10);	
+	WriteControlRegister(MPU9250_GYRO_CONFIG , GYRO_SF_2000); //Gyro full scale select 0x00=250°/s 0x80=500°/s 0x18=2000°/s 
+	CyDelay(10);
+    WriteControlRegister(MPU9250_ACCEL_CONFIG, ACC_SF_2G); // Acc full scale select 0x00 = 2g 0x08 = 4g 0x10 = 8g 0x18 = 16g
+    CyDelay(10);
+    WriteControlRegister(MPU9250_ACCEL_CONFIG2, 0x05);
+    CyDelay(10);
+	//mag register
+	WriteControlRegister(MPU9250_I2C_MST_CTRL, 0x0D); //set slave I2C speed
+	CyDelay(10);
+	//SLV0 (use to write)
+	WriteControlRegister(MPU9250_I2C_SLV0_ADDR, 0x0C); //set compass address
+	CyDelay(10);			
+	WriteControlRegister(MPU9250_I2C_SLV0_REG, AK8936_CNTL); //compass mode register
+	CyDelay(10);	
+	WriteControlRegister(MPU9250_I2C_SLV0_D0, 0x1F); //0x1F ROM access
+	CyDelay(10);
+	WriteControlRegister(MPU9250_I2C_SLV0_CTRL, 0x81); //enable data from register + 1 bit to write
+	CyDelay(10);
+	//SLV0 (use to read)
+	WriteControlRegister(MPU9250_I2C_SLV0_ADDR, 0x8C); // RCR  | AK8963_address (0x0C) 
+	CyDelay(10);
+	WriteControlRegister(MPU9250_I2C_SLV0_REG, 0x10); // 0x10:start from ASAX
+	CyDelay(10);
+	WriteControlRegister(MPU9250_I2C_SLV0_CTRL, 0x83);
+	CyDelay(10);
+	WriteControlRegister(MPU9250_PWR_MGMT_1, 0x00); 
+	CyDelay(20);
 }
 
 /********************************************************************************
@@ -184,30 +176,8 @@ void InitIMUgeneral()
     // Initialize Memory Structure 
     memset(&g_imu, 0, sizeof(struct st_imu));
     memset(&IMU_connected, 0, sizeof(IMU_connected));
-    
-    
-    // Initialize IMU to Read MagCal Parameters
-    for (k_imu=0; k_imu < N_IMU_MAX; k_imu++) 
-    {	
-	    ChipSelector(k_imu);
-	    CyDelay(10);
-	    InitIMUMagCal();
-	    CyDelay(10); 
-        IMU_conf[k_imu][0] = 1;
-        IMU_conf[k_imu][1] = 1;
-        IMU_conf[k_imu][2] = 0;
-        IMU_conf[k_imu][3] = 0;
-        IMU_conf[k_imu][4] = 0;
-    }
-    
-    // Reading of MagCal Parameters
-    CyDelay(50);
-    for (k_imu = 0; k_imu < N_IMU_MAX; k_imu++){
-        ChipSelector(k_imu);
-        ReadMagCal(k_imu);   
-    }
-   
-    // Indentify IMU connected
+
+    // Identify IMU connected
     ChipSelector(0);
     CyDelay(10);
     IMU_ack = ReadControlRegister(MPU9250_WHO_AM_I);
@@ -227,12 +197,10 @@ void InitIMUgeneral()
         else
             tmp[k_imu] = 0;
     }
-    memset(&g_imu, 0, sizeof(struct st_imu));
-    memset(&IMU_connected, 0, sizeof(IMU_connected));
-    memset(&single_imu_size, 0, sizeof(single_imu_size));
-    for(k_imu=0; k_imu<N_IMU_MAX; k_imu++)
+
+    for(k_imu = 0; k_imu < N_IMU_MAX; k_imu++)
     {
-        if(tmp[k_imu]==1)
+        if(tmp[k_imu] == 1)
         {
             IMU_connected[count] = k_imu;
             count++;
@@ -250,24 +218,27 @@ void InitIMUgeneral()
 	    CyDelay(10);
 	    InitIMU();
 	    CyDelay(10); 
-        IMU_conf[k_imu][0] = 1;
-        IMU_conf[k_imu][1] = 1;
-        IMU_conf[k_imu][2] = 0;
-        IMU_conf[k_imu][3] = 0;
-        IMU_conf[k_imu][4] = 0;
+        InitIMUMagCal();      // Initialize IMU to Read MagCal Parameters
+	    CyDelay(10); 
+    }
+    CyDelay(50);
+    
+    // Reading of MagCal Parameters
+    for (k_imu = 0; k_imu < N_IMU_MAX; k_imu++){
+        ChipSelector(k_imu);
+        ReadMagCal(k_imu); 
     }
     CyDelay(50);
     
     // Set Standard Read for the IMU
+    memset(&single_imu_size, 0, sizeof(single_imu_size));
     imus_data_size = 1; //header    
     for (k_imu = 0; k_imu < N_IMU_Connected; k_imu++)
     {
-        single_imu_size[IMU_connected[k_imu]] = 1 + 6*IMU_conf[IMU_connected[k_imu]][0] + 6*IMU_conf[IMU_connected[k_imu]][1] + 6*IMU_conf[IMU_connected[k_imu]][2] + 2*IMU_conf[IMU_connected[k_imu]][4]+ 1;
+        single_imu_size[IMU_connected[k_imu]] = 1 + 6*c_mem.IMU_conf[IMU_connected[k_imu]][0] + 6*c_mem.IMU_conf[IMU_connected[k_imu]][1] + 6*c_mem.IMU_conf[IMU_connected[k_imu]][2]+ 16*c_mem.IMU_conf[IMU_connected[k_imu]][3] + 2*c_mem.IMU_conf[IMU_connected[k_imu]][4]+ 1;
         imus_data_size = imus_data_size + single_imu_size[IMU_connected[k_imu]];
     }
     imus_data_size = imus_data_size + 1;    //checksum
-    
-
 }
 
 /*******************************************************************************
@@ -275,11 +246,11 @@ void InitIMUgeneral()
 *********************************************************************************/	
 void ReadIMU(int n)
 {
-    if (IMU_conf[n][0]) ReadAcc(n);
-    if (IMU_conf[n][1]) ReadGyro(n);
-    if (IMU_conf[n][2]) ReadMag(n);
-    
-    if (IMU_conf[n][4]) ReadTemp(n);
+    if (c_mem.IMU_conf[n][0]) ReadAcc(n);
+    if (c_mem.IMU_conf[n][1]) ReadGyro(n);
+    if (c_mem.IMU_conf[n][2]) ReadMag(n);
+    if (c_mem.IMU_conf[n][3]) ReadQuat(n);
+    if (c_mem.IMU_conf[n][4]) ReadTemp(n);
 }
 
 /*******************************************************************************
@@ -287,34 +258,39 @@ void ReadIMU(int n)
 *********************************************************************************/
 void ReadAcc(int n)
 {
-	uint8 low=0, high=0;	
-		
+	uint8 low=0, high=0;
+	
 	int row = n;
 	
 	//read X
-        low=ReadControlRegister(MPU9250_ACCEL_XOUT_L);
-		high=ReadControlRegister(MPU9250_ACCEL_XOUT_H);
-	
-		Accel[row][0] = high; 
-		Accel[row][1] = low; 
-		low=0, high=0;
+    low=ReadControlRegister(MPU9250_ACCEL_XOUT_L);
+    SPI_delay();
+    high=ReadControlRegister(MPU9250_ACCEL_XOUT_H);
+    SPI_delay();
+    
+	Accel[row][0] = high; 
+	Accel[row][1] = low; 
+	low=0, high=0;
 			
 	//read Y
-		low=ReadControlRegister(MPU9250_ACCEL_YOUT_L);
-		high=ReadControlRegister(MPU9250_ACCEL_YOUT_H);
-	
-		Accel[row][2] = high; 
-		Accel[row][3] = low; 
-		low=0, high=0;
+    low=ReadControlRegister(MPU9250_ACCEL_YOUT_L);
+    SPI_delay();
+	high=ReadControlRegister(MPU9250_ACCEL_YOUT_H);
+    SPI_delay();
+
+	Accel[row][2] = high; 
+	Accel[row][3] = low; 
+	low=0, high=0;
 		
 	//read Z
-		low=ReadControlRegister(MPU9250_ACCEL_ZOUT_L);  
-		high=ReadControlRegister(MPU9250_ACCEL_ZOUT_H);
-
-		Accel[row][4] = high; 
-		Accel[row][5] = low;
-		low=0, high=0;
-
+    low=ReadControlRegister(MPU9250_ACCEL_ZOUT_L);
+    SPI_delay();
+    high=ReadControlRegister(MPU9250_ACCEL_ZOUT_H);
+    SPI_delay();
+    
+	Accel[row][4] = high; 
+	Accel[row][5] = low;
+	low=0, high=0;
 }
 
 /*******************************************************************************
@@ -326,29 +302,37 @@ void ReadGyro(int n){
 	int row = n;
 	
 	//read X
-		low=ReadControlRegister(MPU9250_GYRO_XOUT_L);
-		high=ReadControlRegister(MPU9250_GYRO_XOUT_H);
-        
-		Gyro[row][0] = high; 
-		Gyro[row][1] = low;
-		low=0, high=0;
+	low=ReadControlRegister(MPU9250_GYRO_XOUT_L);
+    SPI_delay();
+	high=ReadControlRegister(MPU9250_GYRO_XOUT_H);
+    SPI_delay();
+    
+	Gyro[row][0] = high; 
+	Gyro[row][1] = low;
+	low=0, high=0;
+    
 	//read Y
-		low=ReadControlRegister(MPU9250_GYRO_YOUT_L);
-		high=ReadControlRegister(MPU9250_GYRO_YOUT_H);
-        
-		Gyro[row][2] = high; 
-		Gyro[row][3] = low;
-		low=0, high=0;
+	low=ReadControlRegister(MPU9250_GYRO_YOUT_L);
+    SPI_delay();
+	high=ReadControlRegister(MPU9250_GYRO_YOUT_H);
+    SPI_delay();
+    
+	Gyro[row][2] = high; 
+	Gyro[row][3] = low;
+	low=0, high=0;
 
 	//read Z
-        low=ReadControlRegister(MPU9250_GYRO_ZOUT_L);
-		high=ReadControlRegister(MPU9250_GYRO_ZOUT_H);
-        
-		Gyro[row][4] = high; 
-		Gyro[row][5] = low;        
+    low=ReadControlRegister(MPU9250_GYRO_ZOUT_L);
+    SPI_delay();
+	high=ReadControlRegister(MPU9250_GYRO_ZOUT_H);
+    SPI_delay();
+    
+	Gyro[row][4] = high; 
+	Gyro[row][5] = low;        
 
-		low=0, high=0;
+	low=0, high=0;
 }
+
 /*******************************************************************************
 * Function Name: Read Compas' Data of IMU n
 *********************************************************************************/
@@ -357,27 +341,36 @@ void ReadMag(int n){
 	uint8 low, high;
 	int row = n;	
 	//read X
-		low = ReadControlRegister(MPU9250_EXT_SENS_DATA_00);
-		high = ReadControlRegister(MPU9250_EXT_SENS_DATA_01);		
-        
-		Mag[row][0] = high; 
-		Mag[row][1] = low;
-		low=0, high=0;
+	low = ReadControlRegister(MPU9250_EXT_SENS_DATA_00);
+    SPI_delay();
+	high = ReadControlRegister(MPU9250_EXT_SENS_DATA_01);		
+    SPI_delay();
+    
+	Mag[row][0] = high; 
+	Mag[row][1] = low;
+	low=0, high=0;
+    
 	//read Y
-		low = ReadControlRegister(MPU9250_EXT_SENS_DATA_02);
-		high = ReadControlRegister(MPU9250_EXT_SENS_DATA_03);		
-			
-		Mag[row][2] = high; 
-		Mag[row][3] = low;
-		low=0, high=0;
+	low = ReadControlRegister(MPU9250_EXT_SENS_DATA_02);
+    SPI_delay();
+	high = ReadControlRegister(MPU9250_EXT_SENS_DATA_03);		
+    SPI_delay();
+    
+	Mag[row][2] = high; 
+	Mag[row][3] = low;
+	low=0, high=0;
+    
 	//read Z
-		low = ReadControlRegister(MPU9250_EXT_SENS_DATA_04);
-		high = ReadControlRegister(MPU9250_EXT_SENS_DATA_05);		
-			
-		Mag[row][4] = high; 
-		Mag[row][5] = low;
-		low=0, high=0;
+	low = ReadControlRegister(MPU9250_EXT_SENS_DATA_04);
+    SPI_delay();
+	high = ReadControlRegister(MPU9250_EXT_SENS_DATA_05);
+    SPI_delay();
+		
+	Mag[row][4] = high; 
+	Mag[row][5] = low;
+	low=0, high=0;
 }
+
 /********************************************************************************
 * Function Name: ReadMagCal
 *********************************************************************************/
@@ -386,18 +379,100 @@ void ReadMagCal(int n){
     uint8 read = 0; 
 	int row = n;	
 	//read X
-		read = ReadControlRegister(MPU9250_EXT_SENS_DATA_00);
-        MagCal[row][0] = read; 
-        read = 0;
-	//read Y
-		read = ReadControlRegister(MPU9250_EXT_SENS_DATA_01);			
-		MagCal[row][1] = read; 
-		read = 0;
-	//read Z
-		read = ReadControlRegister(MPU9250_EXT_SENS_DATA_02);			
-		MagCal[row][2] = read; 
-		read = 0;
+	read = ReadControlRegister(MPU9250_EXT_SENS_DATA_00);
+    MagCal[row][0] = read; 
+    read = 0;
     
+	//read Y
+	read = ReadControlRegister(MPU9250_EXT_SENS_DATA_01);			
+	MagCal[row][1] = read; 
+	read = 0;
+    
+	//read Z
+	read = ReadControlRegister(MPU9250_EXT_SENS_DATA_02);			
+	MagCal[row][2] = read; 
+	read = 0;
+    
+}
+    
+/*******************************************************************************
+* Function Name: Read Quaternion of IMU n
+*********************************************************************************/
+void ReadQuat(int n)
+{
+	uint8 i=0;	
+    int16 var_h;
+    float qd0,qd1,qd2,qd3;        
+    float aP[3]; //, fa[3];
+    float Napla[4],g[4],qL[4];
+    float time = 0;
+        
+    if (N_IMU_Connected == 1) {
+        // Compute quaternion only if 1 IMU is connected
+        
+        if (!c_mem.IMU_conf[n][0]) ReadAcc(n);
+        if (!c_mem.IMU_conf[n][1]) ReadGyro(n);
+        
+        // assume cycle time is the same of last function_scheduler execution,
+        // without adding another counter
+        time = (float)((uint32)timer_value0 - (uint32)timer_value) / 1000000.0;
+        
+        // how N sees P; N is 'Earth' equivalent, P is for sensor
+        // e.g. N = imu1, P = imu0, how imu1 sees imu0
+
+        var_h = Accel[n][0];
+        aP[0] = (int16)(var_h << 8 | Accel[n][1]); 
+        var_h = Accel[n][2];
+        aP[1] = (int16)(var_h << 8 | Accel[n][3]); 
+        var_h = Accel[n][4];
+        aP[2] = (int16)(var_h << 8 | Accel[n][5]);
+        
+        g[0] = 0;
+        var_h = Gyro[n][0];
+        g[1] = ((int16)(var_h << 8 | Gyro[n][1]))*TICK2GYRO;
+        if ( fabs(g[1]) < GYRO_THR ) g[1] = 0;
+        var_h = Gyro[n][2];
+        g[2] = ((int16)(var_h << 8 | Gyro[n][3]))*TICK2GYRO; 
+        if ( fabs(g[2]) < GYRO_THR ) g[2] = 0;
+        var_h = Gyro[n][4];
+        g[3] = ((int16)(var_h << 8 | Gyro[n][5]))*TICK2GYRO;
+        if ( fabs(g[3]) < GYRO_THR ) g[3] = 0;
+        
+        // Normalize to 1
+        v3_normalize(aP);
+        
+        // Current quaternion assignment
+        qL[0] = Quat[0];
+        qL[1] = Quat[1];
+        qL[2] = Quat[2];
+        qL[3] = Quat[3];   
+        
+        // Napla computation
+        Napla[0] = (-qL[2]*((2*(qL[1]*qL[3]-qL[0]*qL[2]) - aP[0])) + qL[1]*((2*(qL[0]*qL[1] + qL[2]*qL[3]) - aP[1])))*TICK2ACC*BETA;
+        Napla[1] = (qL[3]*((2*(qL[1]*qL[3]-qL[0]*qL[2]) - aP[0])) + qL[0]*((2*(qL[0]*qL[1] + qL[2]*qL[3]) - aP[1])) -2*qL[1]*((2*(0.5 - qL[1]*qL[1] - qL[2]*qL[2]) - aP[2])))*TICK2ACC*BETA;
+        Napla[2] = (-qL[0]*((2*(qL[1]*qL[3]-qL[0]*qL[2]) - aP[0])) +qL[3]*((2*(qL[0]*qL[1] + qL[2]*qL[3]) - aP[1])) -2*qL[2]*((2*(0.5 - qL[1]*qL[1] - qL[2]*qL[2]) - aP[2])))*TICK2ACC*BETA;
+        Napla[3] = (qL[1]*((2*(qL[1]*qL[3]-qL[0]*qL[2]) - aP[0])) + qL[2]*((2*(qL[0]*qL[1] + qL[2]*qL[3]) - aP[1])))*TICK2ACC*BETA;
+        
+        qd0 = 0.5*(-(qL[1]*g[1] + qL[2]*g[2] + qL[3]*g[3])) - Napla[0];
+        qd1 = 0.5*(qL[0]*g[1] + (qL[2]*g[3] - qL[3]*g[2])) - Napla[1];
+        qd2 = 0.5*(qL[0]*g[2] + (qL[3]*g[1] - qL[1]*g[3])) - Napla[2];
+        qd3 = 0.5*(qL[0]*g[3] + (qL[1]*g[2] - qL[2]*g[1])) - Napla[3];
+                
+        qL[0] = qL[0] + qd0*time;
+        qL[1] = qL[1] + qd1*time;
+        qL[2] = qL[2] + qd2*time;
+        qL[3] = qL[3] + qd3*time;
+        v4_normalize(qL);
+        
+        // Quaternion update      
+        Quat[0] = qL[0];
+        Quat[1] = qL[1];
+        Quat[2] = qL[2];
+        Quat[3] = qL[3];
+    }
+    else {
+        return;
+    }
 }
 
 /********************************************************************************
@@ -405,40 +480,38 @@ void ReadMagCal(int n){
 *********************************************************************************/
 void ReadAllIMUs(){
     static uint8 k_imu = 0;
-    uint16 tmp = 0;
-    
-    
+    uint16 tmp = 0, i = 0, j = 0;
+    int16 value = 0;
+
     for (k_imu = 0; k_imu < N_IMU_Connected; k_imu++){ 
         // Read k_imu IMU
         ChipSelector(IMU_connected[k_imu]);
-        ReadIMU(IMU_connected[k_imu]);   
-       
-        tmp = Accel[IMU_connected[k_imu]][0];
-        g_imuNew[k_imu].accel_value[0] = (int16)(tmp<<8 | Accel[IMU_connected[k_imu]][1]);
-        tmp = Accel[IMU_connected[k_imu]][2];
-        g_imuNew[k_imu].accel_value[1] = (int16)(tmp<<8 | Accel[IMU_connected[k_imu]][3]);
-        tmp = Accel[IMU_connected[k_imu]][4];
-        g_imuNew[k_imu].accel_value[2] = (int16)(tmp<<8 | Accel[IMU_connected[k_imu]][5]);
+        ReadIMU(IMU_connected[k_imu]);
         
-        tmp = Gyro[IMU_connected[k_imu]][0];
-        g_imuNew[k_imu].gyro_value[0] = (int16)(tmp<<8 | Gyro[IMU_connected[k_imu]][1]);
-        tmp = Gyro[IMU_connected[k_imu]][2];
-        g_imuNew[k_imu].gyro_value[1] = (int16)(tmp<<8 | Gyro[IMU_connected[k_imu]][3]);
-        tmp = Gyro[IMU_connected[k_imu]][4];
-        g_imuNew[k_imu].gyro_value[2] = (int16)(tmp<<8 | Gyro[IMU_connected[k_imu]][5]);
+        for (j = 0; j < 3; j++) {
+            tmp = Accel[IMU_connected[k_imu]][2*j];
+            g_imuNew[k_imu].accel_value[j] = (int16)(tmp<<8 | Accel[IMU_connected[k_imu]][2*j + 1]);
+        }
         
-        tmp = Mag[IMU_connected[k_imu]][0];
-        g_imuNew[k_imu].mag_value[0] = (int16)(tmp<<8 | Mag[IMU_connected[k_imu]][1]);
-        tmp = Mag[IMU_connected[k_imu]][2];
-        g_imuNew[k_imu].mag_value[1] = (int16)(tmp<<8 | Mag[IMU_connected[k_imu]][3]);
-        tmp = Mag[IMU_connected[k_imu]][4];
-        g_imuNew[k_imu].mag_value[2] = (int16)(tmp<<8 | Mag[IMU_connected[k_imu]][5]);
+        for (j = 0; j < 3; j++) {
+            tmp = Gyro[IMU_connected[k_imu]][2*j];
+            g_imuNew[k_imu].gyro_value[j] = (int16)(tmp<<8 | Gyro[IMU_connected[k_imu]][2*j + 1]);
+        }
+                
+        for (j = 0; j < 3; j++) {
+            tmp = Mag[IMU_connected[k_imu]][2*j];
+            g_imuNew[k_imu].mag_value[j] = (int16)(tmp<<8 | Mag[IMU_connected[k_imu]][2*j + 1]);
+        }  
+        
+        // Save quaternion only for first IMU
+        for (j = 0; k_imu == 0 && j < 4; j++) {
+            g_imuNew[k_imu].quat_value[j] = (float)Quat[j];
+        }
         
         tmp = Temp[IMU_connected[k_imu]][0];
         g_imuNew[k_imu].temp_value = (int16)(tmp<<8 | Temp[IMU_connected[k_imu]][1]);
     }
 }
-
 
 /*******************************************************************************
 * Function Name: Read Temperature Data of IMU n
@@ -446,125 +519,18 @@ void ReadAllIMUs(){
 void ReadTemp(int n)
 {
 	uint8 low=0, high=0;	
-		
 	int row = n;
 	
 	//read X
-        low=ReadControlRegister(MPU9250_TEMP_OUT_L);
-		high=ReadControlRegister(MPU9250_TEMP_OUT_H);
-	
-		Temp[row][0] = high; 
-		Temp[row][1] = low; 
-		low=0, high=0;
+    low=ReadControlRegister(MPU9250_TEMP_OUT_L);
+    SPI_delay();
+	high=ReadControlRegister(MPU9250_TEMP_OUT_H);
+    SPI_delay();
+
+	Temp[row][0] = high; 
+	Temp[row][1] = low; 
+	low=0, high=0;
 }
-
-/********************************** ********************************************
-* Function Name: Low-Pass Filter Frequency Change
-*********************************************************************************/
-//void LF_Frequency_Change_Accel_And_Gyro(int d_frequency, int n_imu) {
-//    
-//    int value;
-//    if (d_frequency == 1) {value = 0x01;}
-//    if (d_frequency == 2) {value = 0x02;}
-//    if (d_frequency == 3) {value = 0x03;}
-//    if (d_frequency == 4) {value = 0x04;}
-//    if (d_frequency == 5) {value = 0x05;}
-//    if (d_frequency == 6) {value = 0x06;}
-//    
-//    ISR_1_Stop();		// Disable Time Interrupt
-//	ISR_1_Disable();
-//            	
-//    if (n_imu == 15) {
-//        Chip_Select_2_Write(0);
-//    } 
-//    else if (n_imu == 16) {
-//        Chip_Select_2_Write(1);
-//    } else {
-//        Chip_Select_1_Write(n_imu);
-//    }
-//    
-//	CyDelay(20);
-//    WriteControlRegister(MPU9250_CONFIG, value); //Gyro & Temp Low Pass Filter 0x01 = 184Hz, 0x04 = 20Hz
-//    CyDelay(20);	
-//    WriteControlRegister(MPU9250_ACCEL_CONFIG2, value);
-//    CyDelay(20);
-//									
-//    // Restart Time Interrupt
-//    ISR_1_Start();
-//	ISR_1_Enable();		
-//	CyDelay(10);
-//}
-
-/********************************** ********************************************
-* Function Name: Low-Pass Filter Frequency Change Accel
-*********************************************************************************/
-//void LF_Frequency_Change_Accel(int d_frequency, int n_imu) {
-//    
-//    int value;
-//    if (d_frequency == 1) {value = 0x01;}
-//    if (d_frequency == 2) {value = 0x02;}
-//    if (d_frequency == 3) {value = 0x03;}
-//    if (d_frequency == 4) {value = 0x04;}
-//    if (d_frequency == 5) {value = 0x05;}
-//    if (d_frequency == 6) {value = 0x06;}
-//    
-//    ISR_1_Stop();		// Disable Time Interrupt
-//	ISR_1_Disable();
-//            	
-//    if (n_imu == 15) {
-//        Chip_Select_2_Write(0);
-//    } 
-//    else if (n_imu == 16) {
-//        Chip_Select_2_Write(1);
-//    } else {
-//        Chip_Select_1_Write(n_imu);
-//    }
-//
-//	CyDelay(10);
-//    WriteControlRegister(MPU9250_ACCEL_CONFIG2, value);
-//    CyDelay(10);
-//					
-//    // Restart Time Interrupt
-//    ISR_1_Start();
-//	ISR_1_Enable();	
-//	CyDelay(10);
-//}
-//
-///********************************** ********************************************
-//* Function Name: Low-Pass Filter Frequency Change Gyro
-//*********************************************************************************/
-//void LF_Frequency_Change_Gyro(int d_frequency, int n_imu) {
-//    
-//    int value;
-//    if (d_frequency == 1) {value = 0x01;}
-//    if (d_frequency == 2) {value = 0x02;}
-//    if (d_frequency == 3) {value = 0x03;}
-//    if (d_frequency == 4) {value = 0x04;}
-//    if (d_frequency == 5) {value = 0x05;}
-//    if (d_frequency == 6) {value = 0x06;}
-//    
-//    ISR_1_Stop();		// Disable Time Interrupt
-//	ISR_1_Disable();
-//            
-//                	
-//    if (n_imu == 15) {
-//        Chip_Select_2_Write(0);
-//    } 
-//    else if (n_imu == 16) {
-//        Chip_Select_2_Write(1);
-//    } else {
-//        Chip_Select_1_Write(n_imu);
-//    }
-//
-//	CyDelay(10);
-//    WriteControlRegister(MPU9250_CONFIG, value); //Gyro & Temp Low Pass Filter 0x01 = 184Hz, 0x04 = 20Hz
-//    CyDelay(10);	
-//						
-//    // Restart Time Interrupt
-//    ISR_1_Start();
-//	ISR_1_Enable();	
-//	CyDelay(10);
-//}
 
 /********************************** *********************************************
 * Function Name: Write Control Register
@@ -584,12 +550,27 @@ void WriteControlRegister(uint8 address, uint8 dta){
 * Function Name: Read Control Register
 *********************************************************************************/
 uint8 ReadControlRegister(uint8 address){
-		
-		uint8 controlreg;
-		
-		SPI_IMU_WriteByte(MPU9250_RCR | address);
-	    SPI_IMU_WriteByte(0x00);
-		while(!( SPI_IMU_ReadStatus() & SPI_IMU_STS_SPI_DONE));
-		controlreg = SPI_IMU_ReadByte(); //real data
-		return controlreg;
+	uint8 controlreg;
+	
+	SPI_IMU_WriteByte(MPU9250_RCR | address);
+    SPI_IMU_WriteByte(0x00);
+	while(!( SPI_IMU_ReadStatus() & SPI_IMU_STS_SPI_DONE));
+	controlreg = SPI_IMU_ReadByte();        //real data
+	return controlreg;
+}
+
+/*******************************************************************************
+* Function Name: SPI delay
+*********************************************************************************/
+void SPI_delay(){
+    switch( c_mem.SPI_read_delay ) {
+        case 1:     // Low
+            CyDelayUs((uint16)SPI_DELAY_LOW);
+            break;
+        case 2:     // High
+            CyDelayUs((uint16)SPI_DELAY_HIGH);
+            break;
+        default:    // None
+            break;
+    }
 }
