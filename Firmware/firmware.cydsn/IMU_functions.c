@@ -177,6 +177,14 @@ void InitIMUgeneral()
     memset(&g_imu, 0, sizeof(struct st_imu));
     memset(&IMU_connected, 0, sizeof(IMU_connected));
 
+    // First ping to be sure to wakeup IMUs
+    for (k_imu=0; k_imu < N_IMU_MAX; k_imu++) 
+    {	
+	    ChipSelector(k_imu);
+	    CyDelay(10);
+	    ReadControlRegister(MPU9250_WHO_AM_I);
+    }
+    
     // Identify IMU connected
     ChipSelector(0);
     CyDelay(10);
