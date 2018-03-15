@@ -92,15 +92,15 @@ void qbImuBoard::initImuBoard() {
 	ids_ = (uint8_t *) calloc(n_imu_, sizeof(uint8_t));
 	v = 0;
 	for (int k = 1; k <= num_imus_id_params; k++){
-		if (aux_string[k*PARAM_SLOT_BYTES + 8] != 0) {
+		if (aux_string[k*PARAM_SLOT_BYTES + 8] != 255) {
 			ids_[v] = aux_string[k*PARAM_SLOT_BYTES + 8];
 			v++;
 		}
-		if (aux_string[k*PARAM_SLOT_BYTES + 9] != 0) {
+		if (aux_string[k*PARAM_SLOT_BYTES + 9] != 255) {
 			ids_[v] = aux_string[k*PARAM_SLOT_BYTES + 9];
 			v++;
 		}
-		if (aux_string[k*PARAM_SLOT_BYTES + 10] != 0) {
+		if (aux_string[k*PARAM_SLOT_BYTES + 10] != 255) {
 			ids_[v] = aux_string[k*PARAM_SLOT_BYTES + 10];
 			v++;
 		}

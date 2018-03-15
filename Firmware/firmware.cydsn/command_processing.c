@@ -287,11 +287,11 @@ void get_param_list(uint16 index)
                     if (IMU_connected[i] == j) {
                         packet_data[h+start_byte + PARAM_BYTE_SLOT*k] = (uint8)IMU_connected[i];               
                         i++;
-                        h++;
                     } 
                     else {
-                        packet_data[h+start_byte + PARAM_BYTE_SLOT*k] = 0;
+                        packet_data[h+start_byte + PARAM_BYTE_SLOT*k] = 255;
                     }
+                    h++;
                 }
 
                 //if (IMU_connected[i] >= 3*k && IMU_connected[i] <= 3*k + 2)

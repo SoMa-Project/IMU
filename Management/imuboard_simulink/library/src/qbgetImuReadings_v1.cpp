@@ -330,15 +330,15 @@ static void mdlStart( SimStruct *S )
 	imu_ids = (uint8_t *) calloc(n_imu, sizeof(uint8_t));
 	i = 0;
 	for (int k = 1; k <= num_imus_id_params; k++){
-		if (aux_string[k*PARAM_SLOT_BYTES + 8] != 0) {
+		if (aux_string[k*PARAM_SLOT_BYTES + 8] != 255) {
 			imu_ids[i] = aux_string[k*PARAM_SLOT_BYTES + 8];
 			i++;
 		}
-		if (aux_string[k*PARAM_SLOT_BYTES + 9] != 0) {
+		if (aux_string[k*PARAM_SLOT_BYTES + 9] != 255) {
 			imu_ids[i] = aux_string[k*PARAM_SLOT_BYTES + 9];
 			i++;
 		}
-		if (aux_string[k*PARAM_SLOT_BYTES + 10] != 0) {
+		if (aux_string[k*PARAM_SLOT_BYTES + 10] != 255) {
 			imu_ids[i] = aux_string[k*PARAM_SLOT_BYTES + 10];
 			i++;
 		}

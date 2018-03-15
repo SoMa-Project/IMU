@@ -1086,15 +1086,15 @@ int main (int argc, char **argv)
 		global_args.ids = (uint8_t *) calloc(global_args.n_imu, sizeof(uint8_t));
 		i = 0;
 		for (int k = 1; k <= num_imus_id_params; k++){
-			if (aux_string[k*PARAM_SLOT_BYTES + 8] != 0) {
+			if (aux_string[k*PARAM_SLOT_BYTES + 8] != 255) {
 				global_args.ids[i] = aux_string[k*PARAM_SLOT_BYTES + 8];
 				i++;
 			}
-			if (aux_string[k*PARAM_SLOT_BYTES + 9] != 0) {
+			if (aux_string[k*PARAM_SLOT_BYTES + 9] != 255) {
 				global_args.ids[i] = aux_string[k*PARAM_SLOT_BYTES + 9];
 				i++;
 			}
-			if (aux_string[k*PARAM_SLOT_BYTES + 10] != 0) {
+			if (aux_string[k*PARAM_SLOT_BYTES + 10] != 255) {
 				global_args.ids[i] = aux_string[k*PARAM_SLOT_BYTES + 10];
 				i++;
 			}
