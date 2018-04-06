@@ -140,23 +140,32 @@ bool qbHand::getPosPerc(float* angle) {
 void qbHand::retrieveParams() {
 
     int pos_limits[4];
-    int PARAM_POS_LIMIT = 11; // Position limits index
+    int PARAM_POS_LIMIT = 10; // Position limits index
 
-    // Retrive informations
+    POS_LIMIT_M1_[0] = POS_LIMIT_M1_[1] = 0;
+    POS_LIMIT_M2_[0] = POS_LIMIT_M2_[1] = 0;
 
+    unsigned char parameter_buffer[3000];
+    
+    // Retrieve information
     for (int i = 0; i < NUM_OF_TRIALS; i++) {
-        if(!commGetParamList(cube_comm_, id_, PARAM_POS_LIMIT, pos_limits, 4, 2, NULL)) {
+        if(!commGetParamList(cube_comm_, id_, 0, NULL, 0, 0, parameter_buffer)) {
             // Save limits
-            POS_LIMIT_M1_[0] = pos_limits[0] / 2;
-            POS_LIMIT_M1_[1] = pos_limits[1] / 2;
-            POS_LIMIT_M2_[0] = pos_limits[2] / 2;
-            POS_LIMIT_M2_[1] = pos_limits[3] / 2;
+            for (int i=0; i<2; i++) {
+              int parameter_field = 0;
+              for (int j=0; j<sizeof(int); j++) {
+                POS_LIMIT_M1_[i] += parameter_buffer[PARAM_POS_LIMIT*PARAM_BYTE_SLOT + 8 + i*sizeof(int) + sizeof(int) - j - 1] << (8 * j);
+              }
+            }
 
+            POS_LIMIT_M1_[0] = POS_LIMIT_M1_[0] / 2;
+            POS_LIMIT_M1_[1] = POS_LIMIT_M1_[1] / 2;
+            POS_LIMIT_M2_[0] = 0;
+            POS_LIMIT_M2_[1] = 0;
             return;
         }
     }
-
-    std::cerr << "Unable to retrieve hand params. ID: " << id_ << std::endl;
+   std::cerr << "Unable to retrieve hand params. ID: " << id_ << std::endl;
 }
 
 //-----------------------------------------------------

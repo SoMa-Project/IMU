@@ -29,6 +29,7 @@ qb_class_imu::qb_class_imu(){
 	// Get param from roslaunch or yaml file
 	node_->searchParam("/IDimuboards", aux);
 	node_->getParam(aux, ID_imuboard);
+	node_->param<double>("/step_time_imu", step_time_imu_, 0.002);
 
 
     qbImuBoard* tmp_imuboard;
@@ -39,7 +40,7 @@ qb_class_imu::qb_class_imu(){
         
        	// IF an error is find
         if (tmp_imuboard == NULL){
-        	cout << "[ERORR] Unable to allocate space for imu board structure." << endl;
+        	cout << "[ERROR] Unable to allocate space for imu board structure." << endl;
             return;
         }
 
@@ -47,19 +48,25 @@ qb_class_imu::qb_class_imu(){
     } 
 
 
-	
-    // init publisher
-	imuboard_pub_acc_  = node_->advertise<qb_interface::inertialSensorArray>("/qb_class_imu/acc", 1);
-	imuboard_pub_gyro_ = node_->advertise<qb_interface::inertialSensorArray>("/qb_class_imu/gyro", 1);
-	imuboard_pub_mag_  = node_->advertise<qb_interface::inertialSensorArray>("/qb_class_imu/mag", 1);
-	imuboard_pub_quat_ = node_->advertise<qb_interface::quaternionArray>("/qb_class_imu/quat", 1);
-	imuboard_pub_temp_ = node_->advertise<qb_interface::temperatureArray>("/qb_class_imu/temp", 1);
+	// Initialize publisher and subscriber
 
-	Acc_.resize(imuboard_chain_[0]->n_imu_,3);
-	Acc_old_.resize(imuboard_chain_[0]->n_imu_,3);
+	if (!imuboard_chain_.empty()){
 
-	Acc_.setZero();
-	Acc_old_.setZero();
+		// Publisher initialize
+		imuboard_pub_acc_  = node_->advertise<qb_interface::inertialSensorArray>("/qb_class_imu/acc", 1);
+		imuboard_pub_gyro_ = node_->advertise<qb_interface::inertialSensorArray>("/qb_class_imu/gyro", 1);
+		imuboard_pub_mag_  = node_->advertise<qb_interface::inertialSensorArray>("/qb_class_imu/mag", 1);
+		imuboard_pub_quat_ = node_->advertise<qb_interface::quaternionArray>("/qb_class_imu/quat", 1);
+		imuboard_pub_temp_ = node_->advertise<qb_interface::temperatureArray>("/qb_class_imu/temp", 1);
+
+		Acc_.resize(imuboard_chain_[0]->n_imu_,3);
+		Acc_old_.resize(imuboard_chain_[0]->n_imu_,3);
+
+		Acc_.setZero();
+		Acc_old_.setZero();
+	}
+
+
 }
 
 //-----------------------------------------------------
@@ -223,7 +230,7 @@ void qb_class_imu::spinOnce(){
 void qb_class_imu::spin(){
 
 	// 1/step_time is the rate in Hz
-	ros::Rate loop_rate(1.0 / step_time_);
+	ros::Rate loop_rate(1.0 / step_time_imu_);
 
 	while(ros::ok()) {
 		spinOnce();

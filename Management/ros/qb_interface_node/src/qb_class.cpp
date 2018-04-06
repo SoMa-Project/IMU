@@ -1017,7 +1017,7 @@ bool qb_class::readMeasCurrent() {
 
 	for (int i = hand_chain_.size(); i--;){		
 		if (!hand_chain_[i]->getPosAndCurr(&pClosure, current, meas_unit_)){
-    		cerr << "[WARNING] Unable to retrieve current of hand: " << hand_chain_[i]->getID() << endl;
+    		cerr << "[WARNING] Unable to retrieve measurements and current of hand: " << hand_chain_[i]->getID() << endl;
 
             status = false;
 

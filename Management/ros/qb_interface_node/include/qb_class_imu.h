@@ -46,6 +46,9 @@ class qb_class_imu : public qb_class {
 
 	protected:
 
+		// Step Time, 1 / step_time = communication frequency
+		double step_time_imu_;
+
 	private:
 
 		// Functions
