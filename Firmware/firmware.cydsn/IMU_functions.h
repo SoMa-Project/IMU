@@ -120,6 +120,15 @@
 #define G_TO_MS2                    9.79
 #define DEG_TO_RAD                  (3.14159265359 / 180.0)
 
+//low pass accelerometers filter
+#define LP_ACC_FREQ_460             0x00
+#define LP_ACC_FREQ_184             0x01
+#define LP_ACC_FREQ_92              0x02
+#define LP_ACC_FREQ_41              0x03
+#define LP_ACC_FREQ_20              0x04
+#define LP_ACC_FREQ_10              0x05
+#define LP_ACC_FREQ_5               0x06
+
 // macro for quaternion estimation
 #define TICK2GYRO                   0.000133158     // rad->deg conversion is included
 #define TICK2ACC                    0.000061037

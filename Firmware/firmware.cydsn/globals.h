@@ -57,7 +57,8 @@
 //                                                                        DEVICE
 //==============================================================================
 
-#define VERSION                 "IMUboard v 1.1"
+#define VERSION                 "IMUboard v 1.2"
+//#define OCADO                   "IMUboard v 1.2 OCADO"
 
 #define N_IMU_MAX                   17
 #define NUM_OF_DATA                 5       // accelerometers, gyroscopes, magnetometers, quaternion and temperature data
@@ -101,7 +102,7 @@
 #define FALSE                   0
 #define TRUE                    1
 
-#define DEFAULT_EEPROM_DISPLACEMENT 8   // in pages
+#define DEFAULT_EEPROM_DISPLACEMENT 50   // in pages
 
 //==============================================================================
 //                                                        structures definitions

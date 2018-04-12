@@ -79,7 +79,11 @@ void InitIMU(){
 	CyDelay(10);
     WriteControlRegister(MPU9250_ACCEL_CONFIG, ACC_SF_2G); // Acc full scale select 0x00 = 2g 0x08 = 4g 0x10 = 8g 0x18 = 16g
     CyDelay(10);
-    WriteControlRegister(MPU9250_ACCEL_CONFIG2, 0x05);
+#ifdef OCADO    
+    WriteControlRegister(MPU9250_ACCEL_CONFIG2, LP_ACC_FREQ_184);
+#else
+    WriteControlRegister(MPU9250_ACCEL_CONFIG2, LP_ACC_FREQ_10);
+#endif    
     CyDelay(10);
 	//mag register
 	WriteControlRegister(MPU9250_I2C_MST_CTRL, 0x0D); //set slave I2C speed

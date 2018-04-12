@@ -1,9 +1,9 @@
-C51 COMPILER V9.51   GLOBALS                                                               02/16/2018 15:56:02 PAGE 1   
+C51 COMPILER V9.51   GLOBALS                                                               04/12/2018 12:28:59 PAGE 1   
 
 
 C51 COMPILER V9.51, COMPILATION OF MODULE GLOBALS
 OBJECT MODULE PLACED IN .\DP8051_Keil_951\Release\globals.obj
-COMPILER INVOKED BY: C:\Program Files (x86)\Cypress\PSoC Creator\4.1\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe 
+COMPILER INVOKED BY: C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe 
                     -globals.c NOIV LARGE MODDP2 OMF2 VB(1) NOIP INCDIR(.,Generated_Source\PSoC3) FF(3) DB DF(NDEBUG) WL(2) PR(.\DP8051_Keil_
                     -951\Release/globals.lst) CD OT(11,SPEED) OJ(.\DP8051_Keil_951\Release\globals.obj)
 
@@ -62,7 +62,7 @@ line level    source
   50          struct st_data  g_rx;                       // income data
   51          struct st_mem   g_mem, c_mem;               // memory
   52          
-C51 COMPILER V9.51   GLOBALS                                                               02/16/2018 15:56:02 PAGE 2   
+C51 COMPILER V9.51   GLOBALS                                                               04/12/2018 12:28:59 PAGE 2   
 
   53          // Timer value for debug field
   54          
@@ -89,7 +89,7 @@ line level    source
   75          float Quat[4] = {1,0,0,0};
   76          
   77          /* END OF FILE */
-C51 COMPILER V9.51   GLOBALS                                                               02/16/2018 15:56:02 PAGE 3   
+C51 COMPILER V9.51   GLOBALS                                                               04/12/2018 12:28:59 PAGE 3   
 
 ASSEMBLY LISTING OF GENERATED OBJECT CODE
 

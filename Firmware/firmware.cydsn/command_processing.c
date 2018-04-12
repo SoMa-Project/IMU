@@ -449,13 +449,23 @@ void infoPrepare(unsigned char *info_string)
         strcpy(info_string, "");
         strcat(info_string, "\r\n");
         strcat(info_string, "Firmware version: ");
+#ifdef OCADO
+        strcat(info_string, OCADO);
+#else        
         strcat(info_string, VERSION);
+#endif        
         strcat(info_string, "\r\n\r\n");
 
         strcat(info_string, "DEVICE INFO\r\n");
         sprintf(str, "ID: %d\r\n", (int) c_mem.id);
         strcat(info_string, str);
-     
+
+#ifdef OCADO
+        strcat(info_string, "Low pass filter frequency for accelerometers: 184 Hz\r\n");
+#else
+        strcat(info_string, "Low pass filter frequency for accelerometers: 10 Hz\r\n");
+#endif
+
         sprintf(str, "IMU Connected: %d\r\n", (int) N_IMU_Connected);
         strcat(info_string, str);
         

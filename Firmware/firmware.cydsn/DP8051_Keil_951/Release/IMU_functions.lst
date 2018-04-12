@@ -1,9 +1,9 @@
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 1   
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 1   
 
 
 C51 COMPILER V9.51, COMPILATION OF MODULE IMU_FUNCTIONS
 OBJECT MODULE PLACED IN .\DP8051_Keil_951\Release\IMU_functions.obj
-COMPILER INVOKED BY: C:\Program Files (x86)\Cypress\PSoC Creator\4.1\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe 
+COMPILER INVOKED BY: C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe 
                     -IMU_functions.c NOIV LARGE MODDP2 OMF2 VB(1) NOIP INCDIR(.,Generated_Source\PSoC3) FF(3) DB DF(NDEBUG) WL(2) PR(.\DP8051
                     -_Keil_951\Release/IMU_functions.lst) CD OT(11,SPEED) OJ(.\DP8051_Keil_951\Release\IMU_functions.obj)
 
@@ -62,7 +62,7 @@ line level    source
   50          extern uint8 Mag[N_IMU_MAX][6];
   51          extern uint8 MagCal[N_IMU_MAX][3];
   52          
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 2   
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 2   
 
   53          /*******************************************************************************
   54          * Function Name: Imus Reset
@@ -96,537 +96,541 @@ line level    source
   80   1          WriteControlRegister(MPU9250_ACCEL_CONFIG, ACC_SF_2G); // Acc full scale select 0x00 = 2g 0x08 = 4g 0x
              -10 = 8g 0x18 = 16g
   81   1          CyDelay(10);
-  82   1          WriteControlRegister(MPU9250_ACCEL_CONFIG2, 0x05);
-  83   1          CyDelay(10);
-  84   1              //mag register
-  85   1              WriteControlRegister(MPU9250_I2C_MST_CTRL, 0x0D); //set slave I2C speed
-  86   1              CyDelay(10);
-  87   1              //SLV0 (use to write)
-  88   1              WriteControlRegister(MPU9250_I2C_SLV0_ADDR, 0x0C); //set compass address
-  89   1              CyDelay(10);                    
-  90   1              WriteControlRegister(MPU9250_I2C_SLV0_REG, AK8936_CNTL); //compass mode register
-  91   1              CyDelay(10);    
-  92   1              // Istruction used to read Compass
-  93   1              WriteControlRegister(MPU9250_I2C_SLV0_D0, 0x16); //0x12 continuous mode1  0x16 continuous mode2
-  94   1              CyDelay(10);
-  95   1              WriteControlRegister(MPU9250_I2C_SLV0_CTRL, 0x81); //enable data from register + 1 bit to write
-  96   1              CyDelay(10);
-  97   1              //SLV0 (use to read)
-  98   1              WriteControlRegister(MPU9250_I2C_SLV0_ADDR, 0x8C); // RCR  | AK8963_address (0x0C) 
-  99   1              CyDelay(10);
- 100   1              // Istruction used to read Compass
- 101   1              WriteControlRegister(MPU9250_I2C_SLV0_REG, 0x03); // 0x03:start from Xout Low in case of calibration 0x10
+  82   1      #ifdef OCADO    
+                  WriteControlRegister(MPU9250_ACCEL_CONFIG2, LP_ACC_FREQ_184);
+              #else
+  85   1          WriteControlRegister(MPU9250_ACCEL_CONFIG2, LP_ACC_FREQ_10);
+  86   1      #endif    
+  87   1          CyDelay(10);
+  88   1              //mag register
+  89   1              WriteControlRegister(MPU9250_I2C_MST_CTRL, 0x0D); //set slave I2C speed
+  90   1              CyDelay(10);
+  91   1              //SLV0 (use to write)
+  92   1              WriteControlRegister(MPU9250_I2C_SLV0_ADDR, 0x0C); //set compass address
+  93   1              CyDelay(10);                    
+  94   1              WriteControlRegister(MPU9250_I2C_SLV0_REG, AK8936_CNTL); //compass mode register
+  95   1              CyDelay(10);    
+  96   1              // Istruction used to read Compass
+  97   1              WriteControlRegister(MPU9250_I2C_SLV0_D0, 0x16); //0x12 continuous mode1  0x16 continuous mode2
+  98   1              CyDelay(10);
+  99   1              WriteControlRegister(MPU9250_I2C_SLV0_CTRL, 0x81); //enable data from register + 1 bit to write
+ 100   1              CyDelay(10);
+ 101   1              //SLV0 (use to read)
+ 102   1              WriteControlRegister(MPU9250_I2C_SLV0_ADDR, 0x8C); // RCR  | AK8963_address (0x0C) 
+ 103   1              CyDelay(10);
+ 104   1              // Istruction used to read Compass
+ 105   1              WriteControlRegister(MPU9250_I2C_SLV0_REG, 0x03); // 0x03:start from Xout Low in case of calibration 0x10
              -:start from ASAX
- 102   1              CyDelay(10);
- 103   1              // Istruction used to read Compass
- 104   1              WriteControlRegister(MPU9250_I2C_SLV0_CTRL, 0x8D); //How many bits read  SEMPRE DISPARI 0x8D era quella c
+ 106   1              CyDelay(10);
+ 107   1              // Istruction used to read Compass
+ 108   1              WriteControlRegister(MPU9250_I2C_SLV0_CTRL, 0x8D); //How many bits read  SEMPRE DISPARI 0x8D era quella c
              -he funzionava
- 105   1              CyDelay(10);
- 106   1              WriteControlRegister(MPU9250_PWR_MGMT_1, 0x00); 
- 107   1              CyDelay(20);
- 108   1      }       
- 109          
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 3   
+ 109   1              CyDelay(10);
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 3   
 
- 110          /*******************************************************************************
- 111          * Function Name: IMU Mag Cal Initialization
- 112          *********************************************************************************/
- 113          void InitIMUMagCal(){   
- 114   1          
- 115   1              WriteControlRegister(MPU9250_PWR_MGMT_1, 0x10); 
- 116   1              CyDelay(10);    
- 117   1              WriteControlRegister(MPU9250_USER_CTRL, 0x20);  //I2C master enable - disable I2C (prima 0x30)
- 118   1              CyDelay(10);
- 119   1          WriteControlRegister(MPU9250_CONFIG, 0x06); //Gyro & Temp Low Pass Filter 0x01 = 184Hz, 0x02 = 92Hz, 0
-             -x04 = 20Hz, 0x05 = 10Hz
- 120   1          CyDelay(10);        
- 121   1              WriteControlRegister(MPU9250_GYRO_CONFIG , GYRO_SF_2000); //Gyro full scale select 0x00=250Â°/s 0x80=500Â
-             -°/s 0x18=2000Â°/s 
+ 110   1              WriteControlRegister(MPU9250_PWR_MGMT_1, 0x00); 
+ 111   1              CyDelay(20);
+ 112   1      }       
+ 113          
+ 114          /*******************************************************************************
+ 115          * Function Name: IMU Mag Cal Initialization
+ 116          *********************************************************************************/
+ 117          void InitIMUMagCal(){   
+ 118   1          
+ 119   1              WriteControlRegister(MPU9250_PWR_MGMT_1, 0x10); 
+ 120   1              CyDelay(10);    
+ 121   1              WriteControlRegister(MPU9250_USER_CTRL, 0x20);  //I2C master enable - disable I2C (prima 0x30)
  122   1              CyDelay(10);
- 123   1          WriteControlRegister(MPU9250_ACCEL_CONFIG, ACC_SF_2G); // Acc full scale select 0x00 = 2g 0x08 = 4g 0x
+ 123   1          WriteControlRegister(MPU9250_CONFIG, 0x06); //Gyro & Temp Low Pass Filter 0x01 = 184Hz, 0x02 = 92Hz, 0
+             -x04 = 20Hz, 0x05 = 10Hz
+ 124   1          CyDelay(10);        
+ 125   1              WriteControlRegister(MPU9250_GYRO_CONFIG , GYRO_SF_2000); //Gyro full scale select 0x00=250Â°/s 0x80=500Â
+             -°/s 0x18=2000Â°/s 
+ 126   1              CyDelay(10);
+ 127   1          WriteControlRegister(MPU9250_ACCEL_CONFIG, ACC_SF_2G); // Acc full scale select 0x00 = 2g 0x08 = 4g 0x
              -10 = 8g 0x18 = 16g
- 124   1          CyDelay(10);
- 125   1          WriteControlRegister(MPU9250_ACCEL_CONFIG2, 0x05);
- 126   1          CyDelay(10);
- 127   1              //mag register
- 128   1              WriteControlRegister(MPU9250_I2C_MST_CTRL, 0x0D); //set slave I2C speed
- 129   1              CyDelay(10);
- 130   1              //SLV0 (use to write)
- 131   1              WriteControlRegister(MPU9250_I2C_SLV0_ADDR, 0x0C); //set compass address
- 132   1              CyDelay(10);                    
- 133   1              WriteControlRegister(MPU9250_I2C_SLV0_REG, AK8936_CNTL); //compass mode register
- 134   1              CyDelay(10);    
- 135   1              WriteControlRegister(MPU9250_I2C_SLV0_D0, 0x1F); //0x1F ROM access
- 136   1              CyDelay(10);
- 137   1              WriteControlRegister(MPU9250_I2C_SLV0_CTRL, 0x81); //enable data from register + 1 bit to write
- 138   1              CyDelay(10);
- 139   1              //SLV0 (use to read)
- 140   1              WriteControlRegister(MPU9250_I2C_SLV0_ADDR, 0x8C); // RCR  | AK8963_address (0x0C) 
- 141   1              CyDelay(10);
- 142   1              WriteControlRegister(MPU9250_I2C_SLV0_REG, 0x10); // 0x10:start from ASAX
- 143   1              CyDelay(10);
- 144   1              WriteControlRegister(MPU9250_I2C_SLV0_CTRL, 0x83);
+ 128   1          CyDelay(10);
+ 129   1          WriteControlRegister(MPU9250_ACCEL_CONFIG2, 0x05);
+ 130   1          CyDelay(10);
+ 131   1              //mag register
+ 132   1              WriteControlRegister(MPU9250_I2C_MST_CTRL, 0x0D); //set slave I2C speed
+ 133   1              CyDelay(10);
+ 134   1              //SLV0 (use to write)
+ 135   1              WriteControlRegister(MPU9250_I2C_SLV0_ADDR, 0x0C); //set compass address
+ 136   1              CyDelay(10);                    
+ 137   1              WriteControlRegister(MPU9250_I2C_SLV0_REG, AK8936_CNTL); //compass mode register
+ 138   1              CyDelay(10);    
+ 139   1              WriteControlRegister(MPU9250_I2C_SLV0_D0, 0x1F); //0x1F ROM access
+ 140   1              CyDelay(10);
+ 141   1              WriteControlRegister(MPU9250_I2C_SLV0_CTRL, 0x81); //enable data from register + 1 bit to write
+ 142   1              CyDelay(10);
+ 143   1              //SLV0 (use to read)
+ 144   1              WriteControlRegister(MPU9250_I2C_SLV0_ADDR, 0x8C); // RCR  | AK8963_address (0x0C) 
  145   1              CyDelay(10);
- 146   1              WriteControlRegister(MPU9250_PWR_MGMT_1, 0x00); 
- 147   1              CyDelay(20);
- 148   1      }
- 149          
- 150          /********************************************************************************
- 151          * Function Name: ChipSelector                                                   *
- 152          *********************************************************************************/
- 153          void ChipSelector(int n)
- 154          {
- 155   1          Chip_Select_A_Write(15);
- 156   1          Chip_Select_B_Write(3);
- 157   1          
- 158   1          if(n<15)
- 159   1              Chip_Select_A_Write(n);
- 160   1          if(n==15)
- 161   1              Chip_Select_B_Write(0);
- 162   1          if(n==16)
- 163   1              Chip_Select_B_Write(1);
- 164   1      }
- 165          
- 166          /********************************************************************************
- 167          * Function Name: InitIMUGeneral                                                 *
- 168          *********************************************************************************/
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 4   
+ 146   1              WriteControlRegister(MPU9250_I2C_SLV0_REG, 0x10); // 0x10:start from ASAX
+ 147   1              CyDelay(10);
+ 148   1              WriteControlRegister(MPU9250_I2C_SLV0_CTRL, 0x83);
+ 149   1              CyDelay(10);
+ 150   1              WriteControlRegister(MPU9250_PWR_MGMT_1, 0x00); 
+ 151   1              CyDelay(20);
+ 152   1      }
+ 153          
+ 154          /********************************************************************************
+ 155          * Function Name: ChipSelector                                                   *
+ 156          *********************************************************************************/
+ 157          void ChipSelector(int n)
+ 158          {
+ 159   1          Chip_Select_A_Write(15);
+ 160   1          Chip_Select_B_Write(3);
+ 161   1          
+ 162   1          if(n<15)
+ 163   1              Chip_Select_A_Write(n);
+ 164   1          if(n==15)
+ 165   1              Chip_Select_B_Write(0);
+ 166   1          if(n==16)
+ 167   1              Chip_Select_B_Write(1);
+ 168   1      }
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 4   
 
- 169          void InitIMUgeneral()
- 170          {
- 171   1          uint8 k_imu;
- 172   1          uint8 count = 0;
- 173   1          int IMU_ack;
- 174   1          int tmp[N_IMU_MAX];
- 175   1      
- 176   1          // Initialize Memory Structure 
- 177   1          memset(&g_imu, 0, sizeof(struct st_imu));
- 178   1          memset(&IMU_connected, 0, sizeof(IMU_connected));
+ 169          
+ 170          /********************************************************************************
+ 171          * Function Name: InitIMUGeneral                                                 *
+ 172          *********************************************************************************/
+ 173          void InitIMUgeneral()
+ 174          {
+ 175   1          uint8 k_imu;
+ 176   1          uint8 count = 0;
+ 177   1          int IMU_ack;
+ 178   1          int tmp[N_IMU_MAX];
  179   1      
- 180   1          // First ping to be sure to wakeup IMUs
- 181   1          for (k_imu=0; k_imu < N_IMU_MAX; k_imu++) 
- 182   1          {   
- 183   2                  ChipSelector(k_imu);
- 184   2                  CyDelay(10);
- 185   2                  ReadControlRegister(MPU9250_WHO_AM_I);
- 186   2          }
- 187   1          
- 188   1          // Identify IMU connected
- 189   1          ChipSelector(0);
- 190   1          CyDelay(10);
- 191   1          IMU_ack = ReadControlRegister(MPU9250_WHO_AM_I);
- 192   1          IMU_ack = 0;
- 193   1          N_IMU_Connected = 0;    
- 194   1          for (k_imu = 0; k_imu < N_IMU_MAX; k_imu++) 
- 195   1          {      
- 196   2              ChipSelector(k_imu);
- 197   2              CyDelay(10);
- 198   2              IMU_ack = ReadControlRegister(MPU9250_WHO_AM_I);
- 199   2              if (IMU_ack == 0x71) 
- 200   2              {
- 201   3                  N_IMU_Connected++;
- 202   3                  IMU_ack = 0;
- 203   3                  tmp[k_imu] = 1;
- 204   3              }
- 205   2              else
- 206   2                  tmp[k_imu] = 0;
- 207   2          }
- 208   1      
- 209   1          for(k_imu = 0; k_imu < N_IMU_MAX; k_imu++)
- 210   1          {
- 211   2              if(tmp[k_imu] == 1)
- 212   2              {
- 213   3                  IMU_connected[count] = k_imu;
- 214   3                  count++;
- 215   3              }
- 216   2          }
- 217   1                  
- 218   1          // Standard Initialization of the IMU
- 219   1          Opto_Pin_Write(0);
- 220   1          CyDelay(10);
- 221   1          Opto_Pin_Write(1);
- 222   1          CyDelay(10);
- 223   1          for (k_imu=0; k_imu < N_IMU_MAX; k_imu++) 
- 224   1          {   
- 225   2                  ChipSelector(k_imu);
- 226   2                  CyDelay(10);
- 227   2                  InitIMU();
- 228   2                  CyDelay(10); 
- 229   2              InitIMUMagCal();      // Initialize IMU to Read MagCal Parameters
- 230   2                  CyDelay(10); 
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 5   
+ 180   1          // Initialize Memory Structure 
+ 181   1          memset(&g_imu, 0, sizeof(struct st_imu));
+ 182   1          memset(&IMU_connected, 0, sizeof(IMU_connected));
+ 183   1      
+ 184   1          // First ping to be sure to wakeup IMUs
+ 185   1          for (k_imu=0; k_imu < N_IMU_MAX; k_imu++) 
+ 186   1          {   
+ 187   2                  ChipSelector(k_imu);
+ 188   2                  CyDelay(10);
+ 189   2                  ReadControlRegister(MPU9250_WHO_AM_I);
+ 190   2          }
+ 191   1          
+ 192   1          // Identify IMU connected
+ 193   1          ChipSelector(0);
+ 194   1          CyDelay(10);
+ 195   1          IMU_ack = ReadControlRegister(MPU9250_WHO_AM_I);
+ 196   1          IMU_ack = 0;
+ 197   1          N_IMU_Connected = 0;    
+ 198   1          for (k_imu = 0; k_imu < N_IMU_MAX; k_imu++) 
+ 199   1          {      
+ 200   2              ChipSelector(k_imu);
+ 201   2              CyDelay(10);
+ 202   2              IMU_ack = ReadControlRegister(MPU9250_WHO_AM_I);
+ 203   2              if (IMU_ack == 0x71) 
+ 204   2              {
+ 205   3                  N_IMU_Connected++;
+ 206   3                  IMU_ack = 0;
+ 207   3                  tmp[k_imu] = 1;
+ 208   3              }
+ 209   2              else
+ 210   2                  tmp[k_imu] = 0;
+ 211   2          }
+ 212   1      
+ 213   1          for(k_imu = 0; k_imu < N_IMU_MAX; k_imu++)
+ 214   1          {
+ 215   2              if(tmp[k_imu] == 1)
+ 216   2              {
+ 217   3                  IMU_connected[count] = k_imu;
+ 218   3                  count++;
+ 219   3              }
+ 220   2          }
+ 221   1                  
+ 222   1          // Standard Initialization of the IMU
+ 223   1          Opto_Pin_Write(0);
+ 224   1          CyDelay(10);
+ 225   1          Opto_Pin_Write(1);
+ 226   1          CyDelay(10);
+ 227   1          for (k_imu=0; k_imu < N_IMU_MAX; k_imu++) 
+ 228   1          {   
+ 229   2                  ChipSelector(k_imu);
+ 230   2                  CyDelay(10);
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 5   
 
- 231   2          }
- 232   1          CyDelay(50);
- 233   1          
- 234   1          // Reading of MagCal Parameters
- 235   1          for (k_imu = 0; k_imu < N_IMU_MAX; k_imu++){
- 236   2              ChipSelector(k_imu);
- 237   2              ReadMagCal(k_imu); 
- 238   2          }
- 239   1          CyDelay(50);
- 240   1          
- 241   1          // Set Standard Read for the IMU
- 242   1          memset(&single_imu_size, 0, sizeof(single_imu_size));
- 243   1          imus_data_size = 1; //header    
- 244   1          for (k_imu = 0; k_imu < N_IMU_Connected; k_imu++)
- 245   1          {
- 246   2              single_imu_size[IMU_connected[k_imu]] = 1 + 6*c_mem.IMU_conf[IMU_connected[k_imu]][0] + 6*c_mem.IM
+ 231   2                  InitIMU();
+ 232   2                  CyDelay(10); 
+ 233   2              InitIMUMagCal();      // Initialize IMU to Read MagCal Parameters
+ 234   2                  CyDelay(10); 
+ 235   2          }
+ 236   1          CyDelay(50);
+ 237   1          
+ 238   1          // Reading of MagCal Parameters
+ 239   1          for (k_imu = 0; k_imu < N_IMU_MAX; k_imu++){
+ 240   2              ChipSelector(k_imu);
+ 241   2              ReadMagCal(k_imu); 
+ 242   2          }
+ 243   1          CyDelay(50);
+ 244   1          
+ 245   1          // Set Standard Read for the IMU
+ 246   1          memset(&single_imu_size, 0, sizeof(single_imu_size));
+ 247   1          imus_data_size = 1; //header    
+ 248   1          for (k_imu = 0; k_imu < N_IMU_Connected; k_imu++)
+ 249   1          {
+ 250   2              single_imu_size[IMU_connected[k_imu]] = 1 + 6*c_mem.IMU_conf[IMU_connected[k_imu]][0] + 6*c_mem.IM
              -U_conf[IMU_connected[k_imu]][1] + 6*c_mem.IMU_conf[IMU_connected[k_imu]][2]+ 16*c_mem.IMU_conf[IMU_connected[k_imu]][3] 
              -+ 2*c_mem.IMU_conf[IMU_connected[k_imu]][4]+ 1;
- 247   2              imus_data_size = imus_data_size + single_imu_size[IMU_connected[k_imu]];
- 248   2          }
- 249   1          imus_data_size = imus_data_size + 1;    //checksum
- 250   1      }
- 251          
- 252          /*******************************************************************************
- 253          * Function Name: IMU Read
- 254          *********************************************************************************/      
- 255          void ReadIMU(int n)
- 256          {
- 257   1          if (c_mem.IMU_conf[n][0]) ReadAcc(n);
- 258   1          if (c_mem.IMU_conf[n][1]) ReadGyro(n);
- 259   1          if (c_mem.IMU_conf[n][2]) ReadMag(n);
- 260   1          if (c_mem.IMU_conf[n][3]) ReadQuat(n);
- 261   1          if (c_mem.IMU_conf[n][4]) ReadTemp(n);
- 262   1      }
- 263          
- 264          /*******************************************************************************
- 265          * Function Name: Read Acc's Data of IMU n
- 266          *********************************************************************************/
- 267          void ReadAcc(int n)
- 268          {
- 269   1              uint8 low=0, high=0;
- 270   1              
- 271   1              int row = n;
- 272   1              
- 273   1              //read X
- 274   1          low=ReadControlRegister(MPU9250_ACCEL_XOUT_L);
- 275   1          SPI_delay();
- 276   1          high=ReadControlRegister(MPU9250_ACCEL_XOUT_H);
- 277   1          SPI_delay();
- 278   1          
- 279   1              Accel[row][0] = high; 
- 280   1              Accel[row][1] = low; 
- 281   1              low=0, high=0;
- 282   1                              
- 283   1              //read Y
- 284   1          low=ReadControlRegister(MPU9250_ACCEL_YOUT_L);
- 285   1          SPI_delay();
- 286   1              high=ReadControlRegister(MPU9250_ACCEL_YOUT_H);
- 287   1          SPI_delay();
- 288   1      
- 289   1              Accel[row][2] = high; 
- 290   1              Accel[row][3] = low; 
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 6   
+ 251   2              imus_data_size = imus_data_size + single_imu_size[IMU_connected[k_imu]];
+ 252   2          }
+ 253   1          imus_data_size = imus_data_size + 1;    //checksum
+ 254   1      }
+ 255          
+ 256          /*******************************************************************************
+ 257          * Function Name: IMU Read
+ 258          *********************************************************************************/      
+ 259          void ReadIMU(int n)
+ 260          {
+ 261   1          if (c_mem.IMU_conf[n][0]) ReadAcc(n);
+ 262   1          if (c_mem.IMU_conf[n][1]) ReadGyro(n);
+ 263   1          if (c_mem.IMU_conf[n][2]) ReadMag(n);
+ 264   1          if (c_mem.IMU_conf[n][3]) ReadQuat(n);
+ 265   1          if (c_mem.IMU_conf[n][4]) ReadTemp(n);
+ 266   1      }
+ 267          
+ 268          /*******************************************************************************
+ 269          * Function Name: Read Acc's Data of IMU n
+ 270          *********************************************************************************/
+ 271          void ReadAcc(int n)
+ 272          {
+ 273   1              uint8 low=0, high=0;
+ 274   1              
+ 275   1              int row = n;
+ 276   1              
+ 277   1              //read X
+ 278   1          low=ReadControlRegister(MPU9250_ACCEL_XOUT_L);
+ 279   1          SPI_delay();
+ 280   1          high=ReadControlRegister(MPU9250_ACCEL_XOUT_H);
+ 281   1          SPI_delay();
+ 282   1          
+ 283   1              Accel[row][0] = high; 
+ 284   1              Accel[row][1] = low; 
+ 285   1              low=0, high=0;
+ 286   1                              
+ 287   1              //read Y
+ 288   1          low=ReadControlRegister(MPU9250_ACCEL_YOUT_L);
+ 289   1          SPI_delay();
+ 290   1              high=ReadControlRegister(MPU9250_ACCEL_YOUT_H);
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 6   
 
- 291   1              low=0, high=0;
- 292   1                      
- 293   1              //read Z
- 294   1          low=ReadControlRegister(MPU9250_ACCEL_ZOUT_L);
- 295   1          SPI_delay();
- 296   1          high=ReadControlRegister(MPU9250_ACCEL_ZOUT_H);
- 297   1          SPI_delay();
- 298   1          
- 299   1              Accel[row][4] = high; 
- 300   1              Accel[row][5] = low;
- 301   1              low=0, high=0;
- 302   1      }
- 303          
- 304          /*******************************************************************************
- 305          * Function Name: Read Gyro's Data of IMU n
- 306          *********************************************************************************/
- 307          void ReadGyro(int n){
- 308   1              uint8 low=0, high=0;
- 309   1          
- 310   1              int row = n;
- 311   1              
- 312   1              //read X
- 313   1              low=ReadControlRegister(MPU9250_GYRO_XOUT_L);
- 314   1          SPI_delay();
- 315   1              high=ReadControlRegister(MPU9250_GYRO_XOUT_H);
- 316   1          SPI_delay();
- 317   1          
- 318   1              Gyro[row][0] = high; 
- 319   1              Gyro[row][1] = low;
- 320   1              low=0, high=0;
+ 291   1          SPI_delay();
+ 292   1      
+ 293   1              Accel[row][2] = high; 
+ 294   1              Accel[row][3] = low; 
+ 295   1              low=0, high=0;
+ 296   1                      
+ 297   1              //read Z
+ 298   1          low=ReadControlRegister(MPU9250_ACCEL_ZOUT_L);
+ 299   1          SPI_delay();
+ 300   1          high=ReadControlRegister(MPU9250_ACCEL_ZOUT_H);
+ 301   1          SPI_delay();
+ 302   1          
+ 303   1              Accel[row][4] = high; 
+ 304   1              Accel[row][5] = low;
+ 305   1              low=0, high=0;
+ 306   1      }
+ 307          
+ 308          /*******************************************************************************
+ 309          * Function Name: Read Gyro's Data of IMU n
+ 310          *********************************************************************************/
+ 311          void ReadGyro(int n){
+ 312   1              uint8 low=0, high=0;
+ 313   1          
+ 314   1              int row = n;
+ 315   1              
+ 316   1              //read X
+ 317   1              low=ReadControlRegister(MPU9250_GYRO_XOUT_L);
+ 318   1          SPI_delay();
+ 319   1              high=ReadControlRegister(MPU9250_GYRO_XOUT_H);
+ 320   1          SPI_delay();
  321   1          
- 322   1              //read Y
- 323   1              low=ReadControlRegister(MPU9250_GYRO_YOUT_L);
- 324   1          SPI_delay();
- 325   1              high=ReadControlRegister(MPU9250_GYRO_YOUT_H);
- 326   1          SPI_delay();
- 327   1          
- 328   1              Gyro[row][2] = high; 
- 329   1              Gyro[row][3] = low;
- 330   1              low=0, high=0;
- 331   1      
- 332   1              //read Z
- 333   1          low=ReadControlRegister(MPU9250_GYRO_ZOUT_L);
- 334   1          SPI_delay();
- 335   1              high=ReadControlRegister(MPU9250_GYRO_ZOUT_H);
- 336   1          SPI_delay();
- 337   1          
- 338   1              Gyro[row][4] = high; 
- 339   1              Gyro[row][5] = low;        
- 340   1      
- 341   1              low=0, high=0;
- 342   1      }
- 343          
- 344          /*******************************************************************************
- 345          * Function Name: Read Compas' Data of IMU n
- 346          *********************************************************************************/
- 347          void ReadMag(int n){
- 348   1              
- 349   1              uint8 low, high;
- 350   1              int row = n;    
- 351   1              //read X
- 352   1              low = ReadControlRegister(MPU9250_EXT_SENS_DATA_00);
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 7   
+ 322   1              Gyro[row][0] = high; 
+ 323   1              Gyro[row][1] = low;
+ 324   1              low=0, high=0;
+ 325   1          
+ 326   1              //read Y
+ 327   1              low=ReadControlRegister(MPU9250_GYRO_YOUT_L);
+ 328   1          SPI_delay();
+ 329   1              high=ReadControlRegister(MPU9250_GYRO_YOUT_H);
+ 330   1          SPI_delay();
+ 331   1          
+ 332   1              Gyro[row][2] = high; 
+ 333   1              Gyro[row][3] = low;
+ 334   1              low=0, high=0;
+ 335   1      
+ 336   1              //read Z
+ 337   1          low=ReadControlRegister(MPU9250_GYRO_ZOUT_L);
+ 338   1          SPI_delay();
+ 339   1              high=ReadControlRegister(MPU9250_GYRO_ZOUT_H);
+ 340   1          SPI_delay();
+ 341   1          
+ 342   1              Gyro[row][4] = high; 
+ 343   1              Gyro[row][5] = low;        
+ 344   1      
+ 345   1              low=0, high=0;
+ 346   1      }
+ 347          
+ 348          /*******************************************************************************
+ 349          * Function Name: Read Compas' Data of IMU n
+ 350          *********************************************************************************/
+ 351          void ReadMag(int n){
+ 352   1              
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 7   
 
- 353   1          SPI_delay();
- 354   1              high = ReadControlRegister(MPU9250_EXT_SENS_DATA_01);           
- 355   1          SPI_delay();
- 356   1          
- 357   1              Mag[row][0] = high; 
- 358   1              Mag[row][1] = low;
- 359   1              low=0, high=0;
+ 353   1              uint8 low, high;
+ 354   1              int row = n;    
+ 355   1              //read X
+ 356   1              low = ReadControlRegister(MPU9250_EXT_SENS_DATA_00);
+ 357   1          SPI_delay();
+ 358   1              high = ReadControlRegister(MPU9250_EXT_SENS_DATA_01);           
+ 359   1          SPI_delay();
  360   1          
- 361   1              //read Y
- 362   1              low = ReadControlRegister(MPU9250_EXT_SENS_DATA_02);
- 363   1          SPI_delay();
- 364   1              high = ReadControlRegister(MPU9250_EXT_SENS_DATA_03);           
- 365   1          SPI_delay();
- 366   1          
- 367   1              Mag[row][2] = high; 
- 368   1              Mag[row][3] = low;
- 369   1              low=0, high=0;
+ 361   1              Mag[row][0] = high; 
+ 362   1              Mag[row][1] = low;
+ 363   1              low=0, high=0;
+ 364   1          
+ 365   1              //read Y
+ 366   1              low = ReadControlRegister(MPU9250_EXT_SENS_DATA_02);
+ 367   1          SPI_delay();
+ 368   1              high = ReadControlRegister(MPU9250_EXT_SENS_DATA_03);           
+ 369   1          SPI_delay();
  370   1          
- 371   1              //read Z
- 372   1              low = ReadControlRegister(MPU9250_EXT_SENS_DATA_04);
- 373   1          SPI_delay();
- 374   1              high = ReadControlRegister(MPU9250_EXT_SENS_DATA_05);
- 375   1          SPI_delay();
- 376   1                      
- 377   1              Mag[row][4] = high; 
- 378   1              Mag[row][5] = low;
- 379   1              low=0, high=0;
- 380   1      }
- 381          
- 382          /********************************************************************************
- 383          * Function Name: ReadMagCal
- 384          *********************************************************************************/
- 385          void ReadMagCal(int n){
- 386   1              
- 387   1          uint8 read = 0; 
- 388   1              int row = n;    
- 389   1              //read X
- 390   1              read = ReadControlRegister(MPU9250_EXT_SENS_DATA_00);
- 391   1          MagCal[row][0] = read; 
- 392   1          read = 0;
- 393   1          
- 394   1              //read Y
- 395   1              read = ReadControlRegister(MPU9250_EXT_SENS_DATA_01);                   
- 396   1              MagCal[row][1] = read; 
- 397   1              read = 0;
- 398   1          
- 399   1              //read Z
- 400   1              read = ReadControlRegister(MPU9250_EXT_SENS_DATA_02);                   
- 401   1              MagCal[row][2] = read; 
- 402   1              read = 0;
- 403   1          
- 404   1      }
- 405              
- 406          /*******************************************************************************
- 407          * Function Name: Read Quaternion of IMU n
- 408          *********************************************************************************/
- 409          void ReadQuat(int n)
- 410          {
- 411   1              uint8 i=0;      
- 412   1          int16 var_h;
- 413   1          float qd0,qd1,qd2,qd3;        
- 414   1          float aP[3]; //, fa[3];
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 8   
+ 371   1              Mag[row][2] = high; 
+ 372   1              Mag[row][3] = low;
+ 373   1              low=0, high=0;
+ 374   1          
+ 375   1              //read Z
+ 376   1              low = ReadControlRegister(MPU9250_EXT_SENS_DATA_04);
+ 377   1          SPI_delay();
+ 378   1              high = ReadControlRegister(MPU9250_EXT_SENS_DATA_05);
+ 379   1          SPI_delay();
+ 380   1                      
+ 381   1              Mag[row][4] = high; 
+ 382   1              Mag[row][5] = low;
+ 383   1              low=0, high=0;
+ 384   1      }
+ 385          
+ 386          /********************************************************************************
+ 387          * Function Name: ReadMagCal
+ 388          *********************************************************************************/
+ 389          void ReadMagCal(int n){
+ 390   1              
+ 391   1          uint8 read = 0; 
+ 392   1              int row = n;    
+ 393   1              //read X
+ 394   1              read = ReadControlRegister(MPU9250_EXT_SENS_DATA_00);
+ 395   1          MagCal[row][0] = read; 
+ 396   1          read = 0;
+ 397   1          
+ 398   1              //read Y
+ 399   1              read = ReadControlRegister(MPU9250_EXT_SENS_DATA_01);                   
+ 400   1              MagCal[row][1] = read; 
+ 401   1              read = 0;
+ 402   1          
+ 403   1              //read Z
+ 404   1              read = ReadControlRegister(MPU9250_EXT_SENS_DATA_02);                   
+ 405   1              MagCal[row][2] = read; 
+ 406   1              read = 0;
+ 407   1          
+ 408   1      }
+ 409              
+ 410          /*******************************************************************************
+ 411          * Function Name: Read Quaternion of IMU n
+ 412          *********************************************************************************/
+ 413          void ReadQuat(int n)
+ 414          {
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 8   
 
- 415   1          float Napla[4],g[4],qL[4];
- 416   1          float time = 0;
- 417   1              
- 418   1          if (N_IMU_Connected == 1) {
- 419   2              // Compute quaternion only if 1 IMU is connected
- 420   2              
- 421   2              if (!c_mem.IMU_conf[n][0]) ReadAcc(n);
- 422   2              if (!c_mem.IMU_conf[n][1]) ReadGyro(n);
- 423   2              
- 424   2              // assume cycle time is the same of last function_scheduler execution,
- 425   2              // without adding another counter
- 426   2              time = (float)((uint32)timer_value0 - (uint32)timer_value) / 1000000.0;
+ 415   1              uint8 i=0;      
+ 416   1          int16 var_h;
+ 417   1          float qd0,qd1,qd2,qd3;        
+ 418   1          float aP[3]; //, fa[3];
+ 419   1          float Napla[4],g[4],qL[4];
+ 420   1          float time = 0;
+ 421   1              
+ 422   1          if (N_IMU_Connected == 1) {
+ 423   2              // Compute quaternion only if 1 IMU is connected
+ 424   2              
+ 425   2              if (!c_mem.IMU_conf[n][0]) ReadAcc(n);
+ 426   2              if (!c_mem.IMU_conf[n][1]) ReadGyro(n);
  427   2              
- 428   2              // how N sees P; N is 'Earth' equivalent, P is for sensor
- 429   2              // e.g. N = imu1, P = imu0, how imu1 sees imu0
- 430   2      
- 431   2              var_h = Accel[n][0];
- 432   2              aP[0] = (int16)(var_h << 8 | Accel[n][1]); 
- 433   2              var_h = Accel[n][2];
- 434   2              aP[1] = (int16)(var_h << 8 | Accel[n][3]); 
- 435   2              var_h = Accel[n][4];
- 436   2              aP[2] = (int16)(var_h << 8 | Accel[n][5]);
- 437   2              
- 438   2              g[0] = 0;
- 439   2              var_h = Gyro[n][0];
- 440   2              g[1] = ((int16)(var_h << 8 | Gyro[n][1]))*TICK2GYRO;
- 441   2              if ( fabs(g[1]) < GYRO_THR ) g[1] = 0;
- 442   2              var_h = Gyro[n][2];
- 443   2              g[2] = ((int16)(var_h << 8 | Gyro[n][3]))*TICK2GYRO; 
- 444   2              if ( fabs(g[2]) < GYRO_THR ) g[2] = 0;
- 445   2              var_h = Gyro[n][4];
- 446   2              g[3] = ((int16)(var_h << 8 | Gyro[n][5]))*TICK2GYRO;
- 447   2              if ( fabs(g[3]) < GYRO_THR ) g[3] = 0;
- 448   2              
- 449   2              // Normalize to 1
- 450   2              v3_normalize(aP);
- 451   2              
- 452   2              // Current quaternion assignment
- 453   2              qL[0] = Quat[0];
- 454   2              qL[1] = Quat[1];
- 455   2              qL[2] = Quat[2];
- 456   2              qL[3] = Quat[3];   
- 457   2              
- 458   2              // Napla computation
- 459   2              Napla[0] = (-qL[2]*((2*(qL[1]*qL[3]-qL[0]*qL[2]) - aP[0])) + qL[1]*((2*(qL[0]*qL[1] + qL[2]*qL[3])
+ 428   2              // assume cycle time is the same of last function_scheduler execution,
+ 429   2              // without adding another counter
+ 430   2              time = (float)((uint32)timer_value0 - (uint32)timer_value) / 1000000.0;
+ 431   2              
+ 432   2              // how N sees P; N is 'Earth' equivalent, P is for sensor
+ 433   2              // e.g. N = imu1, P = imu0, how imu1 sees imu0
+ 434   2      
+ 435   2              var_h = Accel[n][0];
+ 436   2              aP[0] = (int16)(var_h << 8 | Accel[n][1]); 
+ 437   2              var_h = Accel[n][2];
+ 438   2              aP[1] = (int16)(var_h << 8 | Accel[n][3]); 
+ 439   2              var_h = Accel[n][4];
+ 440   2              aP[2] = (int16)(var_h << 8 | Accel[n][5]);
+ 441   2              
+ 442   2              g[0] = 0;
+ 443   2              var_h = Gyro[n][0];
+ 444   2              g[1] = ((int16)(var_h << 8 | Gyro[n][1]))*TICK2GYRO;
+ 445   2              if ( fabs(g[1]) < GYRO_THR ) g[1] = 0;
+ 446   2              var_h = Gyro[n][2];
+ 447   2              g[2] = ((int16)(var_h << 8 | Gyro[n][3]))*TICK2GYRO; 
+ 448   2              if ( fabs(g[2]) < GYRO_THR ) g[2] = 0;
+ 449   2              var_h = Gyro[n][4];
+ 450   2              g[3] = ((int16)(var_h << 8 | Gyro[n][5]))*TICK2GYRO;
+ 451   2              if ( fabs(g[3]) < GYRO_THR ) g[3] = 0;
+ 452   2              
+ 453   2              // Normalize to 1
+ 454   2              v3_normalize(aP);
+ 455   2              
+ 456   2              // Current quaternion assignment
+ 457   2              qL[0] = Quat[0];
+ 458   2              qL[1] = Quat[1];
+ 459   2              qL[2] = Quat[2];
+ 460   2              qL[3] = Quat[3];   
+ 461   2              
+ 462   2              // Napla computation
+ 463   2              Napla[0] = (-qL[2]*((2*(qL[1]*qL[3]-qL[0]*qL[2]) - aP[0])) + qL[1]*((2*(qL[0]*qL[1] + qL[2]*qL[3])
              - - aP[1])))*TICK2ACC*BETA;
- 460   2              Napla[1] = (qL[3]*((2*(qL[1]*qL[3]-qL[0]*qL[2]) - aP[0])) + qL[0]*((2*(qL[0]*qL[1] + qL[2]*qL[3]) 
+ 464   2              Napla[1] = (qL[3]*((2*(qL[1]*qL[3]-qL[0]*qL[2]) - aP[0])) + qL[0]*((2*(qL[0]*qL[1] + qL[2]*qL[3]) 
              -- aP[1])) -2*qL[1]*((2*(0.5 - qL[1]*qL[1] - qL[2]*qL[2]) - aP[2])))*TICK2ACC*BETA;
- 461   2              Napla[2] = (-qL[0]*((2*(qL[1]*qL[3]-qL[0]*qL[2]) - aP[0])) +qL[3]*((2*(qL[0]*qL[1] + qL[2]*qL[3]) 
+ 465   2              Napla[2] = (-qL[0]*((2*(qL[1]*qL[3]-qL[0]*qL[2]) - aP[0])) +qL[3]*((2*(qL[0]*qL[1] + qL[2]*qL[3]) 
              -- aP[1])) -2*qL[2]*((2*(0.5 - qL[1]*qL[1] - qL[2]*qL[2]) - aP[2])))*TICK2ACC*BETA;
- 462   2              Napla[3] = (qL[1]*((2*(qL[1]*qL[3]-qL[0]*qL[2]) - aP[0])) + qL[2]*((2*(qL[0]*qL[1] + qL[2]*qL[3]) 
+ 466   2              Napla[3] = (qL[1]*((2*(qL[1]*qL[3]-qL[0]*qL[2]) - aP[0])) + qL[2]*((2*(qL[0]*qL[1] + qL[2]*qL[3]) 
              -- aP[1])))*TICK2ACC*BETA;
- 463   2              
- 464   2              qd0 = 0.5*(-(qL[1]*g[1] + qL[2]*g[2] + qL[3]*g[3])) - Napla[0];
- 465   2              qd1 = 0.5*(qL[0]*g[1] + (qL[2]*g[3] - qL[3]*g[2])) - Napla[1];
- 466   2              qd2 = 0.5*(qL[0]*g[2] + (qL[3]*g[1] - qL[1]*g[3])) - Napla[2];
- 467   2              qd3 = 0.5*(qL[0]*g[3] + (qL[1]*g[2] - qL[2]*g[1])) - Napla[3];
- 468   2                      
- 469   2              qL[0] = qL[0] + qd0*time;
- 470   2              qL[1] = qL[1] + qd1*time;
- 471   2              qL[2] = qL[2] + qd2*time;
- 472   2              qL[3] = qL[3] + qd3*time;
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 9   
+ 467   2              
+ 468   2              qd0 = 0.5*(-(qL[1]*g[1] + qL[2]*g[2] + qL[3]*g[3])) - Napla[0];
+ 469   2              qd1 = 0.5*(qL[0]*g[1] + (qL[2]*g[3] - qL[3]*g[2])) - Napla[1];
+ 470   2              qd2 = 0.5*(qL[0]*g[2] + (qL[3]*g[1] - qL[1]*g[3])) - Napla[2];
+ 471   2              qd3 = 0.5*(qL[0]*g[3] + (qL[1]*g[2] - qL[2]*g[1])) - Napla[3];
+ 472   2                      
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 9   
 
- 473   2              v4_normalize(qL);
- 474   2              
- 475   2              // Quaternion update      
- 476   2              Quat[0] = qL[0];
- 477   2              Quat[1] = qL[1];
- 478   2              Quat[2] = qL[2];
- 479   2              Quat[3] = qL[3];
- 480   2          }
- 481   1          else {
- 482   2              return;
- 483   2          }
- 484   1      }
- 485          
- 486          /********************************************************************************
- 487          * Function Name: ReadAllIMUs
- 488          *********************************************************************************/
- 489          void ReadAllIMUs(){
- 490   1          static uint8 k_imu = 0;
- 491   1          uint16 tmp = 0, i = 0, j = 0;
- 492   1          int16 value = 0;
- 493   1      
- 494   1          for (k_imu = 0; k_imu < N_IMU_Connected; k_imu++){ 
- 495   2              // Read k_imu IMU
- 496   2              ChipSelector(IMU_connected[k_imu]);
- 497   2              ReadIMU(IMU_connected[k_imu]);
- 498   2              
- 499   2              for (j = 0; j < 3; j++) {
- 500   3                  tmp = Accel[IMU_connected[k_imu]][2*j];
- 501   3                  g_imuNew[k_imu].accel_value[j] = (int16)(tmp<<8 | Accel[IMU_connected[k_imu]][2*j + 1]);
- 502   3              }
- 503   2              
- 504   2              for (j = 0; j < 3; j++) {
- 505   3                  tmp = Gyro[IMU_connected[k_imu]][2*j];
- 506   3                  g_imuNew[k_imu].gyro_value[j] = (int16)(tmp<<8 | Gyro[IMU_connected[k_imu]][2*j + 1]);
- 507   3              }
- 508   2                      
- 509   2              for (j = 0; j < 3; j++) {
- 510   3                  tmp = Mag[IMU_connected[k_imu]][2*j];
- 511   3                  g_imuNew[k_imu].mag_value[j] = (int16)(tmp<<8 | Mag[IMU_connected[k_imu]][2*j + 1]);
- 512   3              }  
- 513   2              
- 514   2              // Save quaternion only for first IMU
- 515   2              for (j = 0; k_imu == 0 && j < 4; j++) {
- 516   3                  g_imuNew[k_imu].quat_value[j] = (float)Quat[j];
- 517   3              }
- 518   2              
- 519   2              tmp = Temp[IMU_connected[k_imu]][0];
- 520   2              g_imuNew[k_imu].temp_value = (int16)(tmp<<8 | Temp[IMU_connected[k_imu]][1]);
- 521   2          }
- 522   1      }
- 523          
- 524          /*******************************************************************************
- 525          * Function Name: Read Temperature Data of IMU n
- 526          *********************************************************************************/
- 527          void ReadTemp(int n)
- 528          {
- 529   1              uint8 low=0, high=0;    
- 530   1              int row = n;
- 531   1              
- 532   1              //read X
- 533   1          low=ReadControlRegister(MPU9250_TEMP_OUT_L);
- 534   1          SPI_delay();
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 10  
+ 473   2              qL[0] = qL[0] + qd0*time;
+ 474   2              qL[1] = qL[1] + qd1*time;
+ 475   2              qL[2] = qL[2] + qd2*time;
+ 476   2              qL[3] = qL[3] + qd3*time;
+ 477   2              v4_normalize(qL);
+ 478   2              
+ 479   2              // Quaternion update      
+ 480   2              Quat[0] = qL[0];
+ 481   2              Quat[1] = qL[1];
+ 482   2              Quat[2] = qL[2];
+ 483   2              Quat[3] = qL[3];
+ 484   2          }
+ 485   1          else {
+ 486   2              return;
+ 487   2          }
+ 488   1      }
+ 489          
+ 490          /********************************************************************************
+ 491          * Function Name: ReadAllIMUs
+ 492          *********************************************************************************/
+ 493          void ReadAllIMUs(){
+ 494   1          static uint8 k_imu = 0;
+ 495   1          uint16 tmp = 0, i = 0, j = 0;
+ 496   1          int16 value = 0;
+ 497   1      
+ 498   1          for (k_imu = 0; k_imu < N_IMU_Connected; k_imu++){ 
+ 499   2              // Read k_imu IMU
+ 500   2              ChipSelector(IMU_connected[k_imu]);
+ 501   2              ReadIMU(IMU_connected[k_imu]);
+ 502   2              
+ 503   2              for (j = 0; j < 3; j++) {
+ 504   3                  tmp = Accel[IMU_connected[k_imu]][2*j];
+ 505   3                  g_imuNew[k_imu].accel_value[j] = (int16)(tmp<<8 | Accel[IMU_connected[k_imu]][2*j + 1]);
+ 506   3              }
+ 507   2              
+ 508   2              for (j = 0; j < 3; j++) {
+ 509   3                  tmp = Gyro[IMU_connected[k_imu]][2*j];
+ 510   3                  g_imuNew[k_imu].gyro_value[j] = (int16)(tmp<<8 | Gyro[IMU_connected[k_imu]][2*j + 1]);
+ 511   3              }
+ 512   2                      
+ 513   2              for (j = 0; j < 3; j++) {
+ 514   3                  tmp = Mag[IMU_connected[k_imu]][2*j];
+ 515   3                  g_imuNew[k_imu].mag_value[j] = (int16)(tmp<<8 | Mag[IMU_connected[k_imu]][2*j + 1]);
+ 516   3              }  
+ 517   2              
+ 518   2              // Save quaternion only for first IMU
+ 519   2              for (j = 0; k_imu == 0 && j < 4; j++) {
+ 520   3                  g_imuNew[k_imu].quat_value[j] = (float)Quat[j];
+ 521   3              }
+ 522   2              
+ 523   2              tmp = Temp[IMU_connected[k_imu]][0];
+ 524   2              g_imuNew[k_imu].temp_value = (int16)(tmp<<8 | Temp[IMU_connected[k_imu]][1]);
+ 525   2          }
+ 526   1      }
+ 527          
+ 528          /*******************************************************************************
+ 529          * Function Name: Read Temperature Data of IMU n
+ 530          *********************************************************************************/
+ 531          void ReadTemp(int n)
+ 532          {
+ 533   1              uint8 low=0, high=0;    
+ 534   1              int row = n;
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 10  
 
- 535   1              high=ReadControlRegister(MPU9250_TEMP_OUT_H);
- 536   1          SPI_delay();
- 537   1      
- 538   1              Temp[row][0] = high; 
- 539   1              Temp[row][1] = low; 
- 540   1              low=0, high=0;
- 541   1      }
- 542          
- 543          /********************************** *********************************************
- 544          * Function Name: Write Control Register
- 545          *********************************************************************************/
- 546          void WriteControlRegister(uint8 address, uint8 dta){
- 547   1              
- 548   1              SPI_IMU_ClearRxBuffer();
- 549   1              SPI_IMU_ClearTxBuffer();
- 550   1              SPI_IMU_ClearFIFO();
- 551   1              SPI_IMU_WriteByte(MPU9250_WCR | address);
- 552   1              while(!( SPI_IMU_ReadStatus() & SPI_IMU_STS_TX_FIFO_EMPTY));            
- 553   1              SPI_IMU_WriteByte(dta);
- 554   1              while(!( SPI_IMU_ReadStatus() & SPI_IMU_STS_TX_FIFO_EMPTY));
- 555   1      }
- 556          
- 557          /*******************************************************************************
- 558          * Function Name: Read Control Register
- 559          *********************************************************************************/
- 560          uint8 ReadControlRegister(uint8 address){
- 561   1              uint8 controlreg;
- 562   1              
- 563   1              SPI_IMU_WriteByte(MPU9250_RCR | address);
- 564   1          SPI_IMU_WriteByte(0x00);
- 565   1              while(!( SPI_IMU_ReadStatus() & SPI_IMU_STS_SPI_DONE));
- 566   1              controlreg = SPI_IMU_ReadByte();        //real data
- 567   1              return controlreg;
- 568   1      }
- 569          
- 570          /*******************************************************************************
- 571          * Function Name: SPI delay
- 572          *********************************************************************************/
- 573          void SPI_delay(){
- 574   1          switch( c_mem.SPI_read_delay ) {
- 575   2              case 1:     // Low
- 576   2                  CyDelayUs((uint16)SPI_DELAY_LOW);
- 577   2                  break;
- 578   2              case 2:     // High
- 579   2                  CyDelayUs((uint16)SPI_DELAY_HIGH);
- 580   2                  break;
- 581   2              default:    // None
- 582   2                  break;
- 583   2          }
- 584   1      }
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 11  
+ 535   1              
+ 536   1              //read X
+ 537   1          low=ReadControlRegister(MPU9250_TEMP_OUT_L);
+ 538   1          SPI_delay();
+ 539   1              high=ReadControlRegister(MPU9250_TEMP_OUT_H);
+ 540   1          SPI_delay();
+ 541   1      
+ 542   1              Temp[row][0] = high; 
+ 543   1              Temp[row][1] = low; 
+ 544   1              low=0, high=0;
+ 545   1      }
+ 546          
+ 547          /********************************** *********************************************
+ 548          * Function Name: Write Control Register
+ 549          *********************************************************************************/
+ 550          void WriteControlRegister(uint8 address, uint8 dta){
+ 551   1              
+ 552   1              SPI_IMU_ClearRxBuffer();
+ 553   1              SPI_IMU_ClearTxBuffer();
+ 554   1              SPI_IMU_ClearFIFO();
+ 555   1              SPI_IMU_WriteByte(MPU9250_WCR | address);
+ 556   1              while(!( SPI_IMU_ReadStatus() & SPI_IMU_STS_TX_FIFO_EMPTY));            
+ 557   1              SPI_IMU_WriteByte(dta);
+ 558   1              while(!( SPI_IMU_ReadStatus() & SPI_IMU_STS_TX_FIFO_EMPTY));
+ 559   1      }
+ 560          
+ 561          /*******************************************************************************
+ 562          * Function Name: Read Control Register
+ 563          *********************************************************************************/
+ 564          uint8 ReadControlRegister(uint8 address){
+ 565   1              uint8 controlreg;
+ 566   1              
+ 567   1              SPI_IMU_WriteByte(MPU9250_RCR | address);
+ 568   1          SPI_IMU_WriteByte(0x00);
+ 569   1              while(!( SPI_IMU_ReadStatus() & SPI_IMU_STS_SPI_DONE));
+ 570   1              controlreg = SPI_IMU_ReadByte();        //real data
+ 571   1              return controlreg;
+ 572   1      }
+ 573          
+ 574          /*******************************************************************************
+ 575          * Function Name: SPI delay
+ 576          *********************************************************************************/
+ 577          void SPI_delay(){
+ 578   1          switch( c_mem.SPI_read_delay ) {
+ 579   2              case 1:     // Low
+ 580   2                  CyDelayUs((uint16)SPI_DELAY_LOW);
+ 581   2                  break;
+ 582   2              case 2:     // High
+ 583   2                  CyDelayUs((uint16)SPI_DELAY_HIGH);
+ 584   2                  break;
+ 585   2              default:    // None
+ 586   2                  break;
+ 587   2          }
+ 588   1      }
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 11  
 
 ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
@@ -690,7 +694,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 001A FE                MOV     R6,A
 001B FD                MOV     R5,A
 001C FC                MOV     R4,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 12  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 12  
 
 001D 120000      E     LCALL   _?CyDelay
                                            ; SOURCE LINE # 76
@@ -727,34 +731,34 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 004B FD                MOV     R5,A
 004C FC                MOV     R4,A
 004D 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 82
+                                           ; SOURCE LINE # 85
 0050 7D05              MOV     R5,#05H
 0052 7F1D              MOV     R7,#01DH
 0054 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 83
+                                           ; SOURCE LINE # 87
 0057 E4                CLR     A
 0058 7F0A              MOV     R7,#0AH
 005A FE                MOV     R6,A
 005B FD                MOV     R5,A
 005C FC                MOV     R4,A
 005D 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 85
+                                           ; SOURCE LINE # 89
 0060 7D0D              MOV     R5,#0DH
 0062 7F24              MOV     R7,#024H
 0064 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 86
+                                           ; SOURCE LINE # 90
 0067 E4                CLR     A
 0068 7F0A              MOV     R7,#0AH
 006A FE                MOV     R6,A
 006B FD                MOV     R5,A
 006C FC                MOV     R4,A
 006D 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 88
+                                           ; SOURCE LINE # 92
 0070 7D0C              MOV     R5,#0CH
 0072 7F25              MOV     R7,#025H
 0074 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 89
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 13  
+                                           ; SOURCE LINE # 93
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 13  
 
 0077 E4                CLR     A
 0078 7F0A              MOV     R7,#0AH
@@ -762,285 +766,285 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 007B FD                MOV     R5,A
 007C FC                MOV     R4,A
 007D 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 90
+                                           ; SOURCE LINE # 94
 0080 7D0A              MOV     R5,#0AH
 0082 7F26              MOV     R7,#026H
 0084 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 91
+                                           ; SOURCE LINE # 95
 0087 E4                CLR     A
 0088 7F0A              MOV     R7,#0AH
 008A FE                MOV     R6,A
 008B FD                MOV     R5,A
 008C FC                MOV     R4,A
 008D 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 93
+                                           ; SOURCE LINE # 97
 0090 7D16              MOV     R5,#016H
 0092 7F63              MOV     R7,#063H
 0094 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 94
+                                           ; SOURCE LINE # 98
 0097 E4                CLR     A
 0098 7F0A              MOV     R7,#0AH
 009A FE                MOV     R6,A
 009B FD                MOV     R5,A
 009C FC                MOV     R4,A
 009D 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 95
+                                           ; SOURCE LINE # 99
 00A0 7D81              MOV     R5,#081H
 00A2 7F27              MOV     R7,#027H
 00A4 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 96
+                                           ; SOURCE LINE # 100
 00A7 E4                CLR     A
 00A8 7F0A              MOV     R7,#0AH
 00AA FE                MOV     R6,A
 00AB FD                MOV     R5,A
 00AC FC                MOV     R4,A
 00AD 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 98
+                                           ; SOURCE LINE # 102
 00B0 7D8C              MOV     R5,#08CH
 00B2 7F25              MOV     R7,#025H
 00B4 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 99
+                                           ; SOURCE LINE # 103
 00B7 E4                CLR     A
 00B8 7F0A              MOV     R7,#0AH
 00BA FE                MOV     R6,A
 00BB FD                MOV     R5,A
 00BC FC                MOV     R4,A
 00BD 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 101
+                                           ; SOURCE LINE # 105
 00C0 7D03              MOV     R5,#03H
 00C2 7F26              MOV     R7,#026H
 00C4 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 102
+                                           ; SOURCE LINE # 106
 00C7 E4                CLR     A
 00C8 7F0A              MOV     R7,#0AH
 00CA FE                MOV     R6,A
 00CB FD                MOV     R5,A
 00CC FC                MOV     R4,A
 00CD 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 104
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 14  
+                                           ; SOURCE LINE # 108
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 14  
 
 00D0 7D8D              MOV     R5,#08DH
 00D2 7F27              MOV     R7,#027H
 00D4 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 105
+                                           ; SOURCE LINE # 109
 00D7 E4                CLR     A
 00D8 7F0A              MOV     R7,#0AH
 00DA FE                MOV     R6,A
 00DB FD                MOV     R5,A
 00DC FC                MOV     R4,A
 00DD 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 106
+                                           ; SOURCE LINE # 110
 00E0 E4                CLR     A
 00E1 FD                MOV     R5,A
 00E2 7F6B              MOV     R7,#06BH
 00E4 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 107
+                                           ; SOURCE LINE # 111
 00E7 E4                CLR     A
 00E8 7F14              MOV     R7,#014H
 00EA FE                MOV     R6,A
 00EB FD                MOV     R5,A
 00EC FC                MOV     R4,A
 00ED 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 108
+                                           ; SOURCE LINE # 112
 00F0 22                RET     
              ; FUNCTION InitIMU (END)
 
              ; FUNCTION InitIMUMagCal (BEGIN)
-                                           ; SOURCE LINE # 113
-                                           ; SOURCE LINE # 115
+                                           ; SOURCE LINE # 117
+                                           ; SOURCE LINE # 119
 0000 7D10              MOV     R5,#010H
 0002 7F6B              MOV     R7,#06BH
 0004 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 116
+                                           ; SOURCE LINE # 120
 0007 E4                CLR     A
 0008 7F0A              MOV     R7,#0AH
 000A FE                MOV     R6,A
 000B FD                MOV     R5,A
 000C FC                MOV     R4,A
 000D 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 117
+                                           ; SOURCE LINE # 121
 0010 7D20              MOV     R5,#020H
 0012 7F6A              MOV     R7,#06AH
 0014 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 118
+                                           ; SOURCE LINE # 122
 0017 E4                CLR     A
 0018 7F0A              MOV     R7,#0AH
 001A FE                MOV     R6,A
 001B FD                MOV     R5,A
 001C FC                MOV     R4,A
 001D 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 119
+                                           ; SOURCE LINE # 123
 0020 7D06              MOV     R5,#06H
 0022 7F1A              MOV     R7,#01AH
 0024 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 120
+                                           ; SOURCE LINE # 124
 0027 E4                CLR     A
 0028 7F0A              MOV     R7,#0AH
 002A FE                MOV     R6,A
 002B FD                MOV     R5,A
 002C FC                MOV     R4,A
 002D 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 121
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 15  
+                                           ; SOURCE LINE # 125
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 15  
 
 0030 7D18              MOV     R5,#018H
 0032 7F1B              MOV     R7,#01BH
 0034 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 122
+                                           ; SOURCE LINE # 126
 0037 E4                CLR     A
 0038 7F0A              MOV     R7,#0AH
 003A FE                MOV     R6,A
 003B FD                MOV     R5,A
 003C FC                MOV     R4,A
 003D 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 123
+                                           ; SOURCE LINE # 127
 0040 E4                CLR     A
 0041 FD                MOV     R5,A
 0042 7F1C              MOV     R7,#01CH
 0044 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 124
+                                           ; SOURCE LINE # 128
 0047 E4                CLR     A
 0048 7F0A              MOV     R7,#0AH
 004A FE                MOV     R6,A
 004B FD                MOV     R5,A
 004C FC                MOV     R4,A
 004D 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 125
+                                           ; SOURCE LINE # 129
 0050 7D05              MOV     R5,#05H
 0052 7F1D              MOV     R7,#01DH
 0054 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 126
+                                           ; SOURCE LINE # 130
 0057 E4                CLR     A
 0058 7F0A              MOV     R7,#0AH
 005A FE                MOV     R6,A
 005B FD                MOV     R5,A
 005C FC                MOV     R4,A
 005D 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 128
+                                           ; SOURCE LINE # 132
 0060 7D0D              MOV     R5,#0DH
 0062 7F24              MOV     R7,#024H
 0064 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 129
+                                           ; SOURCE LINE # 133
 0067 E4                CLR     A
 0068 7F0A              MOV     R7,#0AH
 006A FE                MOV     R6,A
 006B FD                MOV     R5,A
 006C FC                MOV     R4,A
 006D 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 131
+                                           ; SOURCE LINE # 135
 0070 7D0C              MOV     R5,#0CH
 0072 7F25              MOV     R7,#025H
 0074 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 132
+                                           ; SOURCE LINE # 136
 0077 E4                CLR     A
 0078 7F0A              MOV     R7,#0AH
 007A FE                MOV     R6,A
 007B FD                MOV     R5,A
 007C FC                MOV     R4,A
 007D 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 133
+                                           ; SOURCE LINE # 137
 0080 7D0A              MOV     R5,#0AH
 0082 7F26              MOV     R7,#026H
 0084 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 134
+                                           ; SOURCE LINE # 138
 0087 E4                CLR     A
 0088 7F0A              MOV     R7,#0AH
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 16  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 16  
 
 008A FE                MOV     R6,A
 008B FD                MOV     R5,A
 008C FC                MOV     R4,A
 008D 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 135
+                                           ; SOURCE LINE # 139
 0090 7D1F              MOV     R5,#01FH
 0092 7F63              MOV     R7,#063H
 0094 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 136
+                                           ; SOURCE LINE # 140
 0097 E4                CLR     A
 0098 7F0A              MOV     R7,#0AH
 009A FE                MOV     R6,A
 009B FD                MOV     R5,A
 009C FC                MOV     R4,A
 009D 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 137
+                                           ; SOURCE LINE # 141
 00A0 7D81              MOV     R5,#081H
 00A2 7F27              MOV     R7,#027H
 00A4 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 138
+                                           ; SOURCE LINE # 142
 00A7 E4                CLR     A
 00A8 7F0A              MOV     R7,#0AH
 00AA FE                MOV     R6,A
 00AB FD                MOV     R5,A
 00AC FC                MOV     R4,A
 00AD 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 140
+                                           ; SOURCE LINE # 144
 00B0 7D8C              MOV     R5,#08CH
 00B2 7F25              MOV     R7,#025H
 00B4 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 141
+                                           ; SOURCE LINE # 145
 00B7 E4                CLR     A
 00B8 7F0A              MOV     R7,#0AH
 00BA FE                MOV     R6,A
 00BB FD                MOV     R5,A
 00BC FC                MOV     R4,A
 00BD 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 142
+                                           ; SOURCE LINE # 146
 00C0 7D10              MOV     R5,#010H
 00C2 7F26              MOV     R7,#026H
 00C4 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 143
+                                           ; SOURCE LINE # 147
 00C7 E4                CLR     A
 00C8 7F0A              MOV     R7,#0AH
 00CA FE                MOV     R6,A
 00CB FD                MOV     R5,A
 00CC FC                MOV     R4,A
 00CD 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 144
+                                           ; SOURCE LINE # 148
 00D0 7D83              MOV     R5,#083H
 00D2 7F27              MOV     R7,#027H
 00D4 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 145
+                                           ; SOURCE LINE # 149
 00D7 E4                CLR     A
 00D8 7F0A              MOV     R7,#0AH
 00DA FE                MOV     R6,A
 00DB FD                MOV     R5,A
 00DC FC                MOV     R4,A
 00DD 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 146
+                                           ; SOURCE LINE # 150
 00E0 E4                CLR     A
 00E1 FD                MOV     R5,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 17  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 17  
 
 00E2 7F6B              MOV     R7,#06BH
 00E4 120000      R     LCALL   _WriteControlRegister
-                                           ; SOURCE LINE # 147
+                                           ; SOURCE LINE # 151
 00E7 E4                CLR     A
 00E8 7F14              MOV     R7,#014H
 00EA FE                MOV     R6,A
 00EB FD                MOV     R5,A
 00EC FC                MOV     R4,A
 00ED 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 148
+                                           ; SOURCE LINE # 152
 00F0 22                RET     
              ; FUNCTION InitIMUMagCal (END)
 
              ; FUNCTION _ChipSelector (BEGIN)
-                                           ; SOURCE LINE # 153
+                                           ; SOURCE LINE # 157
 0000 900000      R     MOV     DPTR,#n
 0003 EE                MOV     A,R6
 0004 F0                MOVX    @DPTR,A
 0005 A3                INC     DPTR
 0006 EF                MOV     A,R7
 0007 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 154
-                                           ; SOURCE LINE # 155
+                                           ; SOURCE LINE # 158
+                                           ; SOURCE LINE # 159
 0008 7F0F              MOV     R7,#0FH
 000A 120000      E     LCALL   _Chip_Select_A_Write
-                                           ; SOURCE LINE # 156
+                                           ; SOURCE LINE # 160
 000D 7F03              MOV     R7,#03H
 000F 120000      E     LCALL   _Chip_Select_B_Write
-                                           ; SOURCE LINE # 158
+                                           ; SOURCE LINE # 162
 0012 900000      R     MOV     DPTR,#n
 0015 E0                MOVX    A,@DPTR
 0016 FE                MOV     R6,A
@@ -1053,10 +1057,10 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 001E 6480              XRL     A,#080H
 0020 9480              SUBB    A,#080H
 0022 5003              JNC     ?C0004
-                                           ; SOURCE LINE # 159
+                                           ; SOURCE LINE # 163
 0024 120000      E     LCALL   _Chip_Select_A_Write
 0027         ?C0004:
-                                           ; SOURCE LINE # 160
+                                           ; SOURCE LINE # 164
 0027 900000      R     MOV     DPTR,#n
 002A E0                MOVX    A,@DPTR
 002B 7004              JNZ     ?C0078
@@ -1065,37 +1069,37 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 002F 640F              XRL     A,#0FH
 0031         ?C0078:
 0031 7004              JNZ     ?C0005
-                                           ; SOURCE LINE # 161
+                                           ; SOURCE LINE # 165
 0033 FF                MOV     R7,A
 0034 120000      E     LCALL   _Chip_Select_B_Write
 0037         ?C0005:
-                                           ; SOURCE LINE # 162
+                                           ; SOURCE LINE # 166
 0037 900000      R     MOV     DPTR,#n
 003A E0                MOVX    A,@DPTR
 003B 7004              JNZ     ?C0079
 003D A3                INC     DPTR
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 18  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 18  
 
 003E E0                MOVX    A,@DPTR
 003F 6410              XRL     A,#010H
 0041         ?C0079:
 0041 7005              JNZ     ?C0007
-                                           ; SOURCE LINE # 163
+                                           ; SOURCE LINE # 167
 0043 7F01              MOV     R7,#01H
 0045 120000      E     LCALL   _Chip_Select_B_Write
-                                           ; SOURCE LINE # 164
+                                           ; SOURCE LINE # 168
 0048         ?C0007:
 0048 22                RET     
              ; FUNCTION _ChipSelector (END)
 
              ; FUNCTION InitIMUgeneral (BEGIN)
-                                           ; SOURCE LINE # 169
-                                           ; SOURCE LINE # 170
-                                           ; SOURCE LINE # 172
+                                           ; SOURCE LINE # 173
+                                           ; SOURCE LINE # 174
+                                           ; SOURCE LINE # 176
 0000 E4                CLR     A
 0001 900000      R     MOV     DPTR,#count
 0004 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 177
+                                           ; SOURCE LINE # 181
 0005 FE                MOV     R6,A
 0006 7F25              MOV     R7,#025H
 0008 FD                MOV     R5,A
@@ -1103,7 +1107,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 000B 7A00        E     MOV     R2,#HIGH g_imu
 000D 7900        E     MOV     R1,#LOW g_imu
 000F 120000      E     LCALL   ?C?MEMSET
-                                           ; SOURCE LINE # 178
+                                           ; SOURCE LINE # 182
 0012 7E00              MOV     R6,#00H
 0014 7F11              MOV     R7,#011H
 0016 7D00              MOV     R5,#00H
@@ -1111,7 +1115,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 001A 7A00        E     MOV     R2,#HIGH IMU_connected
 001C 7900        E     MOV     R1,#LOW IMU_connected
 001E 120000      E     LCALL   ?C?MEMSET
-                                           ; SOURCE LINE # 181
+                                           ; SOURCE LINE # 185
 0021 E4                CLR     A
 0022 900000      R     MOV     DPTR,#k_imu
 0025 F0                MOVX    @DPTR,A
@@ -1122,42 +1126,42 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 002B C3                CLR     C
 002C 9411              SUBB    A,#011H
 002E 501B              JNC     ?C0009
-                                           ; SOURCE LINE # 182
-                                           ; SOURCE LINE # 183
+                                           ; SOURCE LINE # 186
+                                           ; SOURCE LINE # 187
 0030 7E00              MOV     R6,#00H
 0032 120000      R     LCALL   _ChipSelector
-                                           ; SOURCE LINE # 184
+                                           ; SOURCE LINE # 188
 0035 E4                CLR     A
 0036 7F0A              MOV     R7,#0AH
 0038 FE                MOV     R6,A
 0039 FD                MOV     R5,A
 003A FC                MOV     R4,A
 003B 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 185
+                                           ; SOURCE LINE # 189
 003E 7F75              MOV     R7,#075H
 0040 120000      R     LCALL   _ReadControlRegister
-                                           ; SOURCE LINE # 186
+                                           ; SOURCE LINE # 190
 0043 900000      R     MOV     DPTR,#k_imu
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 19  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 19  
 
 0046 E0                MOVX    A,@DPTR
 0047 04                INC     A
 0048 F0                MOVX    @DPTR,A
 0049 80DB              SJMP    ?C0008
 004B         ?C0009:
-                                           ; SOURCE LINE # 189
+                                           ; SOURCE LINE # 193
 004B E4                CLR     A
 004C FF                MOV     R7,A
 004D FE                MOV     R6,A
 004E 120000      R     LCALL   _ChipSelector
-                                           ; SOURCE LINE # 190
+                                           ; SOURCE LINE # 194
 0051 E4                CLR     A
 0052 7F0A              MOV     R7,#0AH
 0054 FE                MOV     R6,A
 0055 FD                MOV     R5,A
 0056 FC                MOV     R4,A
 0057 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 191
+                                           ; SOURCE LINE # 195
 005A 7F75              MOV     R7,#075H
 005C 120000      R     LCALL   _ReadControlRegister
 005F 900000      R     MOV     DPTR,#IMU_ack
@@ -1166,16 +1170,16 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0064 A3                INC     DPTR
 0065 EF                MOV     A,R7
 0066 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 192
+                                           ; SOURCE LINE # 196
 0067 E4                CLR     A
 0068 900000      R     MOV     DPTR,#IMU_ack
 006B F0                MOVX    @DPTR,A
 006C A3                INC     DPTR
 006D F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 193
+                                           ; SOURCE LINE # 197
 006E 900000      E     MOV     DPTR,#N_IMU_Connected
 0071 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 194
+                                           ; SOURCE LINE # 198
 0072 900000      R     MOV     DPTR,#k_imu
 0075 F0                MOVX    @DPTR,A
 0076         ?C0011:
@@ -1185,45 +1189,45 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 007B C3                CLR     C
 007C 9411              SUBB    A,#011H
 007E 505F              JNC     ?C0012
-                                           ; SOURCE LINE # 195
-                                           ; SOURCE LINE # 196
+                                           ; SOURCE LINE # 199
+                                           ; SOURCE LINE # 200
 0080 7E00              MOV     R6,#00H
 0082 120000      R     LCALL   _ChipSelector
-                                           ; SOURCE LINE # 197
+                                           ; SOURCE LINE # 201
 0085 E4                CLR     A
 0086 7F0A              MOV     R7,#0AH
 0088 FE                MOV     R6,A
 0089 FD                MOV     R5,A
 008A FC                MOV     R4,A
 008B 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 198
+                                           ; SOURCE LINE # 202
 008E 7F75              MOV     R7,#075H
 0090 120000      R     LCALL   _ReadControlRegister
 0093 7E00              MOV     R6,#00H
 0095 900000      R     MOV     DPTR,#IMU_ack
 0098 EE                MOV     A,R6
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 20  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 20  
 
 0099 F0                MOVX    @DPTR,A
 009A A3                INC     DPTR
 009B EF                MOV     A,R7
 009C F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 199
+                                           ; SOURCE LINE # 203
 009D 6471              XRL     A,#071H
 009F 7023              JNZ     ?C0014
-                                           ; SOURCE LINE # 200
-                                           ; SOURCE LINE # 201
+                                           ; SOURCE LINE # 204
+                                           ; SOURCE LINE # 205
 00A1 900000      E     MOV     DPTR,#N_IMU_Connected
 00A4 E0                MOVX    A,@DPTR
 00A5 04                INC     A
 00A6 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 202
+                                           ; SOURCE LINE # 206
 00A7 E4                CLR     A
 00A8 900000      R     MOV     DPTR,#IMU_ack
 00AB F0                MOVX    @DPTR,A
 00AC A3                INC     DPTR
 00AD F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 203
+                                           ; SOURCE LINE # 207
 00AE 900000      R     MOV     DPTR,#k_imu
 00B1 E0                MOVX    A,@DPTR
 00B2 25E0              ADD     A,ACC
@@ -1237,10 +1241,10 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00BF A3                INC     DPTR
 00C0 04                INC     A
 00C1 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 204
+                                           ; SOURCE LINE # 208
 00C2 8013              SJMP    ?C0013
 00C4         ?C0014:
-                                           ; SOURCE LINE # 206
+                                           ; SOURCE LINE # 210
 00C4 900000      R     MOV     DPTR,#k_imu
 00C7 E0                MOVX    A,@DPTR
 00C8 25E0              ADD     A,ACC
@@ -1253,7 +1257,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00D4 F0                MOVX    @DPTR,A
 00D5 A3                INC     DPTR
 00D6 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 207
+                                           ; SOURCE LINE # 211
 00D7         ?C0013:
 00D7 900000      R     MOV     DPTR,#k_imu
 00DA E0                MOVX    A,@DPTR
@@ -1261,12 +1265,12 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00DC F0                MOVX    @DPTR,A
 00DD 8097              SJMP    ?C0011
 00DF         ?C0012:
-                                           ; SOURCE LINE # 209
+                                           ; SOURCE LINE # 213
 00DF E4                CLR     A
 00E0 900000      R     MOV     DPTR,#k_imu
 00E3 F0                MOVX    @DPTR,A
 00E4         ?C0016:
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 21  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 21  
 
 00E4 900000      R     MOV     DPTR,#k_imu
 00E7 E0                MOVX    A,@DPTR
@@ -1274,8 +1278,8 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00E9 C3                CLR     C
 00EA 9411              SUBB    A,#011H
 00EC 5034              JNC     ?C0017
-                                           ; SOURCE LINE # 210
-                                           ; SOURCE LINE # 211
+                                           ; SOURCE LINE # 214
+                                           ; SOURCE LINE # 215
 00EE EF                MOV     A,R7
 00EF 25E0              ADD     A,ACC
 00F1 2400        R     ADD     A,#LOW tmp
@@ -1290,8 +1294,8 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00FE 6401              XRL     A,#01H
 0100 4E                ORL     A,R6
 0101 7017              JNZ     ?C0018
-                                           ; SOURCE LINE # 212
-                                           ; SOURCE LINE # 213
+                                           ; SOURCE LINE # 216
+                                           ; SOURCE LINE # 217
 0103 900000      R     MOV     DPTR,#k_imu
 0106 E0                MOVX    A,@DPTR
 0107 A3                INC     DPTR
@@ -1303,13 +1307,13 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0110 F583              MOV     DPH,A
 0112 EF                MOV     A,R7
 0113 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 214
+                                           ; SOURCE LINE # 218
 0114 900000      R     MOV     DPTR,#count
 0117 E0                MOVX    A,@DPTR
 0118 04                INC     A
 0119 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 215
-                                           ; SOURCE LINE # 216
+                                           ; SOURCE LINE # 219
+                                           ; SOURCE LINE # 220
 011A         ?C0018:
 011A 900000      R     MOV     DPTR,#k_imu
 011D E0                MOVX    A,@DPTR
@@ -1317,30 +1321,30 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 011F F0                MOVX    @DPTR,A
 0120 80C2              SJMP    ?C0016
 0122         ?C0017:
-                                           ; SOURCE LINE # 219
+                                           ; SOURCE LINE # 223
 0122 E4                CLR     A
 0123 FF                MOV     R7,A
 0124 120000      E     LCALL   _Opto_Pin_Write
-                                           ; SOURCE LINE # 220
+                                           ; SOURCE LINE # 224
 0127 E4                CLR     A
 0128 7F0A              MOV     R7,#0AH
 012A FE                MOV     R6,A
 012B FD                MOV     R5,A
 012C FC                MOV     R4,A
 012D 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 221
+                                           ; SOURCE LINE # 225
 0130 7F01              MOV     R7,#01H
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 22  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 22  
 
 0132 120000      E     LCALL   _Opto_Pin_Write
-                                           ; SOURCE LINE # 222
+                                           ; SOURCE LINE # 226
 0135 E4                CLR     A
 0136 7F0A              MOV     R7,#0AH
 0138 FE                MOV     R6,A
 0139 FD                MOV     R5,A
 013A FC                MOV     R4,A
 013B 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 223
+                                           ; SOURCE LINE # 227
 013E E4                CLR     A
 013F 900000      R     MOV     DPTR,#k_imu
 0142 F0                MOVX    @DPTR,A
@@ -1351,52 +1355,52 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0148 C3                CLR     C
 0149 9411              SUBB    A,#011H
 014B 502E              JNC     ?C0021
-                                           ; SOURCE LINE # 224
-                                           ; SOURCE LINE # 225
+                                           ; SOURCE LINE # 228
+                                           ; SOURCE LINE # 229
 014D 7E00              MOV     R6,#00H
 014F 120000      R     LCALL   _ChipSelector
-                                           ; SOURCE LINE # 226
+                                           ; SOURCE LINE # 230
 0152 E4                CLR     A
 0153 7F0A              MOV     R7,#0AH
 0155 FE                MOV     R6,A
 0156 FD                MOV     R5,A
 0157 FC                MOV     R4,A
 0158 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 227
+                                           ; SOURCE LINE # 231
 015B 120000      R     LCALL   InitIMU
-                                           ; SOURCE LINE # 228
+                                           ; SOURCE LINE # 232
 015E E4                CLR     A
 015F 7F0A              MOV     R7,#0AH
 0161 FE                MOV     R6,A
 0162 FD                MOV     R5,A
 0163 FC                MOV     R4,A
 0164 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 229
+                                           ; SOURCE LINE # 233
 0167 120000      R     LCALL   InitIMUMagCal
-                                           ; SOURCE LINE # 230
+                                           ; SOURCE LINE # 234
 016A E4                CLR     A
 016B 7F0A              MOV     R7,#0AH
 016D FE                MOV     R6,A
 016E FD                MOV     R5,A
 016F FC                MOV     R4,A
 0170 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 231
+                                           ; SOURCE LINE # 235
 0173 900000      R     MOV     DPTR,#k_imu
 0176 E0                MOVX    A,@DPTR
 0177 04                INC     A
 0178 F0                MOVX    @DPTR,A
 0179 80C8              SJMP    ?C0020
 017B         ?C0021:
-                                           ; SOURCE LINE # 232
+                                           ; SOURCE LINE # 236
 017B E4                CLR     A
 017C 7F32              MOV     R7,#032H
 017E FE                MOV     R6,A
 017F FD                MOV     R5,A
 0180 FC                MOV     R4,A
 0181 120000      E     LCALL   _?CyDelay
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 23  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 23  
 
-                                           ; SOURCE LINE # 235
+                                           ; SOURCE LINE # 239
 0184 E4                CLR     A
 0185 900000      R     MOV     DPTR,#k_imu
 0188 F0                MOVX    @DPTR,A
@@ -1407,30 +1411,30 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 018E C3                CLR     C
 018F 9411              SUBB    A,#011H
 0191 5017              JNC     ?C0024
-                                           ; SOURCE LINE # 236
+                                           ; SOURCE LINE # 240
 0193 7E00              MOV     R6,#00H
 0195 120000      R     LCALL   _ChipSelector
-                                           ; SOURCE LINE # 237
+                                           ; SOURCE LINE # 241
 0198 900000      R     MOV     DPTR,#k_imu
 019B E0                MOVX    A,@DPTR
 019C FF                MOV     R7,A
 019D 7E00              MOV     R6,#00H
 019F 120000      R     LCALL   _ReadMagCal
-                                           ; SOURCE LINE # 238
+                                           ; SOURCE LINE # 242
 01A2 900000      R     MOV     DPTR,#k_imu
 01A5 E0                MOVX    A,@DPTR
 01A6 04                INC     A
 01A7 F0                MOVX    @DPTR,A
 01A8 80DF              SJMP    ?C0023
 01AA         ?C0024:
-                                           ; SOURCE LINE # 239
+                                           ; SOURCE LINE # 243
 01AA E4                CLR     A
 01AB 7F32              MOV     R7,#032H
 01AD FE                MOV     R6,A
 01AE FD                MOV     R5,A
 01AF FC                MOV     R4,A
 01B0 120000      E     LCALL   _?CyDelay
-                                           ; SOURCE LINE # 242
+                                           ; SOURCE LINE # 246
 01B3 7E00              MOV     R6,#00H
 01B5 7F22              MOV     R7,#022H
 01B7 7D00              MOV     R5,#00H
@@ -1438,14 +1442,14 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 01BB 7A00        E     MOV     R2,#HIGH single_imu_size
 01BD 7900        E     MOV     R1,#LOW single_imu_size
 01BF 120000      E     LCALL   ?C?MEMSET
-                                           ; SOURCE LINE # 243
+                                           ; SOURCE LINE # 247
 01C2 900000      E     MOV     DPTR,#imus_data_size
 01C5 E4                CLR     A
 01C6 F0                MOVX    @DPTR,A
 01C7 A3                INC     DPTR
 01C8 04                INC     A
 01C9 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 244
+                                           ; SOURCE LINE # 248
 01CA E4                CLR     A
 01CB 900000      R     MOV     DPTR,#k_imu
 01CE F0                MOVX    @DPTR,A
@@ -1458,12 +1462,12 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 01D8 FE                MOV     R6,A
 01D9 C3                CLR     C
 01DA 9F                SUBB    A,R7
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 24  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 24  
 
 01DB 4003              JC      $ + 5H
 01DD 020000      R     LJMP    ?C0027
-                                           ; SOURCE LINE # 245
-                                           ; SOURCE LINE # 246
+                                           ; SOURCE LINE # 249
+                                           ; SOURCE LINE # 250
 01E0 E0                MOVX    A,@DPTR
 01E1 FF                MOV     R7,A
 01E2 2400        E     ADD     A,#LOW IMU_connected
@@ -1522,7 +1526,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0239 A4                MUL     AB
 023A 2400        E     ADD     A,#LOW c_mem+07H
 023C F582              MOV     DPL,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 25  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 25  
 
 023E E4                CLR     A
 023F 3400        E     ADDC    A,#HIGH c_mem+07H
@@ -1564,7 +1568,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0277 A3                INC     DPTR
 0278 EB                MOV     A,R3
 0279 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 247
+                                           ; SOURCE LINE # 251
 027A 7400        E     MOV     A,#LOW IMU_connected
 027C 2E                ADD     A,R6
 027D F582              MOV     DPL,A
@@ -1586,21 +1590,21 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0295 900000      E     MOV     DPTR,#imus_data_size+01H
 0298 E0                MOVX    A,@DPTR
 0299 2F                ADD     A,R7
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 26  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 26  
 
 029A F0                MOVX    @DPTR,A
 029B 900000      E     MOV     DPTR,#imus_data_size
 029E E0                MOVX    A,@DPTR
 029F 3E                ADDC    A,R6
 02A0 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 248
+                                           ; SOURCE LINE # 252
 02A1 900000      R     MOV     DPTR,#k_imu
 02A4 E0                MOVX    A,@DPTR
 02A5 04                INC     A
 02A6 F0                MOVX    @DPTR,A
 02A7 020000      R     LJMP    ?C0026
 02AA         ?C0027:
-                                           ; SOURCE LINE # 249
+                                           ; SOURCE LINE # 253
 02AA 900000      E     MOV     DPTR,#imus_data_size+01H
 02AD E0                MOVX    A,@DPTR
 02AE 04                INC     A
@@ -1611,20 +1615,20 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 02B6 04                INC     A
 02B7 F0                MOVX    @DPTR,A
 02B8         ?C0080:
-                                           ; SOURCE LINE # 250
+                                           ; SOURCE LINE # 254
 02B8 22                RET     
              ; FUNCTION InitIMUgeneral (END)
 
              ; FUNCTION _ReadIMU (BEGIN)
-                                           ; SOURCE LINE # 255
+                                           ; SOURCE LINE # 259
 0000 900000      R     MOV     DPTR,#n
 0003 EE                MOV     A,R6
 0004 F0                MOVX    @DPTR,A
 0005 A3                INC     DPTR
 0006 EF                MOV     A,R7
 0007 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 256
-                                           ; SOURCE LINE # 257
+                                           ; SOURCE LINE # 260
+                                           ; SOURCE LINE # 261
 0008 900000      E     MOV     DPTR,#c_mem+04H
 000B 75F005            MOV     B,#05H
 000E 120000      E     LCALL   ?C?OFFXADD
@@ -1643,14 +1647,14 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0024 FF                MOV     R7,A
 0025 120000      R     LCALL   _ReadAcc
 0028         ?C0030:
-                                           ; SOURCE LINE # 258
+                                           ; SOURCE LINE # 262
 0028 900000      R     MOV     DPTR,#n
 002B E0                MOVX    A,@DPTR
 002C FE                MOV     R6,A
 002D A3                INC     DPTR
 002E E0                MOVX    A,@DPTR
 002F FF                MOV     R7,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 27  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 27  
 
 0030 900000      E     MOV     DPTR,#c_mem+05H
 0033 75F005            MOV     B,#05H
@@ -1664,7 +1668,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0043 6003              JZ      ?C0031
 0045 120000      R     LCALL   _ReadGyro
 0048         ?C0031:
-                                           ; SOURCE LINE # 259
+                                           ; SOURCE LINE # 263
 0048 900000      R     MOV     DPTR,#n
 004B E0                MOVX    A,@DPTR
 004C FE                MOV     R6,A
@@ -1683,7 +1687,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0063 6003              JZ      ?C0032
 0065 120000      R     LCALL   _ReadMag
 0068         ?C0032:
-                                           ; SOURCE LINE # 260
+                                           ; SOURCE LINE # 264
 0068 900000      R     MOV     DPTR,#n
 006B E0                MOVX    A,@DPTR
 006C FE                MOV     R6,A
@@ -1702,7 +1706,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0083 6003              JZ      ?C0033
 0085 120000      R     LCALL   _ReadQuat
 0088         ?C0033:
-                                           ; SOURCE LINE # 261
+                                           ; SOURCE LINE # 265
 0088 900000      R     MOV     DPTR,#n
 008B E0                MOVX    A,@DPTR
 008C FE                MOV     R6,A
@@ -1714,7 +1718,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0096 120000      E     LCALL   ?C?OFFXADD
 0099 EE                MOV     A,R6
 009A 75F005            MOV     B,#05H
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 28  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 28  
 
 009D A4                MUL     AB
 009E 2583              ADD     A,DPH
@@ -1722,45 +1726,45 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00A2 E0                MOVX    A,@DPTR
 00A3 6003              JZ      ?C0035
 00A5 120000      R     LCALL   _ReadTemp
-                                           ; SOURCE LINE # 262
+                                           ; SOURCE LINE # 266
 00A8         ?C0035:
 00A8 22                RET     
              ; FUNCTION _ReadIMU (END)
 
              ; FUNCTION _ReadAcc (BEGIN)
-                                           ; SOURCE LINE # 267
+                                           ; SOURCE LINE # 271
 ;---- Variable 'n' assigned to Register 'R6/R7' ----
-                                           ; SOURCE LINE # 268
-                                           ; SOURCE LINE # 269
+                                           ; SOURCE LINE # 272
+                                           ; SOURCE LINE # 273
 0000 E4                CLR     A
 0001 900000      R     MOV     DPTR,#low
 0004 F0                MOVX    @DPTR,A
 0005 A3                INC     DPTR
 0006 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 271
+                                           ; SOURCE LINE # 275
 0007 A3                INC     DPTR
 0008 EE                MOV     A,R6
 0009 F0                MOVX    @DPTR,A
 000A A3                INC     DPTR
 000B EF                MOV     A,R7
 000C F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 274
+                                           ; SOURCE LINE # 278
 000D 7F3C              MOV     R7,#03CH
 000F 120000      R     LCALL   _ReadControlRegister
 0012 900000      R     MOV     DPTR,#low
 0015 EF                MOV     A,R7
 0016 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 275
+                                           ; SOURCE LINE # 279
 0017 120000      R     LCALL   SPI_delay
-                                           ; SOURCE LINE # 276
+                                           ; SOURCE LINE # 280
 001A 7F3B              MOV     R7,#03BH
 001C 120000      R     LCALL   _ReadControlRegister
 001F 900000      R     MOV     DPTR,#high
 0022 EF                MOV     A,R7
 0023 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 277
+                                           ; SOURCE LINE # 281
 0024 120000      R     LCALL   SPI_delay
-                                           ; SOURCE LINE # 279
+                                           ; SOURCE LINE # 283
 0027 900000      R     MOV     DPTR,#high
 002A E0                MOVX    A,@DPTR
 002B FF                MOV     R7,A
@@ -1778,11 +1782,11 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 003F A4                MUL     AB
 0040 2583              ADD     A,DPH
 0042 F583              MOV     DPH,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 29  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 29  
 
 0044 EF                MOV     A,R7
 0045 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 280
+                                           ; SOURCE LINE # 284
 0046 900000      R     MOV     DPTR,#low
 0049 E0                MOVX    A,@DPTR
 004A FF                MOV     R7,A
@@ -1797,29 +1801,29 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 005C F583              MOV     DPH,A
 005E EF                MOV     A,R7
 005F F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 281
+                                           ; SOURCE LINE # 285
 0060 E4                CLR     A
 0061 900000      R     MOV     DPTR,#low
 0064 F0                MOVX    @DPTR,A
 0065 A3                INC     DPTR
 0066 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 284
+                                           ; SOURCE LINE # 288
 0067 7F3E              MOV     R7,#03EH
 0069 120000      R     LCALL   _ReadControlRegister
 006C 900000      R     MOV     DPTR,#low
 006F EF                MOV     A,R7
 0070 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 285
+                                           ; SOURCE LINE # 289
 0071 120000      R     LCALL   SPI_delay
-                                           ; SOURCE LINE # 286
+                                           ; SOURCE LINE # 290
 0074 7F3D              MOV     R7,#03DH
 0076 120000      R     LCALL   _ReadControlRegister
 0079 900000      R     MOV     DPTR,#high
 007C EF                MOV     A,R7
 007D F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 287
+                                           ; SOURCE LINE # 291
 007E 120000      R     LCALL   SPI_delay
-                                           ; SOURCE LINE # 289
+                                           ; SOURCE LINE # 293
 0081 900000      R     MOV     DPTR,#high
 0084 E0                MOVX    A,@DPTR
 0085 FF                MOV     R7,A
@@ -1839,10 +1843,10 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 009C F583              MOV     DPH,A
 009E EF                MOV     A,R7
 009F F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 290
+                                           ; SOURCE LINE # 294
 00A0 900000      R     MOV     DPTR,#low
 00A3 E0                MOVX    A,@DPTR
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 30  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 30  
 
 00A4 FF                MOV     R7,A
 00A5 900000      E     MOV     DPTR,#Accel+03H
@@ -1856,29 +1860,29 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00B6 F583              MOV     DPH,A
 00B8 EF                MOV     A,R7
 00B9 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 291
+                                           ; SOURCE LINE # 295
 00BA E4                CLR     A
 00BB 900000      R     MOV     DPTR,#low
 00BE F0                MOVX    @DPTR,A
 00BF A3                INC     DPTR
 00C0 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 294
+                                           ; SOURCE LINE # 298
 00C1 7F40              MOV     R7,#040H
 00C3 120000      R     LCALL   _ReadControlRegister
 00C6 900000      R     MOV     DPTR,#low
 00C9 EF                MOV     A,R7
 00CA F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 295
+                                           ; SOURCE LINE # 299
 00CB 120000      R     LCALL   SPI_delay
-                                           ; SOURCE LINE # 296
+                                           ; SOURCE LINE # 300
 00CE 7F3F              MOV     R7,#03FH
 00D0 120000      R     LCALL   _ReadControlRegister
 00D3 900000      R     MOV     DPTR,#high
 00D6 EF                MOV     A,R7
 00D7 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 297
+                                           ; SOURCE LINE # 301
 00D8 120000      R     LCALL   SPI_delay
-                                           ; SOURCE LINE # 299
+                                           ; SOURCE LINE # 303
 00DB 900000      R     MOV     DPTR,#high
 00DE E0                MOVX    A,@DPTR
 00DF FF                MOV     R7,A
@@ -1898,7 +1902,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00F6 F583              MOV     DPH,A
 00F8 EF                MOV     A,R7
 00F9 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 300
+                                           ; SOURCE LINE # 304
 00FA 900000      R     MOV     DPTR,#low
 00FD E0                MOVX    A,@DPTR
 00FE FF                MOV     R7,A
@@ -1906,7 +1910,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0102 75F006            MOV     B,#06H
 0105 ED                MOV     A,R5
 0106 120000      E     LCALL   ?C?OFFXADD
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 31  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 31  
 
 0109 EC                MOV     A,R4
 010A 75F006            MOV     B,#06H
@@ -1915,49 +1919,49 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0110 F583              MOV     DPH,A
 0112 EF                MOV     A,R7
 0113 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 301
+                                           ; SOURCE LINE # 305
 0114 E4                CLR     A
 0115 900000      R     MOV     DPTR,#low
 0118 F0                MOVX    @DPTR,A
 0119 A3                INC     DPTR
 011A F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 302
+                                           ; SOURCE LINE # 306
 011B 22                RET     
              ; FUNCTION _ReadAcc (END)
 
              ; FUNCTION _ReadGyro (BEGIN)
-                                           ; SOURCE LINE # 307
+                                           ; SOURCE LINE # 311
 ;---- Variable 'n' assigned to Register 'R6/R7' ----
-                                           ; SOURCE LINE # 308
+                                           ; SOURCE LINE # 312
 0000 E4                CLR     A
 0001 900000      R     MOV     DPTR,#low
 0004 F0                MOVX    @DPTR,A
 0005 A3                INC     DPTR
 0006 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 310
+                                           ; SOURCE LINE # 314
 0007 A3                INC     DPTR
 0008 EE                MOV     A,R6
 0009 F0                MOVX    @DPTR,A
 000A A3                INC     DPTR
 000B EF                MOV     A,R7
 000C F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 313
+                                           ; SOURCE LINE # 317
 000D 7F44              MOV     R7,#044H
 000F 120000      R     LCALL   _ReadControlRegister
 0012 900000      R     MOV     DPTR,#low
 0015 EF                MOV     A,R7
 0016 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 314
+                                           ; SOURCE LINE # 318
 0017 120000      R     LCALL   SPI_delay
-                                           ; SOURCE LINE # 315
+                                           ; SOURCE LINE # 319
 001A 7F43              MOV     R7,#043H
 001C 120000      R     LCALL   _ReadControlRegister
 001F 900000      R     MOV     DPTR,#high
 0022 EF                MOV     A,R7
 0023 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 316
+                                           ; SOURCE LINE # 320
 0024 120000      R     LCALL   SPI_delay
-                                           ; SOURCE LINE # 318
+                                           ; SOURCE LINE # 322
 0027 900000      R     MOV     DPTR,#high
 002A E0                MOVX    A,@DPTR
 002B FF                MOV     R7,A
@@ -1970,7 +1974,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0032 900000      E     MOV     DPTR,#Gyro
 0035 75F006            MOV     B,#06H
 0038 120000      E     LCALL   ?C?OFFXADD
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 32  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 32  
 
 003B EC                MOV     A,R4
 003C 75F006            MOV     B,#06H
@@ -1979,7 +1983,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0042 F583              MOV     DPH,A
 0044 EF                MOV     A,R7
 0045 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 319
+                                           ; SOURCE LINE # 323
 0046 900000      R     MOV     DPTR,#low
 0049 E0                MOVX    A,@DPTR
 004A FF                MOV     R7,A
@@ -1994,29 +1998,29 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 005C F583              MOV     DPH,A
 005E EF                MOV     A,R7
 005F F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 320
+                                           ; SOURCE LINE # 324
 0060 E4                CLR     A
 0061 900000      R     MOV     DPTR,#low
 0064 F0                MOVX    @DPTR,A
 0065 A3                INC     DPTR
 0066 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 323
+                                           ; SOURCE LINE # 327
 0067 7F46              MOV     R7,#046H
 0069 120000      R     LCALL   _ReadControlRegister
 006C 900000      R     MOV     DPTR,#low
 006F EF                MOV     A,R7
 0070 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 324
+                                           ; SOURCE LINE # 328
 0071 120000      R     LCALL   SPI_delay
-                                           ; SOURCE LINE # 325
+                                           ; SOURCE LINE # 329
 0074 7F45              MOV     R7,#045H
 0076 120000      R     LCALL   _ReadControlRegister
 0079 900000      R     MOV     DPTR,#high
 007C EF                MOV     A,R7
 007D F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 326
+                                           ; SOURCE LINE # 330
 007E 120000      R     LCALL   SPI_delay
-                                           ; SOURCE LINE # 328
+                                           ; SOURCE LINE # 332
 0081 900000      R     MOV     DPTR,#high
 0084 E0                MOVX    A,@DPTR
 0085 FF                MOV     R7,A
@@ -2034,11 +2038,11 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0099 A4                MUL     AB
 009A 2583              ADD     A,DPH
 009C F583              MOV     DPH,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 33  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 33  
 
 009E EF                MOV     A,R7
 009F F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 329
+                                           ; SOURCE LINE # 333
 00A0 900000      R     MOV     DPTR,#low
 00A3 E0                MOVX    A,@DPTR
 00A4 FF                MOV     R7,A
@@ -2053,29 +2057,29 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00B6 F583              MOV     DPH,A
 00B8 EF                MOV     A,R7
 00B9 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 330
+                                           ; SOURCE LINE # 334
 00BA E4                CLR     A
 00BB 900000      R     MOV     DPTR,#low
 00BE F0                MOVX    @DPTR,A
 00BF A3                INC     DPTR
 00C0 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 333
+                                           ; SOURCE LINE # 337
 00C1 7F48              MOV     R7,#048H
 00C3 120000      R     LCALL   _ReadControlRegister
 00C6 900000      R     MOV     DPTR,#low
 00C9 EF                MOV     A,R7
 00CA F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 334
+                                           ; SOURCE LINE # 338
 00CB 120000      R     LCALL   SPI_delay
-                                           ; SOURCE LINE # 335
+                                           ; SOURCE LINE # 339
 00CE 7F47              MOV     R7,#047H
 00D0 120000      R     LCALL   _ReadControlRegister
 00D3 900000      R     MOV     DPTR,#high
 00D6 EF                MOV     A,R7
 00D7 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 336
+                                           ; SOURCE LINE # 340
 00D8 120000      R     LCALL   SPI_delay
-                                           ; SOURCE LINE # 338
+                                           ; SOURCE LINE # 342
 00DB 900000      R     MOV     DPTR,#high
 00DE E0                MOVX    A,@DPTR
 00DF FF                MOV     R7,A
@@ -2095,10 +2099,10 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00F6 F583              MOV     DPH,A
 00F8 EF                MOV     A,R7
 00F9 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 339
+                                           ; SOURCE LINE # 343
 00FA 900000      R     MOV     DPTR,#low
 00FD E0                MOVX    A,@DPTR
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 34  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 34  
 
 00FE FF                MOV     R7,A
 00FF 900000      E     MOV     DPTR,#Gyro+05H
@@ -2112,43 +2116,43 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0110 F583              MOV     DPH,A
 0112 EF                MOV     A,R7
 0113 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 341
+                                           ; SOURCE LINE # 345
 0114 E4                CLR     A
 0115 900000      R     MOV     DPTR,#low
 0118 F0                MOVX    @DPTR,A
 0119 A3                INC     DPTR
 011A F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 342
+                                           ; SOURCE LINE # 346
 011B 22                RET     
              ; FUNCTION _ReadGyro (END)
 
              ; FUNCTION _ReadMag (BEGIN)
-                                           ; SOURCE LINE # 347
+                                           ; SOURCE LINE # 351
 ;---- Variable 'n' assigned to Register 'R6/R7' ----
-                                           ; SOURCE LINE # 350
+                                           ; SOURCE LINE # 354
 0000 900000      R     MOV     DPTR,#row
 0003 EE                MOV     A,R6
 0004 F0                MOVX    @DPTR,A
 0005 A3                INC     DPTR
 0006 EF                MOV     A,R7
 0007 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 352
+                                           ; SOURCE LINE # 356
 0008 7F49              MOV     R7,#049H
 000A 120000      R     LCALL   _ReadControlRegister
 000D 900000      R     MOV     DPTR,#low
 0010 EF                MOV     A,R7
 0011 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 353
+                                           ; SOURCE LINE # 357
 0012 120000      R     LCALL   SPI_delay
-                                           ; SOURCE LINE # 354
+                                           ; SOURCE LINE # 358
 0015 7F4A              MOV     R7,#04AH
 0017 120000      R     LCALL   _ReadControlRegister
 001A 900000      R     MOV     DPTR,#high
 001D EF                MOV     A,R7
 001E F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 355
+                                           ; SOURCE LINE # 359
 001F 120000      R     LCALL   SPI_delay
-                                           ; SOURCE LINE # 357
+                                           ; SOURCE LINE # 361
 0022 900000      R     MOV     DPTR,#high
 0025 E0                MOVX    A,@DPTR
 0026 FF                MOV     R7,A
@@ -2162,7 +2166,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0030 75F006            MOV     B,#06H
 0033 120000      E     LCALL   ?C?OFFXADD
 0036 EC                MOV     A,R4
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 35  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 35  
 
 0037 75F006            MOV     B,#06H
 003A A4                MUL     AB
@@ -2170,7 +2174,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 003D F583              MOV     DPH,A
 003F EF                MOV     A,R7
 0040 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 358
+                                           ; SOURCE LINE # 362
 0041 900000      R     MOV     DPTR,#low
 0044 E0                MOVX    A,@DPTR
 0045 FF                MOV     R7,A
@@ -2185,29 +2189,29 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0057 F583              MOV     DPH,A
 0059 EF                MOV     A,R7
 005A F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 359
+                                           ; SOURCE LINE # 363
 005B E4                CLR     A
 005C 900000      R     MOV     DPTR,#low
 005F F0                MOVX    @DPTR,A
 0060 A3                INC     DPTR
 0061 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 362
+                                           ; SOURCE LINE # 366
 0062 7F4B              MOV     R7,#04BH
 0064 120000      R     LCALL   _ReadControlRegister
 0067 900000      R     MOV     DPTR,#low
 006A EF                MOV     A,R7
 006B F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 363
+                                           ; SOURCE LINE # 367
 006C 120000      R     LCALL   SPI_delay
-                                           ; SOURCE LINE # 364
+                                           ; SOURCE LINE # 368
 006F 7F4C              MOV     R7,#04CH
 0071 120000      R     LCALL   _ReadControlRegister
 0074 900000      R     MOV     DPTR,#high
 0077 EF                MOV     A,R7
 0078 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 365
+                                           ; SOURCE LINE # 369
 0079 120000      R     LCALL   SPI_delay
-                                           ; SOURCE LINE # 367
+                                           ; SOURCE LINE # 371
 007C 900000      R     MOV     DPTR,#high
 007F E0                MOVX    A,@DPTR
 0080 FF                MOV     R7,A
@@ -2226,10 +2230,10 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0095 2583              ADD     A,DPH
 0097 F583              MOV     DPH,A
 0099 EF                MOV     A,R7
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 36  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 36  
 
 009A F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 368
+                                           ; SOURCE LINE # 372
 009B 900000      R     MOV     DPTR,#low
 009E E0                MOVX    A,@DPTR
 009F FF                MOV     R7,A
@@ -2244,29 +2248,29 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00B1 F583              MOV     DPH,A
 00B3 EF                MOV     A,R7
 00B4 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 369
+                                           ; SOURCE LINE # 373
 00B5 E4                CLR     A
 00B6 900000      R     MOV     DPTR,#low
 00B9 F0                MOVX    @DPTR,A
 00BA A3                INC     DPTR
 00BB F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 372
+                                           ; SOURCE LINE # 376
 00BC 7F4D              MOV     R7,#04DH
 00BE 120000      R     LCALL   _ReadControlRegister
 00C1 900000      R     MOV     DPTR,#low
 00C4 EF                MOV     A,R7
 00C5 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 373
+                                           ; SOURCE LINE # 377
 00C6 120000      R     LCALL   SPI_delay
-                                           ; SOURCE LINE # 374
+                                           ; SOURCE LINE # 378
 00C9 7F4E              MOV     R7,#04EH
 00CB 120000      R     LCALL   _ReadControlRegister
 00CE 900000      R     MOV     DPTR,#high
 00D1 EF                MOV     A,R7
 00D2 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 375
+                                           ; SOURCE LINE # 379
 00D3 120000      R     LCALL   SPI_delay
-                                           ; SOURCE LINE # 377
+                                           ; SOURCE LINE # 381
 00D6 900000      R     MOV     DPTR,#high
 00D9 E0                MOVX    A,@DPTR
 00DA FF                MOV     R7,A
@@ -2286,11 +2290,11 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00F1 F583              MOV     DPH,A
 00F3 EF                MOV     A,R7
 00F4 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 378
+                                           ; SOURCE LINE # 382
 00F5 900000      R     MOV     DPTR,#low
 00F8 E0                MOVX    A,@DPTR
 00F9 FF                MOV     R7,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 37  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 37  
 
 00FA 900000      E     MOV     DPTR,#Mag+05H
 00FD 75F006            MOV     B,#06H
@@ -2303,37 +2307,37 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 010B F583              MOV     DPH,A
 010D EF                MOV     A,R7
 010E F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 379
+                                           ; SOURCE LINE # 383
 010F E4                CLR     A
 0110 900000      R     MOV     DPTR,#low
 0113 F0                MOVX    @DPTR,A
 0114 A3                INC     DPTR
 0115 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 380
+                                           ; SOURCE LINE # 384
 0116 22                RET     
              ; FUNCTION _ReadMag (END)
 
              ; FUNCTION _ReadMagCal (BEGIN)
-                                           ; SOURCE LINE # 385
+                                           ; SOURCE LINE # 389
 ;---- Variable 'n' assigned to Register 'R6/R7' ----
-                                           ; SOURCE LINE # 387
+                                           ; SOURCE LINE # 391
 0000 E4                CLR     A
 0001 900000      R     MOV     DPTR,#read
 0004 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 388
+                                           ; SOURCE LINE # 392
 0005 A3                INC     DPTR
 0006 EE                MOV     A,R6
 0007 F0                MOVX    @DPTR,A
 0008 A3                INC     DPTR
 0009 EF                MOV     A,R7
 000A F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 390
+                                           ; SOURCE LINE # 394
 000B 7F49              MOV     R7,#049H
 000D 120000      R     LCALL   _ReadControlRegister
 0010 900000      R     MOV     DPTR,#read
 0013 EF                MOV     A,R7
 0014 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 391
+                                           ; SOURCE LINE # 395
 0015 A3                INC     DPTR
 0016 E0                MOVX    A,@DPTR
 0017 FC                MOV     R4,A
@@ -2349,19 +2353,19 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 002A F583              MOV     DPH,A
 002C EF                MOV     A,R7
 002D F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 392
+                                           ; SOURCE LINE # 396
 002E E4                CLR     A
 002F 900000      R     MOV     DPTR,#read
 0032 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 395
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 38  
+                                           ; SOURCE LINE # 399
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 38  
 
 0033 7F4A              MOV     R7,#04AH
 0035 120000      R     LCALL   _ReadControlRegister
 0038 900000      R     MOV     DPTR,#read
 003B EF                MOV     A,R7
 003C F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 396
+                                           ; SOURCE LINE # 400
 003D A3                INC     DPTR
 003E E0                MOVX    A,@DPTR
 003F FC                MOV     R4,A
@@ -2377,17 +2381,17 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0052 F583              MOV     DPH,A
 0054 EF                MOV     A,R7
 0055 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 397
+                                           ; SOURCE LINE # 401
 0056 E4                CLR     A
 0057 900000      R     MOV     DPTR,#read
 005A F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 400
+                                           ; SOURCE LINE # 404
 005B 7F4B              MOV     R7,#04BH
 005D 120000      R     LCALL   _ReadControlRegister
 0060 900000      R     MOV     DPTR,#read
 0063 EF                MOV     A,R7
 0064 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 401
+                                           ; SOURCE LINE # 405
 0065 A3                INC     DPTR
 0066 E0                MOVX    A,@DPTR
 0067 FC                MOV     R4,A
@@ -2403,43 +2407,43 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 007A F583              MOV     DPH,A
 007C EF                MOV     A,R7
 007D F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 402
+                                           ; SOURCE LINE # 406
 007E E4                CLR     A
 007F 900000      R     MOV     DPTR,#read
 0082 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 404
+                                           ; SOURCE LINE # 408
 0083 22                RET     
              ; FUNCTION _ReadMagCal (END)
 
              ; FUNCTION _ReadQuat (BEGIN)
-                                           ; SOURCE LINE # 409
+                                           ; SOURCE LINE # 413
 0000 900000      R     MOV     DPTR,#n
 0003 EE                MOV     A,R6
 0004 F0                MOVX    @DPTR,A
 0005 A3                INC     DPTR
 0006 EF                MOV     A,R7
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 39  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 39  
 
 0007 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 410
-                                           ; SOURCE LINE # 411
+                                           ; SOURCE LINE # 414
+                                           ; SOURCE LINE # 415
 0008 E4                CLR     A
 0009 A3                INC     DPTR
 000A F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 416
+                                           ; SOURCE LINE # 420
 000B FF                MOV     R7,A
 000C FE                MOV     R6,A
 000D FD                MOV     R5,A
 000E FC                MOV     R4,A
 000F 900000      R     MOV     DPTR,#time
 0012 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 418
+                                           ; SOURCE LINE # 422
 0015 900000      E     MOV     DPTR,#N_IMU_Connected
 0018 E0                MOVX    A,@DPTR
 0019 6401              XRL     A,#01H
 001B 6003              JZ      $ + 5H
 001D 020000      R     LJMP    ?C0047
-                                           ; SOURCE LINE # 421
+                                           ; SOURCE LINE # 425
 0020 900000      R     MOV     DPTR,#n
 0023 E0                MOVX    A,@DPTR
 0024 FE                MOV     R6,A
@@ -2458,7 +2462,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 003B 7003              JNZ     ?C0041
 003D 120000      R     LCALL   _ReadAcc
 0040         ?C0041:
-                                           ; SOURCE LINE # 422
+                                           ; SOURCE LINE # 426
 0040 900000      R     MOV     DPTR,#n
 0043 E0                MOVX    A,@DPTR
 0044 FE                MOV     R6,A
@@ -2477,12 +2481,12 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 005B 7003              JNZ     ?C0042
 005D 120000      R     LCALL   _ReadGyro
 0060         ?C0042:
-                                           ; SOURCE LINE # 426
+                                           ; SOURCE LINE # 430
 0060 900000      E     MOV     DPTR,#timer_value
 0063 E0                MOVX    A,@DPTR
 0064 F8                MOV     R0,A
 0065 A3                INC     DPTR
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 40  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 40  
 
 0066 E0                MOVX    A,@DPTR
 0067 F9                MOV     R1,A
@@ -2524,7 +2528,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0093 120000      E     LCALL   ?C?FPDIV
 0096 900000      R     MOV     DPTR,#time
 0099 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 431
+                                           ; SOURCE LINE # 435
 009C 900000      R     MOV     DPTR,#n
 009F E0                MOVX    A,@DPTR
 00A0 FE                MOV     R6,A
@@ -2546,10 +2550,10 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00BC F0                MOVX    @DPTR,A
 00BD A3                INC     DPTR
 00BE ED                MOV     A,R5
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 41  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 41  
 
 00BF F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 432
+                                           ; SOURCE LINE # 436
 00C0 900000      E     MOV     DPTR,#Accel+01H
 00C3 75F006            MOV     B,#06H
 00C6 EF                MOV     A,R7
@@ -2569,7 +2573,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00DC 120000      E     LCALL   ?C?FCASTI
 00DF 900000      R     MOV     DPTR,#aP
 00E2 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 433
+                                           ; SOURCE LINE # 437
 00E5 900000      R     MOV     DPTR,#n
 00E8 E0                MOVX    A,@DPTR
 00E9 FE                MOV     R6,A
@@ -2592,7 +2596,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0106 A3                INC     DPTR
 0107 ED                MOV     A,R5
 0108 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 434
+                                           ; SOURCE LINE # 438
 0109 900000      E     MOV     DPTR,#Accel+03H
 010C 75F006            MOV     B,#06H
 010F EF                MOV     A,R7
@@ -2610,11 +2614,11 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0123 ED                MOV     A,R5
 0124 EC                MOV     A,R4
 0125 120000      E     LCALL   ?C?FCASTI
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 42  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 42  
 
 0128 900000      R     MOV     DPTR,#aP+04H
 012B 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 435
+                                           ; SOURCE LINE # 439
 012E 900000      R     MOV     DPTR,#n
 0131 E0                MOVX    A,@DPTR
 0132 FE                MOV     R6,A
@@ -2637,7 +2641,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 014F A3                INC     DPTR
 0150 ED                MOV     A,R5
 0151 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 436
+                                           ; SOURCE LINE # 440
 0152 900000      E     MOV     DPTR,#Accel+05H
 0155 75F006            MOV     B,#06H
 0158 EF                MOV     A,R7
@@ -2657,7 +2661,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 016E 120000      E     LCALL   ?C?FCASTI
 0171 900000      R     MOV     DPTR,#aP+08H
 0174 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 438
+                                           ; SOURCE LINE # 442
 0177 E4                CLR     A
 0178 FF                MOV     R7,A
 0179 FE                MOV     R6,A
@@ -2665,7 +2669,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 017B FC                MOV     R4,A
 017C 900000      R     MOV     DPTR,#g
 017F 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 439
+                                           ; SOURCE LINE # 443
 0182 900000      R     MOV     DPTR,#n
 0185 E0                MOVX    A,@DPTR
 0186 FE                MOV     R6,A
@@ -2674,7 +2678,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0189 FF                MOV     R7,A
 018A 900000      E     MOV     DPTR,#Gyro
 018D 75F006            MOV     B,#06H
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 43  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 43  
 
 0190 120000      E     LCALL   ?C?OFFXADD
 0193 EE                MOV     A,R6
@@ -2690,7 +2694,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 01A3 A3                INC     DPTR
 01A4 ED                MOV     A,R5
 01A5 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 440
+                                           ; SOURCE LINE # 444
 01A6 900000      E     MOV     DPTR,#Gyro+01H
 01A9 75F006            MOV     B,#06H
 01AC EF                MOV     A,R7
@@ -2715,7 +2719,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 01CD 120000      E     LCALL   ?C?FPMUL
 01D0 900000      R     MOV     DPTR,#g+04H
 01D3 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 441
+                                           ; SOURCE LINE # 445
 01D6 900000      R     MOV     DPTR,#g+04H
 01D9 E0                MOVX    A,@DPTR
 01DA FC                MOV     R4,A
@@ -2738,7 +2742,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 01F4 400B              JC      ?C0043
 01F6 E4                CLR     A
 01F7 FF                MOV     R7,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 44  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 44  
 
 01F8 FE                MOV     R6,A
 01F9 FD                MOV     R5,A
@@ -2746,7 +2750,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 01FB 900000      R     MOV     DPTR,#g+04H
 01FE 120000      E     LCALL   ?C?LSTXDATA
 0201         ?C0043:
-                                           ; SOURCE LINE # 442
+                                           ; SOURCE LINE # 446
 0201 900000      R     MOV     DPTR,#n
 0204 E0                MOVX    A,@DPTR
 0205 FE                MOV     R6,A
@@ -2769,7 +2773,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0222 A3                INC     DPTR
 0223 ED                MOV     A,R5
 0224 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 443
+                                           ; SOURCE LINE # 447
 0225 900000      E     MOV     DPTR,#Gyro+03H
 0228 75F006            MOV     B,#06H
 022B EF                MOV     A,R7
@@ -2794,7 +2798,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 024C 120000      E     LCALL   ?C?FPMUL
 024F 900000      R     MOV     DPTR,#g+08H
 0252 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 444
+                                           ; SOURCE LINE # 448
 0255 900000      R     MOV     DPTR,#g+08H
 0258 E0                MOVX    A,@DPTR
 0259 FC                MOV     R4,A
@@ -2802,7 +2806,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 025B E0                MOVX    A,@DPTR
 025C FD                MOV     R5,A
 025D A3                INC     DPTR
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 45  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 45  
 
 025E E0                MOVX    A,@DPTR
 025F FE                MOV     R6,A
@@ -2825,7 +2829,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 027A 900000      R     MOV     DPTR,#g+08H
 027D 120000      E     LCALL   ?C?LSTXDATA
 0280         ?C0044:
-                                           ; SOURCE LINE # 445
+                                           ; SOURCE LINE # 449
 0280 900000      R     MOV     DPTR,#n
 0283 E0                MOVX    A,@DPTR
 0284 FE                MOV     R6,A
@@ -2848,7 +2852,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 02A1 A3                INC     DPTR
 02A2 ED                MOV     A,R5
 02A3 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 446
+                                           ; SOURCE LINE # 450
 02A4 900000      E     MOV     DPTR,#Gyro+05H
 02A7 75F006            MOV     B,#06H
 02AA EF                MOV     A,R7
@@ -2866,7 +2870,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 02BE ED                MOV     A,R5
 02BF EC                MOV     A,R4
 02C0 120000      E     LCALL   ?C?FCASTI
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 46  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 46  
 
 02C3 7B54              MOV     R3,#054H
 02C5 7AA0              MOV     R2,#0A0H
@@ -2875,7 +2879,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 02CB 120000      E     LCALL   ?C?FPMUL
 02CE 900000      R     MOV     DPTR,#g+0CH
 02D1 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 447
+                                           ; SOURCE LINE # 451
 02D4 900000      R     MOV     DPTR,#g+0CH
 02D7 E0                MOVX    A,@DPTR
 02D8 FC                MOV     R4,A
@@ -2904,12 +2908,12 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 02F9 900000      R     MOV     DPTR,#g+0CH
 02FC 120000      E     LCALL   ?C?LSTXDATA
 02FF         ?C0045:
-                                           ; SOURCE LINE # 450
+                                           ; SOURCE LINE # 454
 02FF 7B01              MOV     R3,#01H
 0301 7A00        R     MOV     R2,#HIGH aP
 0303 7900        R     MOV     R1,#LOW aP
 0305 120000      E     LCALL   _v3_normalize
-                                           ; SOURCE LINE # 453
+                                           ; SOURCE LINE # 457
 0308 900000      E     MOV     DPTR,#Quat
 030B E0                MOVX    A,@DPTR
 030C FC                MOV     R4,A
@@ -2924,13 +2928,13 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0315 FF                MOV     R7,A
 0316 900000      R     MOV     DPTR,#qL
 0319 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 454
+                                           ; SOURCE LINE # 458
 031C 900000      E     MOV     DPTR,#Quat+04H
 031F E0                MOVX    A,@DPTR
 0320 FC                MOV     R4,A
 0321 A3                INC     DPTR
 0322 E0                MOVX    A,@DPTR
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 47  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 47  
 
 0323 FD                MOV     R5,A
 0324 A3                INC     DPTR
@@ -2941,7 +2945,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0329 FF                MOV     R7,A
 032A 900000      R     MOV     DPTR,#qL+04H
 032D 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 455
+                                           ; SOURCE LINE # 459
 0330 900000      E     MOV     DPTR,#Quat+08H
 0333 E0                MOVX    A,@DPTR
 0334 FC                MOV     R4,A
@@ -2956,7 +2960,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 033D FF                MOV     R7,A
 033E 900000      R     MOV     DPTR,#qL+08H
 0341 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 456
+                                           ; SOURCE LINE # 460
 0344 900000      E     MOV     DPTR,#Quat+0CH
 0347 E0                MOVX    A,@DPTR
 0348 FC                MOV     R4,A
@@ -2971,7 +2975,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0351 FF                MOV     R7,A
 0352 900000      R     MOV     DPTR,#qL+0CH
 0355 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 459
+                                           ; SOURCE LINE # 463
 0358 900000      R     MOV     DPTR,#qL+08H
 035B E0                MOVX    A,@DPTR
 035C FC                MOV     R4,A
@@ -2994,7 +2998,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 036F E0                MOVX    A,@DPTR
 0370 FA                MOV     R2,A
 0371 A3                INC     DPTR
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 48  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 48  
 
 0372 E0                MOVX    A,@DPTR
 0373 FB                MOV     R3,A
@@ -3058,7 +3062,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 03C9 C007              PUSH    AR7
 03CB 900000      R     MOV     DPTR,#qL+08H
 03CE E0                MOVX    A,@DPTR
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 49  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 49  
 
 03CF FC                MOV     R4,A
 03D0 A3                INC     DPTR
@@ -3122,7 +3126,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0422 E0                MOVX    A,@DPTR
 0423 FF                MOV     R7,A
 0424 900000      R     MOV     DPTR,#qL
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 50  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 50  
 
 0427 E0                MOVX    A,@DPTR
 0428 F8                MOV     R0,A
@@ -3185,8 +3189,8 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 047E 120000      E     LCALL   ?C?FPMUL
 0481 900000      R     MOV     DPTR,#Napla
 0484 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 460
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 51  
+                                           ; SOURCE LINE # 464
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 51  
 
 0487 900000      R     MOV     DPTR,#qL+0CH
 048A E0                MOVX    A,@DPTR
@@ -3250,7 +3254,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 04D8 E4                CLR     A
 04D9 FB                MOV     R3,A
 04DA FA                MOV     R2,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 52  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 52  
 
 04DB F9                MOV     R1,A
 04DC 7840              MOV     R0,#040H
@@ -3314,7 +3318,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 052C C005              PUSH    AR5
 052E C006              PUSH    AR6
 0530 C007              PUSH    AR7
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 53  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 53  
 
 0532 900000      R     MOV     DPTR,#qL+0CH
 0535 E0                MOVX    A,@DPTR
@@ -3378,7 +3382,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0582 E0                MOVX    A,@DPTR
 0583 FB                MOV     R3,A
 0584 120000      E     LCALL   ?C?FPMUL
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 54  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 54  
 
 0587 D003              POP     AR3
 0589 D002              POP     AR2
@@ -3442,7 +3446,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 05DF FF                MOV     R7,A
 05E0 900000      R     MOV     DPTR,#qL+08H
 05E3 E0                MOVX    A,@DPTR
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 55  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 55  
 
 05E4 F8                MOV     R0,A
 05E5 A3                INC     DPTR
@@ -3506,7 +3510,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0639 FB                MOV     R3,A
 063A 120000      E     LCALL   ?C?FPMUL
 063D D003              POP     AR3
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 56  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 56  
 
 063F D002              POP     AR2
 0641 D001              POP     AR1
@@ -3528,7 +3532,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0663 120000      E     LCALL   ?C?FPMUL
 0666 900000      R     MOV     DPTR,#Napla+04H
 0669 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 461
+                                           ; SOURCE LINE # 465
 066C 900000      R     MOV     DPTR,#qL+08H
 066F E0                MOVX    A,@DPTR
 0670 FC                MOV     R4,A
@@ -3570,7 +3574,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 069E A3                INC     DPTR
 069F E0                MOVX    A,@DPTR
 06A0 FF                MOV     R7,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 57  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 57  
 
 06A1 900000      R     MOV     DPTR,#qL+04H
 06A4 E0                MOVX    A,@DPTR
@@ -3634,7 +3638,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 06FB C004              PUSH    AR4
 06FD C005              PUSH    AR5
 06FF C006              PUSH    AR6
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 58  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 58  
 
 0701 C007              PUSH    AR7
 0703 900000      R     MOV     DPTR,#qL+0CH
@@ -3698,7 +3702,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0751 120000      E     LCALL   ?C?FPADD
 0754 E4                CLR     A
 0755 FB                MOV     R3,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 59  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 59  
 
 0756 FA                MOV     R2,A
 0757 F9                MOV     R1,A
@@ -3762,7 +3766,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 07AA FA                MOV     R2,A
 07AB A3                INC     DPTR
 07AC E0                MOVX    A,@DPTR
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 60  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 60  
 
 07AD FB                MOV     R3,A
 07AE 120000      E     LCALL   ?C?FPMUL
@@ -3826,7 +3830,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 080A A3                INC     DPTR
 080B E0                MOVX    A,@DPTR
 080C F9                MOV     R1,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 61  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 61  
 
 080D A3                INC     DPTR
 080E E0                MOVX    A,@DPTR
@@ -3878,7 +3882,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 085B 120000      E     LCALL   ?C?FPMUL
 085E 900000      R     MOV     DPTR,#Napla+08H
 0861 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 462
+                                           ; SOURCE LINE # 466
 0864 900000      R     MOV     DPTR,#qL+0CH
 0867 E0                MOVX    A,@DPTR
 0868 FC                MOV     R4,A
@@ -3890,7 +3894,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 086E FE                MOV     R6,A
 086F A3                INC     DPTR
 0870 E0                MOVX    A,@DPTR
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 62  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 62  
 
 0871 FF                MOV     R7,A
 0872 900000      R     MOV     DPTR,#qL+08H
@@ -3954,7 +3958,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 08C5 F9                MOV     R1,A
 08C6 A3                INC     DPTR
 08C7 E0                MOVX    A,@DPTR
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 63  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 63  
 
 08C8 FA                MOV     R2,A
 08C9 A3                INC     DPTR
@@ -4018,7 +4022,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0919 FE                MOV     R6,A
 091A A3                INC     DPTR
 091B E0                MOVX    A,@DPTR
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 64  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 64  
 
 091C FF                MOV     R7,A
 091D 900000      R     MOV     DPTR,#qL+04H
@@ -4082,10 +4086,10 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0975 7840              MOV     R0,#040H
 0977 120000      E     LCALL   ?C?FPMUL
 097A 900000      R     MOV     DPTR,#Napla+0CH
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 65  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 65  
 
 097D 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 464
+                                           ; SOURCE LINE # 468
 0980 900000      R     MOV     DPTR,#g+08H
 0983 E0                MOVX    A,@DPTR
 0984 FC                MOV     R4,A
@@ -4146,7 +4150,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 09CC D000              POP     AR0
 09CE 120000      E     LCALL   ?C?FPADD
 09D1 C004              PUSH    AR4
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 66  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 66  
 
 09D3 C005              PUSH    AR5
 09D5 C006              PUSH    AR6
@@ -4203,14 +4207,14 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0A1D 120000      E     LCALL   ?C?FPSUB
 0A20 900000      R     MOV     DPTR,#qd0
 0A23 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 465
+                                           ; SOURCE LINE # 469
 0A26 900000      R     MOV     DPTR,#g+08H
 0A29 E0                MOVX    A,@DPTR
 0A2A FC                MOV     R4,A
 0A2B A3                INC     DPTR
 0A2C E0                MOVX    A,@DPTR
 0A2D FD                MOV     R5,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 67  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 67  
 
 0A2E A3                INC     DPTR
 0A2F E0                MOVX    A,@DPTR
@@ -4274,7 +4278,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0A83 FC                MOV     R4,A
 0A84 A3                INC     DPTR
 0A85 E0                MOVX    A,@DPTR
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 68  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 68  
 
 0A86 FD                MOV     R5,A
 0A87 A3                INC     DPTR
@@ -4322,7 +4326,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0AC0 120000      E     LCALL   ?C?FPSUB
 0AC3 900000      R     MOV     DPTR,#qd1
 0AC6 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 466
+                                           ; SOURCE LINE # 470
 0AC9 900000      R     MOV     DPTR,#g+0CH
 0ACC E0                MOVX    A,@DPTR
 0ACD FC                MOV     R4,A
@@ -4338,7 +4342,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0AD7 900000      R     MOV     DPTR,#qL+04H
 0ADA E0                MOVX    A,@DPTR
 0ADB F8                MOV     R0,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 69  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 69  
 
 0ADC A3                INC     DPTR
 0ADD E0                MOVX    A,@DPTR
@@ -4402,7 +4406,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0B2F FF                MOV     R7,A
 0B30 900000      R     MOV     DPTR,#qL
 0B33 E0                MOVX    A,@DPTR
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 70  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 70  
 
 0B34 F8                MOV     R0,A
 0B35 A3                INC     DPTR
@@ -4441,7 +4445,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0B63 120000      E     LCALL   ?C?FPSUB
 0B66 900000      R     MOV     DPTR,#qd2
 0B69 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 467
+                                           ; SOURCE LINE # 471
 0B6C 900000      R     MOV     DPTR,#g+04H
 0B6F E0                MOVX    A,@DPTR
 0B70 FC                MOV     R4,A
@@ -4466,7 +4470,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0B85 A3                INC     DPTR
 0B86 E0                MOVX    A,@DPTR
 0B87 FB                MOV     R3,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 71  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 71  
 
 0B88 120000      E     LCALL   ?C?FPMUL
 0B8B C004              PUSH    AR4
@@ -4530,7 +4534,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0BDB FA                MOV     R2,A
 0BDC A3                INC     DPTR
 0BDD E0                MOVX    A,@DPTR
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 72  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 72  
 
 0BDE FB                MOV     R3,A
 0BDF 120000      E     LCALL   ?C?FPMUL
@@ -4560,7 +4564,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0C04 120000      E     LCALL   ?C?FPSUB
 0C07 900000      R     MOV     DPTR,#qd3
 0C0A 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 469
+                                           ; SOURCE LINE # 473
 0C0D 900000      R     MOV     DPTR,#qL
 0C10 E0                MOVX    A,@DPTR
 0C11 F8                MOV     R0,A
@@ -4594,7 +4598,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0C35 F8                MOV     R0,A
 0C36 A3                INC     DPTR
 0C37 E0                MOVX    A,@DPTR
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 73  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 73  
 
 0C38 F9                MOV     R1,A
 0C39 A3                INC     DPTR
@@ -4611,7 +4615,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0C4A 120000      E     LCALL   ?C?FPADD
 0C4D 900000      R     MOV     DPTR,#qL
 0C50 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 470
+                                           ; SOURCE LINE # 474
 0C53 900000      R     MOV     DPTR,#qL+04H
 0C56 E0                MOVX    A,@DPTR
 0C57 F8                MOV     R0,A
@@ -4658,11 +4662,11 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0C8C D001              POP     AR1
 0C8E D000              POP     AR0
 0C90 120000      E     LCALL   ?C?FPADD
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 74  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 74  
 
 0C93 900000      R     MOV     DPTR,#qL+04H
 0C96 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 471
+                                           ; SOURCE LINE # 475
 0C99 900000      R     MOV     DPTR,#qL+08H
 0C9C E0                MOVX    A,@DPTR
 0C9D F8                MOV     R0,A
@@ -4711,7 +4715,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0CD6 120000      E     LCALL   ?C?FPADD
 0CD9 900000      R     MOV     DPTR,#qL+08H
 0CDC 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 472
+                                           ; SOURCE LINE # 476
 0CDF 900000      R     MOV     DPTR,#qL+0CH
 0CE2 E0                MOVX    A,@DPTR
 0CE3 F8                MOV     R0,A
@@ -4722,7 +4726,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0CE8 E0                MOVX    A,@DPTR
 0CE9 FA                MOV     R2,A
 0CEA A3                INC     DPTR
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 75  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 75  
 
 0CEB E0                MOVX    A,@DPTR
 0CEC FB                MOV     R3,A
@@ -4762,12 +4766,12 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0D1A 120000      E     LCALL   ?C?FPADD
 0D1D 900000      R     MOV     DPTR,#qL+0CH
 0D20 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 473
+                                           ; SOURCE LINE # 477
 0D23 7B01              MOV     R3,#01H
 0D25 7A00        R     MOV     R2,#HIGH qL
 0D27 7900        R     MOV     R1,#LOW qL
 0D29 120000      E     LCALL   _v4_normalize
-                                           ; SOURCE LINE # 476
+                                           ; SOURCE LINE # 480
 0D2C 900000      R     MOV     DPTR,#qL
 0D2F E0                MOVX    A,@DPTR
 0D30 FC                MOV     R4,A
@@ -4782,11 +4786,11 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0D39 FF                MOV     R7,A
 0D3A 900000      E     MOV     DPTR,#Quat
 0D3D 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 477
+                                           ; SOURCE LINE # 481
 0D40 900000      R     MOV     DPTR,#qL+04H
 0D43 E0                MOVX    A,@DPTR
 0D44 FC                MOV     R4,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 76  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 76  
 
 0D45 A3                INC     DPTR
 0D46 E0                MOVX    A,@DPTR
@@ -4799,7 +4803,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0D4D FF                MOV     R7,A
 0D4E 900000      E     MOV     DPTR,#Quat+04H
 0D51 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 478
+                                           ; SOURCE LINE # 482
 0D54 900000      R     MOV     DPTR,#qL+08H
 0D57 E0                MOVX    A,@DPTR
 0D58 FC                MOV     R4,A
@@ -4814,7 +4818,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0D61 FF                MOV     R7,A
 0D62 900000      E     MOV     DPTR,#Quat+08H
 0D65 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 479
+                                           ; SOURCE LINE # 483
 0D68 900000      R     MOV     DPTR,#qL+0CH
 0D6B E0                MOVX    A,@DPTR
 0D6C FC                MOV     R4,A
@@ -4829,17 +4833,17 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0D75 FF                MOV     R7,A
 0D76 900000      E     MOV     DPTR,#Quat+0CH
 0D79 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 480
-                                           ; SOURCE LINE # 481
-                                           ; SOURCE LINE # 483
                                            ; SOURCE LINE # 484
+                                           ; SOURCE LINE # 485
+                                           ; SOURCE LINE # 487
+                                           ; SOURCE LINE # 488
 0D7C         ?C0047:
 0D7C 22                RET     
              ; FUNCTION _ReadQuat (END)
 
              ; FUNCTION ReadAllIMUs (BEGIN)
-                                           ; SOURCE LINE # 489
-                                           ; SOURCE LINE # 491
+                                           ; SOURCE LINE # 493
+                                           ; SOURCE LINE # 495
 0000 E4                CLR     A
 0001 900000      R     MOV     DPTR,#tmp
 0004 F0                MOVX    @DPTR,A
@@ -4850,17 +4854,17 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0009 A3                INC     DPTR
 000A F0                MOVX    @DPTR,A
 000B A3                INC     DPTR
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 77  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 77  
 
 000C F0                MOVX    @DPTR,A
 000D A3                INC     DPTR
 000E F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 492
+                                           ; SOURCE LINE # 496
 000F A3                INC     DPTR
 0010 F0                MOVX    @DPTR,A
 0011 A3                INC     DPTR
 0012 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 494
+                                           ; SOURCE LINE # 498
 0013 900000      R     MOV     DPTR,#k_imu
 0016 F0                MOVX    @DPTR,A
 0017         ?C0048:
@@ -4874,7 +4878,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0022 9F                SUBB    A,R7
 0023 4003              JC      $ + 5H
 0025 020000      R     LJMP    ?C0063
-                                           ; SOURCE LINE # 496
+                                           ; SOURCE LINE # 500
 0028 7400        E     MOV     A,#LOW IMU_connected
 002A 2E                ADD     A,R6
 002B F582              MOV     DPL,A
@@ -4885,7 +4889,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0033 FF                MOV     R7,A
 0034 7E00              MOV     R6,#00H
 0036 120000      R     LCALL   _ChipSelector
-                                           ; SOURCE LINE # 497
+                                           ; SOURCE LINE # 501
 0039 900000      R     MOV     DPTR,#k_imu
 003C E0                MOVX    A,@DPTR
 003D 2400        E     ADD     A,#LOW IMU_connected
@@ -4897,7 +4901,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0047 FF                MOV     R7,A
 0048 7E00              MOV     R6,#00H
 004A 120000      R     LCALL   _ReadIMU
-                                           ; SOURCE LINE # 499
+                                           ; SOURCE LINE # 503
 004D E4                CLR     A
 004E 900000      R     MOV     DPTR,#j
 0051 F0                MOVX    @DPTR,A
@@ -4914,11 +4918,11 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 005D 9403              SUBB    A,#03H
 005F EE                MOV     A,R6
 0060 9400              SUBB    A,#00H
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 78  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 78  
 
 0062 4003              JC      $ + 5H
 0064 020000      R     LJMP    ?C0052
-                                           ; SOURCE LINE # 500
+                                           ; SOURCE LINE # 504
 0067 EF                MOV     A,R7
 0068 25E0              ADD     A,ACC
 006A FF                MOV     R7,A
@@ -4956,7 +4960,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 009C A3                INC     DPTR
 009D EB                MOV     A,R3
 009E F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 501
+                                           ; SOURCE LINE # 505
 009F ED                MOV     A,R5
 00A0 75F006            MOV     B,#06H
 00A3 A4                MUL     AB
@@ -4978,7 +4982,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00BD FC                MOV     R4,A
 00BE ED                MOV     A,R5
 00BF 900000      R     MOV     DPTR,#j+01H
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 79  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 79  
 
 00C2 E0                MOVX    A,@DPTR
 00C3 25E0              ADD     A,ACC
@@ -5006,7 +5010,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00E7 A3                INC     DPTR
 00E8 ED                MOV     A,R5
 00E9 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 502
+                                           ; SOURCE LINE # 506
 00EA 900000      R     MOV     DPTR,#j+01H
 00ED E0                MOVX    A,@DPTR
 00EE 04                INC     A
@@ -5019,7 +5023,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00F8         ?C0081:
 00F8 020000      R     LJMP    ?C0051
 00FB         ?C0052:
-                                           ; SOURCE LINE # 504
+                                           ; SOURCE LINE # 508
 00FB E4                CLR     A
 00FC 900000      R     MOV     DPTR,#j
 00FF F0                MOVX    @DPTR,A
@@ -5038,11 +5042,11 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 010E 9400              SUBB    A,#00H
 0110 4003              JC      $ + 5H
 0112 020000      R     LJMP    ?C0055
-                                           ; SOURCE LINE # 505
+                                           ; SOURCE LINE # 509
 0115 EF                MOV     A,R7
 0116 25E0              ADD     A,ACC
 0118 FF                MOV     R7,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 80  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 80  
 
 0119 EE                MOV     A,R6
 011A 33                RLC     A
@@ -5078,7 +5082,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 014A A3                INC     DPTR
 014B EB                MOV     A,R3
 014C F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 506
+                                           ; SOURCE LINE # 510
 014D ED                MOV     A,R5
 014E 75F006            MOV     B,#06H
 0151 A4                MUL     AB
@@ -5106,7 +5110,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0174 900000      R     MOV     DPTR,#j
 0177 E0                MOVX    A,@DPTR
 0178 33                RLC     A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 81  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 81  
 
 0179 FE                MOV     R6,A
 017A 75F025            MOV     B,#025H
@@ -5128,7 +5132,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0195 A3                INC     DPTR
 0196 ED                MOV     A,R5
 0197 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 507
+                                           ; SOURCE LINE # 511
 0198 900000      R     MOV     DPTR,#j+01H
 019B E0                MOVX    A,@DPTR
 019C 04                INC     A
@@ -5141,7 +5145,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 01A6         ?C0082:
 01A6 020000      R     LJMP    ?C0054
 01A9         ?C0055:
-                                           ; SOURCE LINE # 509
+                                           ; SOURCE LINE # 513
 01A9 E4                CLR     A
 01AA 900000      R     MOV     DPTR,#j
 01AD F0                MOVX    @DPTR,A
@@ -5160,7 +5164,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 01BC 9400              SUBB    A,#00H
 01BE 4003              JC      $ + 5H
 01C0 020000      R     LJMP    ?C0058
-                                           ; SOURCE LINE # 510
+                                           ; SOURCE LINE # 514
 01C3 EF                MOV     A,R7
 01C4 25E0              ADD     A,ACC
 01C6 FF                MOV     R7,A
@@ -5170,7 +5174,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 01CA 900000      R     MOV     DPTR,#k_imu
 01CD E0                MOVX    A,@DPTR
 01CE F9                MOV     R1,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 82  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 82  
 
 01CF 2400        E     ADD     A,#LOW IMU_connected
 01D1 F582              MOV     DPL,A
@@ -5200,7 +5204,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 01F8 A3                INC     DPTR
 01F9 EB                MOV     A,R3
 01FA F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 511
+                                           ; SOURCE LINE # 515
 01FB ED                MOV     A,R5
 01FC 75F006            MOV     B,#06H
 01FF A4                MUL     AB
@@ -5234,7 +5238,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 022C A4                MUL     AB
 022D 2400        E     ADD     A,#LOW g_imuNew+0DH
 022F F582              MOV     DPL,A
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 83  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 83  
 
 0231 E5F0              MOV     A,B
 0233 3400        E     ADDC    A,#HIGH g_imuNew+0DH
@@ -5250,7 +5254,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0243 A3                INC     DPTR
 0244 ED                MOV     A,R5
 0245 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 512
+                                           ; SOURCE LINE # 516
 0246 900000      R     MOV     DPTR,#j+01H
 0249 E0                MOVX    A,@DPTR
 024A 04                INC     A
@@ -5263,7 +5267,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0254         ?C0083:
 0254 020000      R     LJMP    ?C0057
 0257         ?C0058:
-                                           ; SOURCE LINE # 515
+                                           ; SOURCE LINE # 519
 0257 E4                CLR     A
 0258 900000      R     MOV     DPTR,#j
 025B F0                MOVX    @DPTR,A
@@ -5284,7 +5288,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 026F EE                MOV     A,R6
 0270 9400              SUBB    A,#00H
 0272 506F              JNC     ?C0061
-                                           ; SOURCE LINE # 516
+                                           ; SOURCE LINE # 520
 0274 EF                MOV     A,R7
 0275 7802              MOV     R0,#02H
 0277         ?C0084:
@@ -5298,7 +5302,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0280 F582              MOV     DPL,A
 0282 7400        E     MOV     A,#HIGH Quat
 0284 3E                ADDC    A,R6
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 84  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 84  
 
 0285 F583              MOV     DPH,A
 0287 E0                MOVX    A,@DPTR
@@ -5350,7 +5354,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 02CB D005              POP     AR5
 02CD D004              POP     AR4
 02CF 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 517
+                                           ; SOURCE LINE # 521
 02D2 900000      R     MOV     DPTR,#j+01H
 02D5 E0                MOVX    A,@DPTR
 02D6 04                INC     A
@@ -5362,10 +5366,10 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 02DF F0                MOVX    @DPTR,A
 02E0         ?C0086:
 02E0 020000      R     LJMP    ?C0060
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 85  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 85  
 
 02E3         ?C0061:
-                                           ; SOURCE LINE # 519
+                                           ; SOURCE LINE # 523
 02E3 900000      R     MOV     DPTR,#k_imu
 02E6 E0                MOVX    A,@DPTR
 02E7 FD                MOV     R5,A
@@ -5390,7 +5394,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0305 A3                INC     DPTR
 0306 EB                MOV     A,R3
 0307 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 520
+                                           ; SOURCE LINE # 524
 0308 EF                MOV     A,R7
 0309 25E0              ADD     A,ACC
 030B 2400        E     ADD     A,#LOW Temp+01H
@@ -5418,53 +5422,53 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 032E A3                INC     DPTR
 032F EF                MOV     A,R7
 0330 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 521
+                                           ; SOURCE LINE # 525
 0331 900000      R     MOV     DPTR,#k_imu
 0334 E0                MOVX    A,@DPTR
 0335 04                INC     A
 0336 F0                MOVX    @DPTR,A
 0337 020000      R     LJMP    ?C0048
-                                           ; SOURCE LINE # 522
+                                           ; SOURCE LINE # 526
 033A         ?C0063:
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 86  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 86  
 
 033A 22                RET     
              ; FUNCTION ReadAllIMUs (END)
 
              ; FUNCTION _ReadTemp (BEGIN)
-                                           ; SOURCE LINE # 527
+                                           ; SOURCE LINE # 531
 ;---- Variable 'n' assigned to Register 'R6/R7' ----
-                                           ; SOURCE LINE # 528
-                                           ; SOURCE LINE # 529
+                                           ; SOURCE LINE # 532
+                                           ; SOURCE LINE # 533
 0000 E4                CLR     A
 0001 900000      R     MOV     DPTR,#low
 0004 F0                MOVX    @DPTR,A
 0005 A3                INC     DPTR
 0006 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 530
+                                           ; SOURCE LINE # 534
 0007 A3                INC     DPTR
 0008 EE                MOV     A,R6
 0009 F0                MOVX    @DPTR,A
 000A A3                INC     DPTR
 000B EF                MOV     A,R7
 000C F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 533
+                                           ; SOURCE LINE # 537
 000D 7F42              MOV     R7,#042H
 000F 120000      R     LCALL   _ReadControlRegister
 0012 900000      R     MOV     DPTR,#low
 0015 EF                MOV     A,R7
 0016 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 534
+                                           ; SOURCE LINE # 538
 0017 120000      R     LCALL   SPI_delay
-                                           ; SOURCE LINE # 535
+                                           ; SOURCE LINE # 539
 001A 7F41              MOV     R7,#041H
 001C 120000      R     LCALL   _ReadControlRegister
 001F 900000      R     MOV     DPTR,#high
 0022 EF                MOV     A,R7
 0023 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 536
+                                           ; SOURCE LINE # 540
 0024 120000      R     LCALL   SPI_delay
-                                           ; SOURCE LINE # 538
+                                           ; SOURCE LINE # 542
 0027 900000      R     MOV     DPTR,#high
 002A E0                MOVX    A,@DPTR
 002B FD                MOV     R5,A
@@ -5484,13 +5488,13 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0041 F583              MOV     DPH,A
 0043 ED                MOV     A,R5
 0044 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 539
+                                           ; SOURCE LINE # 543
 0045 900000      R     MOV     DPTR,#low
 0048 E0                MOVX    A,@DPTR
 0049 FD                MOV     R5,A
 004A 7400        E     MOV     A,#LOW Temp+01H
 004C 2F                ADD     A,R7
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 87  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 87  
 
 004D F582              MOV     DPL,A
 004F 7400        E     MOV     A,#HIGH Temp+01H
@@ -5498,114 +5502,114 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0052 F583              MOV     DPH,A
 0054 ED                MOV     A,R5
 0055 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 540
+                                           ; SOURCE LINE # 544
 0056 E4                CLR     A
 0057 900000      R     MOV     DPTR,#low
 005A F0                MOVX    @DPTR,A
 005B A3                INC     DPTR
 005C F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 541
+                                           ; SOURCE LINE # 545
 005D 22                RET     
              ; FUNCTION _ReadTemp (END)
 
              ; FUNCTION _WriteControlRegister (BEGIN)
-                                           ; SOURCE LINE # 546
+                                           ; SOURCE LINE # 550
 0000 900000      R     MOV     DPTR,#address
 0003 EF                MOV     A,R7
 0004 F0                MOVX    @DPTR,A
 0005 A3                INC     DPTR
 0006 ED                MOV     A,R5
 0007 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 548
+                                           ; SOURCE LINE # 552
 0008 120000      E     LCALL   SPI_IMU_ClearRxBuffer
-                                           ; SOURCE LINE # 549
+                                           ; SOURCE LINE # 553
 000B 120000      E     LCALL   SPI_IMU_ClearTxBuffer
-                                           ; SOURCE LINE # 550
+                                           ; SOURCE LINE # 554
 000E 120000      E     LCALL   SPI_IMU_ClearFIFO
-                                           ; SOURCE LINE # 551
+                                           ; SOURCE LINE # 555
 0011 900000      R     MOV     DPTR,#address
 0014 E0                MOVX    A,@DPTR
 0015 FF                MOV     R7,A
 0016 120000      E     LCALL   _SPI_IMU_WriteTxData
 0019         ?C0065:
-                                           ; SOURCE LINE # 552
+                                           ; SOURCE LINE # 556
 0019 120000      E     LCALL   SPI_IMU_ReadStatus
 001C EF                MOV     A,R7
 001D 30E1F9            JNB     ACC.1,?C0065
 0020         ?C0066:
-                                           ; SOURCE LINE # 553
+                                           ; SOURCE LINE # 557
 0020 900000      R     MOV     DPTR,#dta
 0023 E0                MOVX    A,@DPTR
 0024 FF                MOV     R7,A
 0025 120000      E     LCALL   _SPI_IMU_WriteTxData
 0028         ?C0067:
-                                           ; SOURCE LINE # 554
+                                           ; SOURCE LINE # 558
 0028 120000      E     LCALL   SPI_IMU_ReadStatus
 002B EF                MOV     A,R7
 002C 30E1F9            JNB     ACC.1,?C0067
 002F         ?C0068:
-                                           ; SOURCE LINE # 555
+                                           ; SOURCE LINE # 559
 002F         ?C0069:
 002F 22                RET     
              ; FUNCTION _WriteControlRegister (END)
 
              ; FUNCTION _ReadControlRegister (BEGIN)
-                                           ; SOURCE LINE # 560
+                                           ; SOURCE LINE # 564
 ;---- Variable 'address' assigned to Register 'R7' ----
-                                           ; SOURCE LINE # 563
+                                           ; SOURCE LINE # 567
 0000 EF                MOV     A,R7
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 88  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 88  
 
 0001 4480              ORL     A,#080H
 0003 FF                MOV     R7,A
 0004 120000      E     LCALL   _SPI_IMU_WriteTxData
-                                           ; SOURCE LINE # 564
+                                           ; SOURCE LINE # 568
 0007 E4                CLR     A
 0008 FF                MOV     R7,A
 0009 120000      E     LCALL   _SPI_IMU_WriteTxData
 000C         ?C0070:
-                                           ; SOURCE LINE # 565
+                                           ; SOURCE LINE # 569
 000C 120000      E     LCALL   SPI_IMU_ReadStatus
 000F EF                MOV     A,R7
 0010 30E0F9            JNB     ACC.0,?C0070
 0013         ?C0071:
-                                           ; SOURCE LINE # 566
+                                           ; SOURCE LINE # 570
 0013 120000      E     LCALL   SPI_IMU_ReadRxData
 ;---- Variable 'controlreg' assigned to Register 'R7' ----
-                                           ; SOURCE LINE # 567
-                                           ; SOURCE LINE # 568
+                                           ; SOURCE LINE # 571
+                                           ; SOURCE LINE # 572
 0016         ?C0072:
 0016 22                RET     
              ; FUNCTION _ReadControlRegister (END)
 
              ; FUNCTION SPI_delay (BEGIN)
-                                           ; SOURCE LINE # 573
-                                           ; SOURCE LINE # 574
+                                           ; SOURCE LINE # 577
+                                           ; SOURCE LINE # 578
 0000 900000      E     MOV     DPTR,#c_mem+03H
 0003 E0                MOVX    A,@DPTR
 0004 24FE              ADD     A,#0FEH
 0006 600B              JZ      ?C0075
 0008 04                INC     A
 0009 700F              JNZ     ?C0077
-                                           ; SOURCE LINE # 575
+                                           ; SOURCE LINE # 579
 000B         ?C0074:
-                                           ; SOURCE LINE # 576
+                                           ; SOURCE LINE # 580
 000B 7F0A              MOV     R7,#0AH
 000D 7E00              MOV     R6,#00H
 000F 120000      E     LCALL   _CyDelayUs
-                                           ; SOURCE LINE # 577
+                                           ; SOURCE LINE # 581
 0012 22                RET     
-                                           ; SOURCE LINE # 578
+                                           ; SOURCE LINE # 582
 0013         ?C0075:
-                                           ; SOURCE LINE # 579
+                                           ; SOURCE LINE # 583
 0013 7F64              MOV     R7,#064H
 0015 7E00              MOV     R6,#00H
 0017 120000      E     LCALL   _CyDelayUs
-                                           ; SOURCE LINE # 580
-                                           ; SOURCE LINE # 581
-                                           ; SOURCE LINE # 582
-                                           ; SOURCE LINE # 583
                                            ; SOURCE LINE # 584
+                                           ; SOURCE LINE # 585
+                                           ; SOURCE LINE # 586
+                                           ; SOURCE LINE # 587
+                                           ; SOURCE LINE # 588
 001A         ?C0077:
 001A 22                RET     
              ; FUNCTION SPI_delay (END)
@@ -5618,7 +5622,7 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    XDATA SIZE       =      1     156
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
-C51 COMPILER V9.51   IMU_FUNCTIONS                                                         03/15/2018 13:41:59 PAGE 89  
+C51 COMPILER V9.51   IMU_FUNCTIONS                                                         04/12/2018 12:29:01 PAGE 89  
 
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
