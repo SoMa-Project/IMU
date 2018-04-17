@@ -1,4 +1,4 @@
-C51 COMPILER V9.51   MAIN                                                                  04/12/2018 12:29:00 PAGE 1   
+C51 COMPILER V9.51   MAIN                                                                  04/17/2018 14:39:18 PAGE 1   
 
 
 C51 COMPILER V9.51, COMPILATION OF MODULE MAIN
@@ -62,7 +62,7 @@ line level    source
   50          */
   51          
   52          
-C51 COMPILER V9.51   MAIN                                                                  04/12/2018 12:29:00 PAGE 2   
+C51 COMPILER V9.51   MAIN                                                                  04/17/2018 14:39:18 PAGE 2   
 
   53          // ----------------------------------------------------------------------------
   54          // This version changes:
@@ -126,7 +126,7 @@ line level    source
  112   1          CyDelay(10);
  113   1          
  114   1          Opto_Pin_Write(1); //start hw spi communication
-C51 COMPILER V9.51   MAIN                                                                  04/12/2018 12:29:00 PAGE 3   
+C51 COMPILER V9.51   MAIN                                                                  04/17/2018 14:39:18 PAGE 3   
 
  115   1          
  116   1          // Init MPU9250 devices
@@ -176,7 +176,7 @@ line level    source
  160          
  161          
  162          /* [] END OF FILE */
-C51 COMPILER V9.51   MAIN                                                                  04/12/2018 12:29:00 PAGE 4   
+C51 COMPILER V9.51   MAIN                                                                  04/17/2018 14:39:18 PAGE 4   
 
 ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
@@ -240,7 +240,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
                                            ; SOURCE LINE # 112
 004F E4                CLR     A
 0050 7F0A              MOV     R7,#0AH
-C51 COMPILER V9.51   MAIN                                                                  04/12/2018 12:29:00 PAGE 5   
+C51 COMPILER V9.51   MAIN                                                                  04/17/2018 14:39:18 PAGE 5   
 
 0052 FE                MOV     R6,A
 0053 FD                MOV     R5,A
@@ -304,7 +304,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 009A 80CF              SJMP    ?C0001
                                            ; SOURCE LINE # 157
                                            ; SOURCE LINE # 158
-C51 COMPILER V9.51   MAIN                                                                  04/12/2018 12:29:00 PAGE 6   
+C51 COMPILER V9.51   MAIN                                                                  04/17/2018 14:39:18 PAGE 6   
 
 009C         ?C0009:
 009C 22                RET     

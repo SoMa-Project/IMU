@@ -390,6 +390,52 @@
 <VisibleNodeIds>
 <v>firmware</v>
 <v>firmware\firmware</v>
+<v>firmware\firmware\DP8051</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Debug</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Debug\Listing Files</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Debug\Listing Files\FTDI_ENABLE_REG_PM.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Debug\Listing Files\RESET_FF_PM.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Debug\Listing Files\RS485_CTS_PM.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Debug\firmware.cyacd</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Debug\firmware.elf</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Debug\firmware.hex</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Debug\firmware.map</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\Bootloadable.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\Chip_Select_A.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\Chip_Select_A_PM.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\Chip_Select_B.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\Chip_Select_B_PM.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CLOCK_UART.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\command_processing.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS00.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS01.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS02.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS03.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS04.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS05.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS06.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS07.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS08.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS09.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS10.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS11.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS12.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS13.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS14.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS15.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS16.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\cy_em_eeprom.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CyBootAsmKeil.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CyDmac.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\cyfitter_cfg.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CyFlash.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CyLib.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\cymem.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\cyPm.lst</v>
+<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CySpc.lst</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStates>

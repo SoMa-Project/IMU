@@ -58,7 +58,7 @@
 //==============================================================================
 
 #define VERSION                 "IMUboard v 1.2"
-//#define OCADO                   "IMUboard v 1.2 OCADO"
+//#define SOMA                   "IMUboard v 1.2 SoMa"
 
 #define N_IMU_MAX                   17
 #define NUM_OF_DATA                 5       // accelerometers, gyroscopes, magnetometers, quaternion and temperature data

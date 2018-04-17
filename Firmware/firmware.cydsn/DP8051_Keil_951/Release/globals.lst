@@ -1,4 +1,4 @@
-C51 COMPILER V9.51   GLOBALS                                                               04/12/2018 12:28:59 PAGE 1   
+C51 COMPILER V9.51   GLOBALS                                                               04/17/2018 14:39:17 PAGE 1   
 
 
 C51 COMPILER V9.51, COMPILATION OF MODULE GLOBALS
@@ -62,7 +62,7 @@ line level    source
   50          struct st_data  g_rx;                       // income data
   51          struct st_mem   g_mem, c_mem;               // memory
   52          
-C51 COMPILER V9.51   GLOBALS                                                               04/12/2018 12:28:59 PAGE 2   
+C51 COMPILER V9.51   GLOBALS                                                               04/17/2018 14:39:17 PAGE 2   
 
   53          // Timer value for debug field
   54          
@@ -89,7 +89,7 @@ line level    source
   75          float Quat[4] = {1,0,0,0};
   76          
   77          /* END OF FILE */
-C51 COMPILER V9.51   GLOBALS                                                               04/12/2018 12:28:59 PAGE 3   
+C51 COMPILER V9.51   GLOBALS                                                               04/17/2018 14:39:17 PAGE 3   
 
 ASSEMBLY LISTING OF GENERATED OBJECT CODE
 

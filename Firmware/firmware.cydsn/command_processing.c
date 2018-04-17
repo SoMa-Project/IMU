@@ -449,8 +449,8 @@ void infoPrepare(unsigned char *info_string)
         strcpy(info_string, "");
         strcat(info_string, "\r\n");
         strcat(info_string, "Firmware version: ");
-#ifdef OCADO
-        strcat(info_string, OCADO);
+#ifdef SOMA
+        strcat(info_string, SoMa);
 #else        
         strcat(info_string, VERSION);
 #endif        
@@ -460,7 +460,7 @@ void infoPrepare(unsigned char *info_string)
         sprintf(str, "ID: %d\r\n", (int) c_mem.id);
         strcat(info_string, str);
 
-#ifdef OCADO
+#ifdef SOMA
         strcat(info_string, "Low pass filter frequency for accelerometers: 184 Hz\r\n");
 #else
         strcat(info_string, "Low pass filter frequency for accelerometers: 10 Hz\r\n");
