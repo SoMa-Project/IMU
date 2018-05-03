@@ -49,6 +49,7 @@ class qb_class_imu : public qb_class {
 		// Step Time, 1 / step_time = communication frequency
 		double step_time_imu_;
 
+		int hand_step_div_;
 	private:
 
 		// Functions

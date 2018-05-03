@@ -1022,7 +1022,7 @@ bool qb_class::readMeasCurrent() {
             status = false;
 
             hand_current.push_back(NAN);
-            closure.push_back(pClosure);	
+            closure.push_back(NAN);	
         }else{
         	hand_current.push_back(current[0]);	
         	closure.push_back(pClosure);	

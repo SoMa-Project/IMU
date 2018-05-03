@@ -30,6 +30,7 @@ qb_class_imu::qb_class_imu(){
 	node_->searchParam("/IDimuboards", aux);
 	node_->getParam(aux, ID_imuboard);
 	node_->param<double>("/step_time_imu", step_time_imu_, 0.002);
+	node_->param<int>("/hand_step_div", hand_step_div_, 10);
 
 
     qbImuBoard* tmp_imuboard;
@@ -206,7 +207,13 @@ bool qb_class_imu::readIMU(){
 
 void qb_class_imu::spinOnce(){
 
-	qb_class::spinOnce();
+	static int counter = 0;
+
+	if (counter > hand_step_div_){
+		qb_class::spinOnce();
+		counter = 0;
+	}
+	counter++;
 
 	// Read measurementes of all IMUs and send them on topics
 	readIMU();
