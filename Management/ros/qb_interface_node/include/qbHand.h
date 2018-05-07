@@ -38,17 +38,30 @@ class qbHand : public qbInterface
         // Get Position and Current of the hand closure
         bool getPosAndCurr(float*, float*, angular_unit);
 
+        //------------------------------ getPIDparams
+        // Get position PID params
+        bool getPIDparams(float*);
+
         //------------------------------ init
-        // Inizialize default values for the cube
-        void retrieveParams();
+        // Inizialize default limits for the hand
+        void retrieveLimits();
+
+        // Inizialize default values for the PID
+        void retrievePID();
+
+        // Set values for the PID
+        void setPID(float, float, float);
 
     protected:
 
         // Position limit for motors
         int POS_LIMIT_M1_[2], POS_LIMIT_M2_[2];
 
-    private:
 
+        // Actual hand PID parameters
+        float position_PID[3];
+
+    private:
 
 };
 

@@ -19,6 +19,8 @@
 #include <qb_interface/cubeCurrent.h>
 #include <qb_interface/handCurrent.h>
 
+#include "qb_interface/control_pid.h" 
+
 // General Headers
 #include <vector>
 #include <map>
@@ -92,6 +94,8 @@ class qb_class{
 
 		void sendCurrent(vector<int>);
 		void sendCurrent(vector<int>, vector<int>);
+
+		bool change_control_pid(qb_interface::control_pid::Request& req, qb_interface::control_pid::Response& res);
 		
 		// Variables
 
@@ -144,4 +148,6 @@ class qb_class{
 		ros::Publisher cube_curr_pub;
 		ros::Publisher hand_curr_pub;
 
+		//Service Server
+	    ros::ServiceServer srv_control_pid_;
 };

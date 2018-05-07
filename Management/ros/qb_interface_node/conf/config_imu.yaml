@@ -8,4 +8,4 @@ hand_step_div: 20 #Step time divider for the hand
 baudrate: 2000000 # BaudRate [200000, 460800]
 IDcubes: [] # ID cubes in chain
 IDhands: [2] # ID hands in chain
-IDimuboards: [1] # ID imu boards in chainIDimuboards: [34] 
+IDimuboards: [3] # ID imu boards in chainIDimuboards: [34] 

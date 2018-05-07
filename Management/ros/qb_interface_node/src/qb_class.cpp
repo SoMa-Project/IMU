@@ -115,6 +115,7 @@ qb_class::qb_class(){
         hand_chain_.push_back(tmp_hand);
     } 
 
+
 	// Activate
 	if (!activate())
 		cout << "[ERROR] Some qbDevice are not correctly activated." << endl;
@@ -138,6 +139,9 @@ qb_class::qb_class(){
 
 		if (flag_curr_type_)
 			hand_curr_pub = node_->advertise<qb_interface::handCurrent>("/qb_class/hand_current", 1);
+
+	  	//service callbacks
+  		srv_control_pid_ = node_->advertiseService("control_pid", &qb_class::change_control_pid, this);
 	}
 
 	if (!cube_chain_.empty()){
@@ -1037,3 +1041,29 @@ bool qb_class::readMeasCurrent() {
 
 }
 
+// Service
+bool qb_class::change_control_pid(qb_interface::control_pid::Request& req, qb_interface::control_pid::Response& res){
+	
+	float aux_float[3] = {0,0,0};
+	
+	for (int i = hand_chain_.size(); i--;){
+    	if (hand_chain_[i]->getID() == req.id){
+
+    		hand_chain_[i]->getPIDparams(aux_float);
+
+    		if (req.kp > 0 && req.kp < 0.6) {
+    			hand_chain_[i]->setPID(req.kp, aux_float[1], aux_float[2]);
+		    
+		    	std::cout << "Setting k_p = " << req.kp << " for hand with ID: " << req.id << std::endl; 
+		    }
+		    else {
+		    	std::cerr << "[Error] k_p PID parameter outside allowed bounds for the hand with ID: " << req.id << std::endl;
+				return false;
+		    }
+			return true;
+        } 
+    }
+
+	std::cerr << "[Error] No connected hand with ID: " << req.id << std::endl;
+	return false;
+}
