@@ -390,52 +390,6 @@
 <VisibleNodeIds>
 <v>firmware</v>
 <v>firmware\firmware</v>
-<v>firmware\firmware\DP8051</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Debug</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Debug\Listing Files</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Debug\Listing Files\FTDI_ENABLE_REG_PM.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Debug\Listing Files\RESET_FF_PM.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Debug\Listing Files\RS485_CTS_PM.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Debug\firmware.cyacd</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Debug\firmware.elf</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Debug\firmware.hex</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Debug\firmware.map</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\Bootloadable.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\Chip_Select_A.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\Chip_Select_A_PM.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\Chip_Select_B.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\Chip_Select_B_PM.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CLOCK_UART.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\command_processing.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS00.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS01.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS02.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS03.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS04.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS05.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS06.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS07.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS08.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS09.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS10.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS11.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS12.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS13.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS14.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS15.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CS16.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\cy_em_eeprom.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CyBootAsmKeil.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CyDmac.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\cyfitter_cfg.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CyFlash.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CyLib.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\cymem.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\cyPm.lst</v>
-<v>firmware\firmware\DP8051\DP8051_Keil_951\Release\Listing Files\CySpc.lst</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStates>
@@ -538,7 +492,7 @@
   Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
   http://www.actiprosoftware.com
 
---><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Vertical"><TabbedMdiContainer Size="1362, 593" SelectedTabbedMdiWindow="cd2b640c-b769-48d8-83b1-4137ce9a393a"><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\IMU_functions.c" Guid="9ce4d3d9-a685-42f1-9e28-865ad0329379" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\command_processing.c" Guid="34be2e52-7a17-4ab7-9ca9-59e4f79d79eb" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\IMU_functions.h" Guid="16122173-210c-4d35-aa97-800777438ed6" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\utils.c" Guid="c73816de-989d-444b-97a0-16085c3d2397" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\TopDesign\TopDesign.cysch" Guid="cd2b640c-b769-48d8-83b1-4137ce9a393a" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\interruptions.c" Guid="0e0eeebf-057a-4857-a549-d7a66b03a10c" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\globals.h" Guid="cb810768-f40d-4821-a4cf-a0a3937162cc" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\utils.h" Guid="3055fc19-6f10-4164-b0ce-f917b7e363c9" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\firmware.cydwr" Guid="8059b775-06c0-40be-8e70-02f3c5273cd8" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\main.c" Guid="2a1a811a-0e5f-44dd-a00f-7630feae96f1" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\globals.c" Guid="5a24d7d4-5e2a-407d-9b60-ab1c7c8cf62b" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\command_processing.h" Guid="ff1d904b-2c9c-4bd0-b42c-f0f479cf7edc" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\commands.h" Guid="d3d3b14e-154d-4520-b1ae-5a2cba03f2a7" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Vertical"><TabbedMdiContainer Size="1583, 675" SelectedTabbedMdiWindow="9ce4d3d9-a685-42f1-9e28-865ad0329379"><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\IMU_functions.c" Guid="9ce4d3d9-a685-42f1-9e28-865ad0329379" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\command_processing.c" Guid="34be2e52-7a17-4ab7-9ca9-59e4f79d79eb" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\IMU_functions.h" Guid="16122173-210c-4d35-aa97-800777438ed6" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\utils.c" Guid="c73816de-989d-444b-97a0-16085c3d2397" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\TopDesign\TopDesign.cysch" Guid="cd2b640c-b769-48d8-83b1-4137ce9a393a" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\interruptions.c" Guid="0e0eeebf-057a-4857-a549-d7a66b03a10c" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\globals.h" Guid="cb810768-f40d-4821-a4cf-a0a3937162cc" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\utils.h" Guid="3055fc19-6f10-4164-b0ce-f917b7e363c9" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\firmware.cydwr" Guid="8059b775-06c0-40be-8e70-02f3c5273cd8" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\main.c" Guid="2a1a811a-0e5f-44dd-a00f-7630feae96f1" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\globals.c" Guid="5a24d7d4-5e2a-407d-9b60-ab1c7c8cf62b" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\command_processing.h" Guid="ff1d904b-2c9c-4bd0-b42c-f0f479cf7edc" /><DocumentWindow Key="C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\commands.h" Guid="d3d3b14e-154d-4520-b1ae-5a2cba03f2a7" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
 <config v="Release" />
 <AutoUpdate v="true" />
 </CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>

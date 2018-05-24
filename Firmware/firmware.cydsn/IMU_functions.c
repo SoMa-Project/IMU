@@ -181,6 +181,22 @@ void InitIMUgeneral()
     memset(&g_imu, 0, sizeof(struct st_imu));
     memset(&IMU_connected, 0, sizeof(IMU_connected));
 
+    // Initialize IMU to Read MagCal Parameters
+    for (k_imu=0; k_imu < N_IMU_MAX; k_imu++) 
+    {	
+	    ChipSelector(k_imu);
+	    CyDelay(10);
+	    InitIMUMagCal();
+	    CyDelay(10); 
+    }
+    
+    // Reading of MagCal Parameters
+    CyDelay(50);
+    for (k_imu = 0; k_imu < N_IMU_MAX; k_imu++){
+        ChipSelector(k_imu);
+        ReadMagCal(k_imu);   
+    }
+
     // First ping to be sure to wakeup IMUs
     for (k_imu=0; k_imu < N_IMU_MAX; k_imu++) 
     {	
@@ -230,18 +246,9 @@ void InitIMUgeneral()
 	    CyDelay(10);
 	    InitIMU();
 	    CyDelay(10); 
-        InitIMUMagCal();      // Initialize IMU to Read MagCal Parameters
-	    CyDelay(10); 
     }
     CyDelay(50);
-    
-    // Reading of MagCal Parameters
-    for (k_imu = 0; k_imu < N_IMU_MAX; k_imu++){
-        ChipSelector(k_imu);
-        ReadMagCal(k_imu); 
-    }
-    CyDelay(50);
-    
+     
     // Set Standard Read for the IMU
     memset(&single_imu_size, 0, sizeof(single_imu_size));
     imus_data_size = 1; //header    

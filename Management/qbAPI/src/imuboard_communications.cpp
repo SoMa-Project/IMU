@@ -140,13 +140,13 @@ void commGetImuReadings(comm_settings *comm_settings_t, int id, uint8_t* imu_tab
 	temp_div = 2.0;
 	
 	values = &package_in[1];
-	/*
+/*	
  	printf("SIZE: %d\n", package_in_size);
 	for (int i=0; i< package_in_size; i++) {
 		printf("%d,", values[i]);
 	}
 	printf("\n"); 
-	*/
+*/	
 	for (int i=0; i < n_imu; i++){
 
 		if (values[c] == ':'){
