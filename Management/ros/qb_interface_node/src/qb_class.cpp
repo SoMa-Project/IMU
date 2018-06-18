@@ -125,12 +125,14 @@ qb_class::qb_class(){
 	if (!hand_chain_.empty()){
 
 		// Subscriber initialize	
- 		hand_sub = node_->subscribe("/qb_class/hand_ref", 1, &qb_class::handRefCallback, this); 		
+ 		hand_sub = node_->subscribe("/qb_class/hand_ref", 1, &qb_class::handRefCallback, this); 	
+ 		hand_CurrAndPos_sub = node_->subscribe("/qb_class/hand_ref_curr_and_pos", 1, &qb_class::handRefCurrAndPosCallback, this);	
 
 		// Publisher initialize
 
 		// Outside command publisher, self-open but not internally used topic
 		handRef_pub = node_->advertise<qb_interface::handRef>("/qb_class/hand_ref", 1);
+		handRef_CurrAndPos_pub = node_->advertise<qb_interface::handRef_CurrAndPos>("/qb_class/hand_ref_curr_and_pos", 1);
 
 		// Publisher to publish new read positions
 		hand_pub = node_->advertise<qb_interface::handPos>("/qb_class/hand_measurement", 1);
@@ -570,12 +572,20 @@ void qb_class::move() {
 
 	    }else{
 
-	    	// Command hand in Pos1 and Pos2, TICK
+	    	// Command hand in Pos1 and Pos2, TICK or Pos1(TICK) and Pos2(mA)
 	    	short int meas[2];
 
 	    	for (int i = hand_chain_.size(); i--;){
 	    		meas[0] = (short int) pos_[(hand_chain_.size() - 1) - i];
-	    		meas[1] = (short int) pos_[(hand_chain_.size() - 1) - i];
+	    		
+	    		if (current_offset_.size() != 0 && current_offset_[(hand_chain_.size() - 1) - i] > 0) {
+	    			// handRef_CurrAndPos msg has been used
+	    			meas[1] = (short int) current_offset_[(hand_chain_.size() - 1) - i];
+				}
+    			else {
+    				// handRef msg has been used
+    				meas[1] = (short int)0;
+    			}
 
 	    		hand_chain_[i]->setInputs(meas);
 	    	}
@@ -618,6 +628,7 @@ void qb_class::spinOnce(){
 	p_1_.clear();
 	p_2_.clear();
 	pos_.clear();
+	current_offset_.clear();
 
 }
 
@@ -667,6 +678,26 @@ void qb_class::spin(){
 
 void qb_class::handRefCallback(const qb_interface::handRef::ConstPtr& msg){
 	pos_ = msg->closure;
+}
+
+//-----------------------------------------------------
+//                           handRef_CurrAndPosCallback
+//-----------------------------------------------------
+
+/*
+/ *****************************************************
+/ Callback function to get referiments of hands from
+/ outside when in current and position control.
+/ *****************************************************
+/   parameters:
+/			msg - message received from topic
+/   return:
+/
+*/
+
+void qb_class::handRefCurrAndPosCallback(const qb_interface::handRef_CurrAndPos::ConstPtr& msg){
+	pos_ = msg->closure;
+	current_offset_ = msg->current_offset;
 }
 
 //-----------------------------------------------------

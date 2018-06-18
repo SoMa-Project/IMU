@@ -11,6 +11,7 @@
 // Custom ROS messages
 #include <qb_interface/cubeRef.h>
 #include <qb_interface/handRef.h>
+#include <qb_interface/handRef_CurrAndPos.h>
 
 #include <qb_interface/cubeEq_Preset.h>
 #include <qb_interface/cubePos.h>
@@ -86,6 +87,7 @@ class qb_class{
 		// Callback functions for referiments 
 		void cubeRefCallback(const qb_interface::cubeRef::ConstPtr&);
 		void handRefCallback(const qb_interface::handRef::ConstPtr&);
+		void handRefCurrAndPosCallback(const qb_interface::handRef_CurrAndPos::ConstPtr&);
 
 		// Post on topic functions
 		void sendHandMeas(vector<float>);
@@ -104,6 +106,7 @@ class qb_class{
 
 		vector<float> p_1_, p_2_;
 		vector<float> pos_;
+		vector<int> current_offset_;
 
 		// Configurations
 
@@ -137,10 +140,12 @@ class qb_class{
 		// Subscriber Variables
  		ros::Subscriber cube_sub;
  		ros::Subscriber hand_sub;
+ 		ros::Subscriber hand_CurrAndPos_sub;
 
  		// Publisher variables
 		ros::Publisher cubeRef_pub;
 		ros::Publisher handRef_pub;
+		ros::Publisher handRef_CurrAndPos_pub;
 
 		ros::Publisher cube_pub;
 		ros::Publisher hand_pub;

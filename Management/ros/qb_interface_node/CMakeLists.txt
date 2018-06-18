@@ -45,6 +45,7 @@ add_definitions(-std=c++11)
 add_message_files(
   FILES
   handRef.msg
+  handRef_CurrAndPos.msg
   cubeRef.msg
   cubeEq_Preset.msg
   cubePos.msg

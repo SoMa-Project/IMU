@@ -85,6 +85,10 @@ cubeCurrent.msg
 
 handRef.msg
 
+[/qb_class/hand_ref_curr_and_pos]
+
+handRef_CurrAndPos.msg
+
 [/qb_class/hand_measurement] 
 
 handPos.msg
