@@ -58,6 +58,8 @@ add_message_files(
   quaternionArray.msg
   temperature.msg
   temperatureArray.msg
+  angles.msg
+  anglesArray.msg
 )
 
 ## Generate services in the 'srv' folder

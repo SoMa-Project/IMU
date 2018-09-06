@@ -1,4 +1,4 @@
---------------- Build Started: 06/01/2018 14:43:02 Project: firmware, Configuration: DP8051 Keil 9.51 Release ---------------
+--------------- Build Started: 09/03/2018 10:39:53 Project: firmware, Configuration: DP8051 Keil 9.51 Release ---------------
 The code generation step is up to date.
 The compile step is up to date, no work needs to be done.
 The link step is up to date, no work needs to be done.
@@ -7,4 +7,4 @@ CyHexTool -o C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\DP80
 CyHexTool -o C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\DP8051_Keil_951\Release\firmware.hex -flsLine 256 -arraySize 65536 -bl ..\Bootloader\bootloader.hex -blver 000000000000000000000000000000000000 -chksumEcc -blChkType 0 -endian b -prot Generated_Source\PSoC3\protect.hex -id 1E093069 -a EEPROM=90200000:800,PROGRAM=00000000:10000,CONFIG=80000000:2000,PROTECT=90400000:40 -meta 0301 -cunv 0800C007 -wonv BC90ACAF -ecc Generated_Source\PSoC3\config.hex -ld C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\DP8051_Keil_951\Release\firmware.ihx=2600:D9BF -acdStart 2600 -e .\DP8051_Keil_951\Release\entryaddress.txt
 Flash used: 256 of 65536 bytes (0.4%). Metadata: 256 bytes.
 SRAM used: 0 of 8192 bytes (0.0%).
---------------- Build Succeeded: 06/01/2018 14:43:03 ---------------
+--------------- Build Succeeded: 09/03/2018 10:39:55 ---------------

@@ -72,7 +72,7 @@
 
 **/
 
-void commGetImuReadings(comm_settings *comm_settings_t,
+int commGetImuReadings(comm_settings *comm_settings_t,
                int id, uint8_t* imu_table, uint8_t* imus_magcal, int n_imu, float* imu_values);
 			   
 

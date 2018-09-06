@@ -5,7 +5,8 @@ current: true # [Activate current reader] -> True, [Deactivate current reader] -
 unit: 'TICK' # Unit of measurement, ['DEG', 'RAD', 'TICK']
 step_time_imu: 0.01 #Step time for IMU boards
 hand_step_div: 20 #Step time divider for the hand
+compute_angles: true #Angles from computed quaternions (if needed)
 baudrate: 2000000 # BaudRate [200000, 460800]
 IDcubes: [] # ID cubes in chain
-IDhands: [2] # ID hands in chain
-IDimuboards: [3] # ID imu boards in chainIDimuboards: [34] 
+IDhands: [] # ID hands in chain
+IDimuboards: [1] # ID imu boards in chainIDimuboards: [34] 

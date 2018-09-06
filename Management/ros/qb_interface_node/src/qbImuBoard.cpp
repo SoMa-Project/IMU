@@ -160,9 +160,10 @@ void qbImuBoard::initImuBoard() {
 //-----------------------------------------------------
 //                                  	 getImuReadings
 //-----------------------------------------------------
-void qbImuBoard::getImuReadings() {
+int qbImuBoard::getImuReadings() {
 	
-	commGetImuReadings(cube_comm_, id_, imu_table_, mag_cal_, n_imu_, imu_values_);
+	return commGetImuReadings(cube_comm_, id_, imu_table_, mag_cal_, n_imu_, imu_values_);
+
 			
 	 // for (int i = 0; i < n_imu_; i++) {
 		

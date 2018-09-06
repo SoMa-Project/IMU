@@ -31,7 +31,7 @@ class qbImuBoard : public qbInterface
 
         //------------------------------ getImuReadings
         // Retrieve accelerometers, gyroscopes and magnetometers readings
-        void getImuReadings();
+        int getImuReadings();
 
 
 		float*   imu_values_;

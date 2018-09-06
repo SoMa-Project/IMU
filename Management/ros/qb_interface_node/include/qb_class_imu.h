@@ -16,6 +16,8 @@
 #include <qb_interface/quaternionArray.h>
 #include <qb_interface/temperature.h>
 #include <qb_interface/temperatureArray.h>
+#include <qb_interface/angles.h>
+#include <qb_interface/anglesArray.h>
 
 // General Headers
 #include <vector>
@@ -50,6 +52,8 @@ class qb_class_imu : public qb_class {
 		double step_time_imu_;
 
 		int hand_step_div_;
+
+		bool compute_angles_;
 	private:
 
 		// Functions
@@ -57,6 +61,8 @@ class qb_class_imu : public qb_class {
 
 		// Read measurements of all IMUs
 		bool readIMU();
+		void Ext_Quat_Computer(int n);
+		void Quat_to_Angles(int n);
 		
 		// Variables
 		std::vector<qbImuBoard*> imuboard_chain_;
@@ -72,9 +78,10 @@ class qb_class_imu : public qb_class {
 		ros::Publisher imuboard_pub_mag_;
 		ros::Publisher imuboard_pub_quat_;
 		ros::Publisher imuboard_pub_temp_;
+		ros::Publisher imuboard_pub_angles_;
 
 
-		Eigen::MatrixXd Acc_, Acc_old_;
-
+		Eigen::MatrixXd Acc_, Acc_old_, Gyro_;
+		Eigen::MatrixXd Ext_Quat_, Angles_;
 
 };

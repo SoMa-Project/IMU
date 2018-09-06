@@ -87,7 +87,7 @@
 // Retrieve accelerometers, gyroscopes and magnetometers readings.
 //==============================================================================
 
-void commGetImuReadings(comm_settings *comm_settings_t, int id, uint8_t* imu_table, uint8_t* imus_magcal, int n_imu, float* imu_values){
+int commGetImuReadings(comm_settings *comm_settings_t, int id, uint8_t* imu_table, uint8_t* imus_magcal, int n_imu, float* imu_values){
 	
 	char data_out[BUFFER_SIZE];         // output data buffer
     char package_in[BUFFER_SIZE];       // output data buffer
@@ -128,8 +128,8 @@ void commGetImuReadings(comm_settings *comm_settings_t, int id, uint8_t* imu_tab
 	memset(package_in, 0, sizeof(package_in));
 	
     package_in_size = RS485read(comm_settings_t, id, package_in);
-    if (package_in_size == -1)
-        return;
+    if (package_in_size < 0)
+        return package_in_size;
 	
 	acc_sf 	= 0.000061037;			// Ticks to G
 	gyro_sf = 0.007629627 * 8;		// Ticks to deg/s with FS +/- 2000 °/s
@@ -252,6 +252,7 @@ void commGetImuReadings(comm_settings *comm_settings_t, int id, uint8_t* imu_tab
 			//printf("Break at %d\n", c);
 		}	
 	}
+	return 0;
 }
 
 
