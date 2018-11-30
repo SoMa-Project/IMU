@@ -338,7 +338,7 @@
       <Data key="3e1144bb-dcb2-4ac7-8b0a-29444d988296" value="FTDI_EN" />
       <Data key="4c15b41e-e284-4978-99e7-5aaee19bd0ce" value="USB_VDD" />
       <Data key="05a9c8de-3ba2-4909-8250-95fdc61c0bf4" value="VOLTAGE_SENSE" />
-      <Data key="7bc8296e-0925-4c45-bc42-d5d2c24c1efd" value="CURRENT_SENSE_1" />
+      <Data key="7bc8296e-0925-4c45-bc42-d5d2c24c1efd" value="AInput_1" />
       <Data key="7f5128c2-8b04-49a4-82ae-5630ad58100f" value="TTL_TX" />
       <Data key="8a6af1ca-be46-44f4-a2c4-d857f01dbe9b" value="MOTOR_B_DIR" />
       <Data key="8d318d8b-cf7b-4b6b-b02c-ab1c5c49d0ba" value="MISO" />
@@ -388,7 +388,7 @@
       <Data key="c7e51901-7389-4e2c-b83a-1c550fbe7c38" value="CURRENT_SENSE_2" />
       <Data key="cc3bcd7e-5dc0-48ea-9bf6-6aa082be1ada" value="Signal_1_B" />
       <Data key="cea1691b-2d95-4f67-acf4-1371ae63b3cb" value="asd" />
-      <Data key="d2b73a47-2288-411e-8c5b-d740ba0840ec" value="EMG_1" />
+      <Data key="d2b73a47-2288-411e-8c5b-d740ba0840ec" value="AInput_2" />
       <Data key="d3b97eba-17be-4498-809f-79bb4aeb63ad" value="USB_VDD" />
       <Data key="d4ebbb4a-9361-4f60-ab03-0a342935d673" value="Signal_4_A" />
       <Data key="d5a0e4a7-1f9c-4b60-a1af-168d8495643c" value="LED" />
@@ -905,7 +905,7 @@
     </Group>
     <Group key="7bc8296e-0925-4c45-bc42-d5d2c24c1efd">
       <Group key="0">
-        <Data key="Port Format" value="0,6" />
+        <Data key="Port Format" value="1,0" />
       </Group>
     </Group>
     <Group key="8a6af1ca-be46-44f4-a2c4-d857f01dbe9b">
@@ -1131,7 +1131,7 @@
     </Group>
     <Group key="d2b73a47-2288-411e-8c5b-d740ba0840ec">
       <Group key="0">
-        <Data key="Port Format" value="15,0" />
+        <Data key="Port Format" value="15,3" />
       </Group>
     </Group>
     <Group key="d3b97eba-17be-4498-809f-79bb4aeb63ad">

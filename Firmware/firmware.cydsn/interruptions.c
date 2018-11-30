@@ -225,6 +225,9 @@ void function_scheduler() {
  
     timer_value0 = (uint32)MY_TIMER_ReadCounter();
     
+    // Start ADC Conversion, SOC = 1
+    ADC_SOC_Write(0x01); 
+    
     // Check Interrupt 
 
     if (interrupt_flag){
@@ -233,7 +236,14 @@ void function_scheduler() {
     }
 
     ReadAllIMUs();      // IMU reading is atomic, no RS485 request is handled
-        
+    
+    analog_read_end();
+
+    if (interrupt_flag){
+        interrupt_flag = FALSE;
+        interrupt_manager();
+    }
+    
     //---------------------------------- Update States     
     memcpy( &g_imu, &g_imuNew, sizeof(g_imu) );
     
@@ -246,5 +256,29 @@ void function_scheduler() {
     MY_TIMER_WriteCounter(5000000);
 
 }
+
+//==============================================================================
+//                                                           ANALOG MEASUREMENTS
+//==============================================================================
+
+void analog_read_end() {
+       
+    while(!ADC_STATUS_Read()){
+        if (interrupt_flag){
+            interrupt_flag = FALSE;
+            interrupt_manager();
+        }
+    }
+    
+    sensor_value_1 = ADC_buf[0];
+    sensor_value_2 = ADC_buf[1];
+    
+    if (interrupt_flag){
+        interrupt_flag = FALSE;
+        interrupt_manager();
+    }
+
+ }
+
 
 /* [] END OF FILE */

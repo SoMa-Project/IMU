@@ -72,6 +72,10 @@ int main()
 { 
     //================================     initializations - psoc and components
 
+    // Variable declarations for DMA 
+    uint8 DMA_Chan;
+    uint8 DMA_TD[1];
+    
     // EEPROM
 
     EEPROM_Start();
@@ -110,6 +114,18 @@ int main()
 	SPI_IMU_ClearTxBuffer();
 	SPI_IMU_ClearFIFO();							
     CyDelay(10);
+    
+    // ADC
+    ADC_Start();                                        // start ADC
+    ADC_SOC_Write(0x01);                                // Force first read cycle
+    
+    // DMA
+    DMA_Chan = DMA_DmaInitialize(DMA_BYTES_PER_BURST, DMA_REQUEST_PER_BURST, HI16(DMA_SRC_BASE), HI16(DMA_DST_BASE));
+    DMA_TD[0] = CyDmaTdAllocate();                                                                          // Allocate TD
+    CyDmaTdSetConfiguration(DMA_TD[0], 2 * 4, DMA_TD[0], TD_SWAP_EN | DMA__TD_TERMOUT_EN | TD_INC_DST_ADR); // DMA Configurations
+    CyDmaTdSetAddress(DMA_TD[0], LO16((uint32)ADC_DEC_SAMP_PTR), LO16((uint32)ADC_buf));                    // Set Register Address
+    CyDmaChSetInitialTd(DMA_Chan, DMA_TD[0]);                                                               // Initialize Channel
+    CyDmaChEnable(DMA_Chan, 1);    
     
     Opto_Pin_Write(1); //start hw spi communication
     

@@ -1,9 +1,9 @@
-C51 COMPILER V9.51   GLOBALS                                                               04/17/2018 14:39:17 PAGE 1   
+C51 COMPILER V9.51   GLOBALS                                                               11/29/2018 13:14:10 PAGE 1   
 
 
 C51 COMPILER V9.51, COMPILATION OF MODULE GLOBALS
 OBJECT MODULE PLACED IN .\DP8051_Keil_951\Release\globals.obj
-COMPILER INVOKED BY: C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe 
+COMPILER INVOKED BY: C:\Program Files (x86)\Cypress\PSoC Creator\4.1\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe 
                     -globals.c NOIV LARGE MODDP2 OMF2 VB(1) NOIP INCDIR(.,Generated_Source\PSoC3) FF(3) DB DF(NDEBUG) WL(2) PR(.\DP8051_Keil_
                     -951\Release/globals.lst) CD OT(11,SPEED) OJ(.\DP8051_Keil_951\Release\globals.obj)
 
@@ -62,7 +62,7 @@ line level    source
   50          struct st_data  g_rx;                       // income data
   51          struct st_mem   g_mem, c_mem;               // memory
   52          
-C51 COMPILER V9.51   GLOBALS                                                               04/17/2018 14:39:17 PAGE 2   
+C51 COMPILER V9.51   GLOBALS                                                               11/29/2018 13:14:10 PAGE 2   
 
   53          // Timer value for debug field
   54          
@@ -88,8 +88,12 @@ line level    source
   74          uint8 Temp[N_IMU_MAX][2];
   75          float Quat[4] = {1,0,0,0};
   76          
-  77          /* END OF FILE */
-C51 COMPILER V9.51   GLOBALS                                                               04/17/2018 14:39:17 PAGE 3   
+  77          uint16 sensor_value_1, sensor_value_2;
+  78          int16 ADC_buf[4];                            /*! ADC measurements buffer */
+  79          
+  80          
+  81          /* END OF FILE */
+C51 COMPILER V9.51   GLOBALS                                                               11/29/2018 13:14:10 PAGE 3   
 
 ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
@@ -99,7 +103,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 MODULE INFORMATION:   STATIC OVERLAYABLE
    CODE SIZE        =   ----    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =   2038    ----
+   XDATA SIZE       =   2050    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

@@ -154,6 +154,12 @@ void commProcess(){
         case CMD_GET_IMU_READINGS:
             cmd_get_imu_readings();
             break;                
+
+//=====================================================     CMD_GET_SENSORS
+
+        case CMD_GET_SENSORS:
+            cmd_get_sensors();
+            break;                
             
 //=========================================================== ALL OTHER COMMANDS
         default:
@@ -854,6 +860,22 @@ void cmd_get_imu_readings(){
     // Calculate Checksum and send message to UART 
     packet_data[imus_data_size-1] = LCRChecksum (packet_data, imus_data_size-1);
     commWrite(packet_data, imus_data_size);
+}
+
+void cmd_get_sensors(){
+    
+    uint8 packet_data[6];
+
+    // Header        
+    packet_data[0] = CMD_GET_SENSORS;
+    
+    *((int16 *) &packet_data[1]) = (int16) sensor_value_1;
+    *((int16 *) &packet_data[3]) = (int16) sensor_value_2;
+
+    packet_data[5] = LCRChecksum (packet_data, 5);
+
+    commWrite(packet_data, 6);
+
 }
 
 

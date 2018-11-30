@@ -76,6 +76,7 @@ void cmd_set_baudrate();
 void cmd_store_params();
 void cmd_ping();
 void cmd_get_imu_readings();
+void cmd_get_sensors();
     
 #endif
 

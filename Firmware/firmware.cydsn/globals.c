@@ -74,4 +74,8 @@ uint8 MagCal[N_IMU_MAX][3];
 uint8 Temp[N_IMU_MAX][2];
 float Quat[4] = {1,0,0,0};
 
+uint16 sensor_value_1, sensor_value_2;
+int16 ADC_buf[4];                            /*! ADC measurements buffer */
+
+
 /* END OF FILE */

@@ -58,6 +58,13 @@ void interrupt_manager();
 
 // ----------------------------------------------------------------------------
 
+/** \name Analog readings */
+/** \{ */
+//=====================================================     analog_read_end
+/** This function executes and terminates the analog readings.
+**/
+void analog_read_end();
+
 #endif
 
 /* [] END OF FILE */

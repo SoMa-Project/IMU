@@ -82,7 +82,9 @@ enum qbmove_command
                                     ///  of communication
     
     CMD_GET_N_IMU           = 160,  // Get number of IMUs connected to board
-    CMD_GET_IMU_READINGS    = 161  // Retrieve accelerometers, gyroscopes and magnetometers readings
+    CMD_GET_IMU_READINGS    = 161,  // Retrieve accelerometers, gyroscopes and magnetometers readings
+    
+    CMD_GET_SENSORS         = 136  // It is the same command used on the board of the hand to get the EMG values 
 };
 
 /** \} */

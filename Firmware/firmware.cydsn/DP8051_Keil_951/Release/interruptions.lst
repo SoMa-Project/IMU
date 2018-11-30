@@ -1,9 +1,9 @@
-C51 COMPILER V9.51   INTERRUPTIONS                                                         04/17/2018 14:39:17 PAGE 1   
+C51 COMPILER V9.51   INTERRUPTIONS                                                         11/29/2018 15:49:39 PAGE 1   
 
 
 C51 COMPILER V9.51, COMPILATION OF MODULE INTERRUPTIONS
 OBJECT MODULE PLACED IN .\DP8051_Keil_951\Release\interruptions.obj
-COMPILER INVOKED BY: C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe 
+COMPILER INVOKED BY: C:\Program Files (x86)\Cypress\PSoC Creator\4.1\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe 
                     -interruptions.c NOIV LARGE MODDP2 OMF2 VB(1) NOIP INCDIR(.,Generated_Source\PSoC3) FF(3) DB DF(NDEBUG) WL(2) PR(.\DP8051
                     -_Keil_951\Release/interruptions.lst) CD OT(11,SPEED) OJ(.\DP8051_Keil_951\Release\interruptions.obj)
 
@@ -62,7 +62,7 @@ line level    source
   50          #include "utils.h"
   51          #include "IMU_functions.h"
   52          
-C51 COMPILER V9.51   INTERRUPTIONS                                                         04/17/2018 14:39:17 PAGE 2   
+C51 COMPILER V9.51   INTERRUPTIONS                                                         11/29/2018 15:49:39 PAGE 2   
 
   53          //==============================================================================
   54          //                                                            RS485 RX INTERRUPT
@@ -126,7 +126,7 @@ line level    source
  112   1          
  113   1          // Get data until buffer is not empty 
  114   1          
-C51 COMPILER V9.51   INTERRUPTIONS                                                         04/17/2018 14:39:17 PAGE 3   
+C51 COMPILER V9.51   INTERRUPTIONS                                                         11/29/2018 15:49:39 PAGE 3   
 
  115   1          while(UART_RS485_GetRxBufferSize() && (package_count < 6)){  
  116   2              // 6 stima di numero massimo di pacchetti che riesco a leggere senza bloccare l'esecuzione del fir
@@ -190,7 +190,7 @@ line level    source
  173   4                              state = UNLOAD;           // packet for others
  174   4                      }
  175   3                      break;
-C51 COMPILER V9.51   INTERRUPTIONS                                                         04/17/2018 14:39:17 PAGE 4   
+C51 COMPILER V9.51   INTERRUPTIONS                                                         11/29/2018 15:49:39 PAGE 4   
 
  176   3      
  177   3                  //-----     receiving     -------------------------------------------
@@ -244,32 +244,66 @@ line level    source
  225   1       
  226   1          timer_value0 = (uint32)MY_TIMER_ReadCounter();
  227   1          
- 228   1          // Check Interrupt 
- 229   1      
- 230   1          if (interrupt_flag){
- 231   2              interrupt_flag = FALSE;
- 232   2              interrupt_manager();
- 233   2          }
- 234   1      
- 235   1          ReadAllIMUs();      // IMU reading is atomic, no RS485 request is handled
- 236   1              
- 237   1          //---------------------------------- Update States     
-C51 COMPILER V9.51   INTERRUPTIONS                                                         04/17/2018 14:39:17 PAGE 5   
+ 228   1          // Start ADC Conversion, SOC = 1
+ 229   1          ADC_SOC_Write(0x01); 
+ 230   1          
+ 231   1          // Check Interrupt 
+ 232   1      
+ 233   1          if (interrupt_flag){
+ 234   2              interrupt_flag = FALSE;
+ 235   2              interrupt_manager();
+ 236   2          }
+ 237   1      
+C51 COMPILER V9.51   INTERRUPTIONS                                                         11/29/2018 15:49:39 PAGE 5   
 
- 238   1          memcpy( &g_imu, &g_imuNew, sizeof(g_imu) );
+ 238   1          ReadAllIMUs();      // IMU reading is atomic, no RS485 request is handled
  239   1          
- 240   1          if (interrupt_flag){
- 241   2              interrupt_flag = FALSE;
- 242   2              interrupt_manager();
- 243   2          }
- 244   1      
- 245   1          timer_value = (uint32)MY_TIMER_ReadCounter();
- 246   1          MY_TIMER_WriteCounter(5000000);
- 247   1      
- 248   1      }
- 249          
- 250          /* [] END OF FILE */
-C51 COMPILER V9.51   INTERRUPTIONS                                                         04/17/2018 14:39:17 PAGE 6   
+ 240   1          analog_read_end();
+ 241   1      
+ 242   1          if (interrupt_flag){
+ 243   2              interrupt_flag = FALSE;
+ 244   2              interrupt_manager();
+ 245   2          }
+ 246   1          
+ 247   1          //---------------------------------- Update States     
+ 248   1          memcpy( &g_imu, &g_imuNew, sizeof(g_imu) );
+ 249   1          
+ 250   1          if (interrupt_flag){
+ 251   2              interrupt_flag = FALSE;
+ 252   2              interrupt_manager();
+ 253   2          }
+ 254   1      
+ 255   1          timer_value = (uint32)MY_TIMER_ReadCounter();
+ 256   1          MY_TIMER_WriteCounter(5000000);
+ 257   1      
+ 258   1      }
+ 259          
+ 260          //==============================================================================
+ 261          //                                                           ANALOG MEASUREMENTS
+ 262          //==============================================================================
+ 263          
+ 264          void analog_read_end() {
+ 265   1             
+ 266   1          while(!ADC_STATUS_Read()){
+ 267   2              if (interrupt_flag){
+ 268   3                  interrupt_flag = FALSE;
+ 269   3                  interrupt_manager();
+ 270   3              }
+ 271   2          }
+ 272   1          
+ 273   1          sensor_value_1 = ADC_buf[0];
+ 274   1          sensor_value_2 = ADC_buf[1];
+ 275   1          
+ 276   1          if (interrupt_flag){
+ 277   2              interrupt_flag = FALSE;
+ 278   2              interrupt_manager();
+ 279   2          }
+ 280   1      
+ 281   1       }
+ 282          
+ 283          
+ 284          /* [] END OF FILE */
+C51 COMPILER V9.51   INTERRUPTIONS                                                         11/29/2018 15:49:39 PAGE 6   
 
 ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
@@ -333,7 +367,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0047 F500        R     MOV     rx_queue,A
                                            ; SOURCE LINE # 132
 0049 F500        R     MOV     rx_queue+01H,A
-C51 COMPILER V9.51   INTERRUPTIONS                                                         04/17/2018 14:39:17 PAGE 7   
+C51 COMPILER V9.51   INTERRUPTIONS                                                         11/29/2018 15:49:39 PAGE 7   
 
                                            ; SOURCE LINE # 133
 004B F500        R     MOV     rx_queue+02H,A
@@ -397,7 +431,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
                                            ; SOURCE LINE # 164
 0092 020000      R     LJMP    ?C0002
 0095         ?C0014:
-C51 COMPILER V9.51   INTERRUPTIONS                                                         04/17/2018 14:39:17 PAGE 8   
+C51 COMPILER V9.51   INTERRUPTIONS                                                         11/29/2018 15:49:39 PAGE 8   
 
 0095 E500        R     MOV     A,data_packet_length
 0097 D3                SETB    C
@@ -461,7 +495,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00E9 E4                CLR     A
 00EA F0                MOVX    @DPTR,A
 00EB A3                INC     DPTR
-C51 COMPILER V9.51   INTERRUPTIONS                                                         04/17/2018 14:39:17 PAGE 9   
+C51 COMPILER V9.51   INTERRUPTIONS                                                         11/29/2018 15:49:39 PAGE 9   
 
 00EC E500        R     MOV     A,data_packet_length
 00EE F0                MOVX    @DPTR,A
@@ -525,54 +559,122 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0000 120000      E     LCALL   MY_TIMER_ReadCounter
 0003 900000      E     MOV     DPTR,#timer_value0
 0006 120000      E     LCALL   ?C?LSTXDATA
-C51 COMPILER V9.51   INTERRUPTIONS                                                         04/17/2018 14:39:17 PAGE 10  
+C51 COMPILER V9.51   INTERRUPTIONS                                                         11/29/2018 15:49:39 PAGE 10  
 
-                                           ; SOURCE LINE # 230
-0009 300005            JNB     interrupt_flag,?C0026
-                                           ; SOURCE LINE # 231
-000C C200        E     CLR     interrupt_flag
-                                           ; SOURCE LINE # 232
-000E 120000      R     LCALL   interrupt_manager
+                                           ; SOURCE LINE # 229
+0009 7F01              MOV     R7,#01H
+000B 120000      E     LCALL   _ADC_SOC_Write
                                            ; SOURCE LINE # 233
-0011         ?C0026:
+000E 300005            JNB     interrupt_flag,?C0026
+                                           ; SOURCE LINE # 234
+0011 C200        E     CLR     interrupt_flag
                                            ; SOURCE LINE # 235
-0011 120000      E     LCALL   ReadAllIMUs
+0013 120000      R     LCALL   interrupt_manager
+                                           ; SOURCE LINE # 236
+0016         ?C0026:
                                            ; SOURCE LINE # 238
-0014 7800        E     MOV     R0,#LOW g_imu
-0016 7C00        E     MOV     R4,#HIGH g_imu
-0018 7D01              MOV     R5,#01H
-001A 7B01              MOV     R3,#01H
-001C 7A00        E     MOV     R2,#HIGH g_imuNew
-001E 7900        E     MOV     R1,#LOW g_imuNew
-0020 7E02              MOV     R6,#02H
-0022 7F75              MOV     R7,#075H
-0024 120000      E     LCALL   ?C?COPYAMD
+0016 120000      E     LCALL   ReadAllIMUs
                                            ; SOURCE LINE # 240
-0027 300005            JNB     interrupt_flag,?C0027
-                                           ; SOURCE LINE # 241
-002A C200        E     CLR     interrupt_flag
+0019 120000      R     LCALL   analog_read_end
                                            ; SOURCE LINE # 242
-002C 120000      R     LCALL   interrupt_manager
+001C 300005            JNB     interrupt_flag,?C0027
                                            ; SOURCE LINE # 243
-002F         ?C0027:
+001F C200        E     CLR     interrupt_flag
+                                           ; SOURCE LINE # 244
+0021 120000      R     LCALL   interrupt_manager
                                            ; SOURCE LINE # 245
-002F 120000      E     LCALL   MY_TIMER_ReadCounter
-0032 900000      E     MOV     DPTR,#timer_value
-0035 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 246
-0038 7F40              MOV     R7,#040H
-003A 7E4B              MOV     R6,#04BH
-003C 7D4C              MOV     R5,#04CH
-003E 7C00              MOV     R4,#00H
-0040 120000      E     LCALL   _MY_TIMER_WriteCounter
+0024         ?C0027:
                                            ; SOURCE LINE # 248
-0043 22                RET     
+0024 7800        E     MOV     R0,#LOW g_imu
+0026 7C00        E     MOV     R4,#HIGH g_imu
+0028 7D01              MOV     R5,#01H
+002A 7B01              MOV     R3,#01H
+002C 7A00        E     MOV     R2,#HIGH g_imuNew
+002E 7900        E     MOV     R1,#LOW g_imuNew
+0030 7E02              MOV     R6,#02H
+0032 7F75              MOV     R7,#075H
+0034 120000      E     LCALL   ?C?COPYAMD
+                                           ; SOURCE LINE # 250
+0037 300005            JNB     interrupt_flag,?C0028
+                                           ; SOURCE LINE # 251
+003A C200        E     CLR     interrupt_flag
+                                           ; SOURCE LINE # 252
+003C 120000      R     LCALL   interrupt_manager
+                                           ; SOURCE LINE # 253
+003F         ?C0028:
+                                           ; SOURCE LINE # 255
+003F 120000      E     LCALL   MY_TIMER_ReadCounter
+0042 900000      E     MOV     DPTR,#timer_value
+0045 120000      E     LCALL   ?C?LSTXDATA
+                                           ; SOURCE LINE # 256
+0048 7F40              MOV     R7,#040H
+004A 7E4B              MOV     R6,#04BH
+004C 7D4C              MOV     R5,#04CH
+004E 7C00              MOV     R4,#00H
+0050 120000      E     LCALL   _MY_TIMER_WriteCounter
+                                           ; SOURCE LINE # 258
+0053 22                RET     
              ; FUNCTION function_scheduler (END)
+
+             ; FUNCTION analog_read_end (BEGIN)
+                                           ; SOURCE LINE # 264
+0000         ?C0030:
+                                           ; SOURCE LINE # 266
+0000 120000      E     LCALL   ADC_STATUS_Read
+0003 EF                MOV     A,R7
+0004 700A              JNZ     ?C0031
+C51 COMPILER V9.51   INTERRUPTIONS                                                         11/29/2018 15:49:39 PAGE 11  
+
+                                           ; SOURCE LINE # 267
+0006 3000F7            JNB     interrupt_flag,?C0030
+                                           ; SOURCE LINE # 268
+0009 C200        E     CLR     interrupt_flag
+                                           ; SOURCE LINE # 269
+000B 120000      R     LCALL   interrupt_manager
+                                           ; SOURCE LINE # 270
+                                           ; SOURCE LINE # 271
+000E 80F0              SJMP    ?C0030
+0010         ?C0031:
+                                           ; SOURCE LINE # 273
+0010 900000      E     MOV     DPTR,#ADC_buf
+0013 E0                MOVX    A,@DPTR
+0014 FF                MOV     R7,A
+0015 A3                INC     DPTR
+0016 E0                MOVX    A,@DPTR
+0017 900000      E     MOV     DPTR,#sensor_value_1
+001A CF                XCH     A,R7
+001B F0                MOVX    @DPTR,A
+001C A3                INC     DPTR
+001D EF                MOV     A,R7
+001E F0                MOVX    @DPTR,A
+                                           ; SOURCE LINE # 274
+001F 900000      E     MOV     DPTR,#ADC_buf+02H
+0022 E0                MOVX    A,@DPTR
+0023 FF                MOV     R7,A
+0024 A3                INC     DPTR
+0025 E0                MOVX    A,@DPTR
+0026 900000      E     MOV     DPTR,#sensor_value_2
+0029 CF                XCH     A,R7
+002A F0                MOVX    @DPTR,A
+002B A3                INC     DPTR
+002C EF                MOV     A,R7
+002D F0                MOVX    @DPTR,A
+                                           ; SOURCE LINE # 276
+002E 300005            JNB     interrupt_flag,?C0034
+                                           ; SOURCE LINE # 277
+0031 C200        E     CLR     interrupt_flag
+                                           ; SOURCE LINE # 278
+0033 120000      R     LCALL   interrupt_manager
+                                           ; SOURCE LINE # 279
+                                           ; SOURCE LINE # 281
+0036         ?C0034:
+0036 22                RET     
+             ; FUNCTION analog_read_end (END)
 
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    366    ----
+   CODE SIZE        =    437    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =    128    ----
    PDATA SIZE       =   ----    ----

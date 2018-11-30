@@ -57,8 +57,8 @@
 //                                                                        DEVICE
 //==============================================================================
 
-#define VERSION                 "IMUboard v 1.2"
-//#define SOMA                   "IMUboard v 1.2 SoMa"
+#define VERSION                 "IMUboard v 1.3"
+//#define SOMA                   "IMUboard v 1.3 SoMa"
 
 #define N_IMU_MAX                   17
 #define NUM_OF_DATA                 5       // accelerometers, gyroscopes, magnetometers, quaternion and temperature data
@@ -166,6 +166,8 @@ extern float Quat[4];
 
 // -----------------------------------------------------------------------------
 
+extern uint16 sensor_value_1, sensor_value_2; 
+extern int16 ADC_buf[4];                            /*! ADC measurements buffer */
 
 #endif
 
