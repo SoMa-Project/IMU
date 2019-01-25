@@ -6,7 +6,7 @@ project(qb_interface)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED message_generation roscpp std_msgs)
 
-add_definitions(-std=c++11)
+add_definitions(-std=c++11 -fno-stack-protector)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -200,6 +200,12 @@ include_directories(
 add_executable(qb_interface_imu src/main_imu.cpp src/qb_class.cpp src/qb_class_imu.cpp src/qbCube.cpp src/qbHand.cpp src/qbImuBoard.cpp src/qbInterface.cpp src/qbmove_communications.cpp src/imuboard_communications.cpp)
 target_link_libraries(qb_interface_imu ${catkin_LIBRARIES})
 add_dependencies(qb_interface_imu qb_interface_gencpp)
+
+add_executable(qb_force_control src/main2.cpp src/qb_force_control.cpp src/qbCube.cpp src/qbHand.cpp src/qbInterface.cpp #/home/joao/code/qb_hand_stuff/qbAPI/src/qbmove_communications.cpp
+		src/qbmove_communications.cpp
+		)
+target_link_libraries(qb_force_control ${catkin_LIBRARIES})
+add_dependencies(qb_force_control qb_interface_gencpp)
 
 add_executable(qb_interface src/main.cpp src/qb_class.cpp src/qbCube.cpp src/qbHand.cpp src/qbInterface.cpp src/qbmove_communications.cpp)
 target_link_libraries(qb_interface ${catkin_LIBRARIES})
