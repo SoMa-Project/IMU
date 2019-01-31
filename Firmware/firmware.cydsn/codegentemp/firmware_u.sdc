@@ -1,3 +1,3 @@
-# Component constraints for C:\IMU-API\Firmware - Versione 1.3\firmware.cydsn\TopDesign\TopDesign.cysch
-# Project: C:\IMU-API\Firmware - Versione 1.3\firmware.cydsn\firmware.cyprj
-# Date: Thu, 29 Nov 2018 11:44:56 GMT
+# Component constraints for C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\TopDesign\TopDesign.cysch
+# Project: C:\Users\MattiaCP\Documents\GITHUB\IMU\Firmware\firmware.cydsn\firmware.cyprj
+# Date: Thu, 31 Jan 2019 10:46:22 GMT

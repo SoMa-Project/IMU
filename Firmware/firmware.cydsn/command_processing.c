@@ -155,9 +155,15 @@ void commProcess(){
             cmd_get_imu_readings();
             break;                
 
+//============================================================     CMD_GET_PARAM
+            
+        case CMD_GET_IMU_PARAM:
+            get_param_list( *((uint16 *) &g_rx.buffer[1]));
+            break;
+            
 //=====================================================     CMD_GET_SENSORS
 
-        case CMD_GET_SENSORS:
+        case CMD_GET_ADC_RAW:
             cmd_get_sensors();
             break;                
             
@@ -867,7 +873,7 @@ void cmd_get_sensors(){
     uint8 packet_data[6];
 
     // Header        
-    packet_data[0] = CMD_GET_SENSORS;
+    packet_data[0] = CMD_GET_ADC_RAW;
     
     *((int16 *) &packet_data[1]) = (int16) sensor_value_1;
     *((int16 *) &packet_data[3]) = (int16) sensor_value_2;

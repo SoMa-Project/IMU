@@ -57,8 +57,8 @@
 //                                                                        DEVICE
 //==============================================================================
 
-#define VERSION                 "IMUboard v 1.3"
-//#define SOMA                   "IMUboard v 1.3 SoMa"
+#define VERSION                 "IMUboard v 1.4"
+//#define SOMA                   "IMUboard v 1.4 SoMa"
 
 #define N_IMU_MAX                   17
 #define NUM_OF_DATA                 5       // accelerometers, gyroscopes, magnetometers, quaternion and temperature data
