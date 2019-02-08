@@ -1,34 +1,51 @@
+// ----------------------------------------------------------------------------
+// BSD 3-Clause License
 
-// Copyright (c) 2012, qbrobotics.
+// Copyright (c) 2016, qbrobotics
+// Copyright (c) 2017-2019, Centro "E.Piaggio"
 // All rights reserved.
-//
+
+
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-//
-// - Redistributions of source code must retain the above copyright notice, this
-// list of conditions and the following disclaimer.
-// - Redistributions in binary form must reproduce the above copyright notice,
-// this list of conditions and the following disclaimer in the documentation
-// and/or other materials provided with the distribution.
-//
+
+
+// * Redistributions of source code must retain the above copyright notice, this
+//   list of conditions and the following disclaimer.
+
+// * Redistributions in binary form must reproduce the above copyright notice,
+//   this list of conditions and the following disclaimer in the documentation
+//   and/or other materials provided with the distribution.
+
+// * Neither the name of the copyright holder nor the names of its
+//   contributors may be used to endorse or promote products derived from
+//   this software without specific prior written permission.
+
+
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+
+// DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+// FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+// DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+// SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+// CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+// OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // POSSIBILITY OF SUCH DAMAGE.
+// ----------------------------------------------------------------------------
 
 /**
  *  \file       qbmove_communications.cpp
  *
- *  \brief      Library of functions for serial port communication with a
- *              qbMove or a qbHand
- *
+ *  \brief      Library of functions for serial port communication with a board
+ * \date         May 03, 2018
+ * \author       _Centro "E.Piaggio"_
+ * \copyright    (C) 2012-2016 qbrobotics. All rights reserved.
+ * \copyright    (C) 2017-2018 Centro "E.Piaggio". All rights reserved.
+
+
  *  \details
  *
  *  Check the \ref qbmove_communications.h "qbmove_communications.h" file
@@ -145,7 +162,7 @@ void hexdump(void *mem, unsigned int len)
 //                                                               RS485listPorts
 //==============================================================================
 
-int RS485listPorts( char list_of_ports[10][255] )
+int RS485listPorts( char list_of_ports[20][255] )
 {
     //////////////////////////////   WINDOWS   //////////////////////////////
 #if (defined(_WIN32) || defined(_WIN64))
@@ -157,7 +174,7 @@ int RS485listPorts( char list_of_ports[10][255] )
 
     h = 0;
 
-    for(i = 1; i < 20; ++i) {
+    for(i = 1; i < 60; ++i) {
         strcpy(list_of_ports[i], "");
         sprintf(aux_string, "\\\\.\\COM%d", i);
         port = CreateFile(aux_string, GENERIC_WRITE|GENERIC_READ,
@@ -943,7 +960,7 @@ void commSetInputs(comm_settings *comm_settings_t, int id, short int inputs[]) {
 //==============================================================================
 //                                                               commSetPosStiff
 //==============================================================================
-// This function send reference position and stiffness to the qbmove
+// This function send reference position and stiffness
 //==============================================================================
 
 void commSetPosStiff(comm_settings *comm_settings_t, int id, short int inputs[]) {
@@ -1981,10 +1998,11 @@ int commStoreParams( comm_settings *comm_settings_t, int id ) {
     write(comm_settings_t->file_handle, data_out, 6);
 #endif
 
-    usleep(100000);
+    usleep(1000000);
     package_in_size = RS485read(comm_settings_t, id, package_in);
 
     if ( (package_in_size < 0) || (package_in[0] == ACK_ERROR) ) {
+
         return package_in_size;
     }
 
@@ -2176,7 +2194,7 @@ int commExtDrive(comm_settings *comm_settings_t, int id, char ext_input) {
 //==============================================================================
 //                                                            commSetCuffInputs
 //==============================================================================
-// This function send reference inputs to a qbMove board connected to a Cuff
+// This function send reference inputs to a board connected to a Cuff
 //==============================================================================
 
 void commSetCuffInputs(comm_settings *comm_settings_t, int id, int flag) {

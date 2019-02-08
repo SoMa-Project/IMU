@@ -70,13 +70,18 @@ void qbImuBoard::initImuBoard() {
 
 	uint8_t aux_string[2000];
 	uint8_t PARAM_SLOT_BYTES = 50;
-	uint8_t num_imus_id_params = 6;
+	uint8_t num_imus_id_params = 7;
 	uint8_t num_mag_cal_params = 0;
 	uint8_t first_imu_parameter = 2;
 	int v = 0;
 	int num_of_params;
 	
-	commGetParamList(cube_comm_, id_, 0, NULL, 0, 0, aux_string);
+	if (commGetIMUParamList(cube_comm_, id_, 0, NULL, 0, 0, aux_string) < 0){
+		// If commGetIMUParamList returns -1, the connected board is a PSoC3 board instead of a STM32 or PSoC5 board
+		// so call the commGetParamList instead
+		commGetParamList(cube_comm_, id_, 0, NULL, 0, 0, aux_string);
+		num_imus_id_params = 6;
+	}
 	
 	num_of_params = aux_string[5];
 	

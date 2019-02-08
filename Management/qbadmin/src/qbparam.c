@@ -1,3 +1,48 @@
+// ----------------------------------------------------------------------------
+// BSD 3-Clause License
+
+// Copyright (c) 2016, qbrobotics
+// Copyright (c) 2017-2018, Centro "E.Piaggio"
+// All rights reserved.
+
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are met:
+
+// * Redistributions of source code must retain the above copyright notice, this
+//   list of conditions and the following disclaimer.
+
+// * Redistributions in binary form must reproduce the above copyright notice,
+//   this list of conditions and the following disclaimer in the documentation
+//   and/or other materials provided with the distribution.
+
+// * Neither the name of the copyright holder nor the names of its
+//   contributors may be used to endorse or promote products derived from
+//   this software without specific prior written permission.
+
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+// DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+// FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+// DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+// SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+// CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+// OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// POSSIBILITY OF SUCH DAMAGE.
+// ----------------------------------------------------------------------------
+
+/**
+* \file         qbparam.c
+*
+* \brief        Command line tools file
+* \author       _Centro "E.Piaggio"_
+* \copyright    (C) 2012-2016 qbrobotics. All rights reserved.
+* \copyright    (C) 2017-2018 Centro "E.Piaggio". All rights reserved.
+*
+* \details      With this file is possible to get or set firmware parameters.
+*/
+
 // --- INCLUDE ---
 #include "../../qbAPI/src/qbmove_communications.h"
 #include "definitions.h"
@@ -6,6 +51,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <getopt.h>
 #include <stdint.h>
 
 // function declaration
@@ -19,26 +65,30 @@ int calibrate();
 // global variables
 char get_or_set;
 comm_settings comm_settings_t;
+uint8_t device_id = BROADCAST_ID;
+
 /** Baudrate functions
  */
 int baudrate_reader();
 
 // --- MAIN ---
-int main() {
+int main(int argc, char **argv) {
     int i,j,k;
     char c_choice;
 
-    uint8_t aux_string[2000];
+    uint8_t aux_string[5000] = "";
+
     int value_size;
     int num_of_values;
     int num_of_params;
     int menu_number[50];
     int index;
+
     int data_type[50];
     int data_dim[50];
     int data_size[50];
     char data_string[20];
-    char tmp_string[100];
+    char tmp_string[150];
 
     int8_t aux_int8[4];
     uint8_t aux_uint8[4];
@@ -50,6 +100,25 @@ int main() {
     double aux_double[4];
     uint8_t temp_char[4];
 
+
+
+
+
+
+
+
+	// Get device ID
+	if (argc > 1)
+    {
+        sscanf(argv[1],"%d",&device_id);
+		printf("Communicating with device %d\n", device_id);
+    }
+
+    if(device_id)
+        printf("\nUsing qbparam with ID: %hhu\n\n", device_id);
+    else
+        printf("\nUsing qbparam in broadcast.\n\n");
+
     printVersion();
 
     if (!open_port()) {
@@ -58,7 +127,8 @@ int main() {
     }
 
 
-//================================================================     MAIN MENU
+//===============================================================     MAIN MENU
+
     printMainMenu();
     scanf("%c", &c_choice);
 
@@ -90,10 +160,16 @@ int main() {
         index = 0;
         value_size = 0;
         num_of_values = 0;
-        commGetParamList(&comm_settings_t, BROADCAST_ID, index, NULL, value_size, num_of_values, aux_string);
+        commGetParamList(&comm_settings_t, device_id, index, NULL, value_size, num_of_values, aux_string);
         
+
         // The packet returned in aux_string is composed as follows
         // [':'][':'][ID][LEN][CMD][PARAM_NUM][...]
+
+
+
+
+
 
         num_of_params = aux_string[5];
 
@@ -110,6 +186,7 @@ int main() {
                 aux_uint16[j] = 0; aux_int32[j] = 0; aux_uint32[j] = 0; aux_float[j] = 0.0;
                 aux_double[j] = 0.0;
             }
+
             // For each parameter is associated a size, which is the number of bytes of that parameter, depending on its type
             switch(data_type[i]){
                 case TYPE_FLAG:
@@ -189,6 +266,7 @@ int main() {
                         }
                         aux_float[k] = (*(float *) &temp_char);
                         sprintf(data_string, " %f", aux_float[k]);
+
                         strcat(tmp_string, data_string);
                     }
                 break;
@@ -289,36 +367,36 @@ int main() {
             }
             switch(data_type[index - 1]) {
                     case TYPE_FLAG:
-                        commGetParamList(&comm_settings_t, BROADCAST_ID, index, aux_uint8, data_size[index - 1], data_dim[index - 1], NULL);
+                        commGetParamList(&comm_settings_t, device_id, index, aux_uint8, data_size[index - 1], data_dim[index - 1], NULL);
                     break;
                     case TYPE_INT8:
-                        commGetParamList(&comm_settings_t, BROADCAST_ID, index, aux_int8, data_size[index - 1], data_dim[index - 1], NULL);
+                        commGetParamList(&comm_settings_t, device_id, index, aux_int8, data_size[index - 1], data_dim[index - 1], NULL);
                     break;
                     case TYPE_UINT8:
-                        commGetParamList(&comm_settings_t, BROADCAST_ID, index, aux_uint8, data_size[index - 1], data_dim[index - 1], NULL);
+                        commGetParamList(&comm_settings_t, device_id, index, aux_uint8, data_size[index - 1], data_dim[index - 1], NULL);
                     break;
                     case TYPE_INT16:
-                        commGetParamList(&comm_settings_t, BROADCAST_ID, index, aux_int16, data_size[index - 1], data_dim[index - 1], NULL);
+                        commGetParamList(&comm_settings_t, device_id, index, aux_int16, data_size[index - 1], data_dim[index - 1], NULL);
                     break;
                     case TYPE_UINT16:
-                        commGetParamList(&comm_settings_t, BROADCAST_ID, index, aux_uint16, data_size[index - 1], data_dim[index - 1], NULL);
+                        commGetParamList(&comm_settings_t, device_id, index, aux_uint16, data_size[index - 1], data_dim[index - 1], NULL);
                     break;
                     case TYPE_INT32:
-                        commGetParamList(&comm_settings_t, BROADCAST_ID, index, aux_int32, data_size[index - 1], data_dim[index - 1], NULL);
+                        commGetParamList(&comm_settings_t, device_id, index, aux_int32, data_size[index - 1], data_dim[index - 1], NULL);
                     break;
                     case TYPE_UINT32:
-                        commGetParamList(&comm_settings_t, BROADCAST_ID, index, aux_uint32, data_size[index - 1], data_dim[index - 1], NULL);
+                        commGetParamList(&comm_settings_t, device_id, index, aux_uint32, data_size[index - 1], data_dim[index - 1], NULL);
                     break;
                     case TYPE_FLOAT:
-                        commGetParamList(&comm_settings_t, BROADCAST_ID, index, aux_float, data_size[index - 1], data_dim[index - 1], NULL);
+                        commGetParamList(&comm_settings_t, device_id, index, aux_float, data_size[index - 1], data_dim[index - 1], NULL);
                     break;
                     case TYPE_DOUBLE:
-                        commGetParamList(&comm_settings_t, BROADCAST_ID, index, aux_double, data_size[index - 1], data_dim[index - 1], NULL);
+                        commGetParamList(&comm_settings_t, device_id, index, aux_double, data_size[index - 1], data_dim[index - 1], NULL);
                     break;
                 }
 
             usleep(100000);
-            commStoreParams(&comm_settings_t, BROADCAST_ID);
+            commStoreParams(&comm_settings_t, device_id);
             usleep(100000);
         }
 
@@ -373,7 +451,7 @@ int port_selection() {
 int calibrate() {
     printf("Calibrating...");
     fflush(stdout);
-    if(!commCalibrate(&comm_settings_t, BROADCAST_ID)) {
+    if(!commCalibrate(&comm_settings_t, device_id)) {
         printf("DONE\n");
         return 1;
     } else {
@@ -456,7 +534,7 @@ int initMemory() {
 
     printf("Initializing memory...");
 
-    if (!commInitMem(&comm_settings_t, BROADCAST_ID)) {
+    if (!commInitMem(&comm_settings_t, device_id)) {
         printf("DONE\n");
         return 1;
     }

@@ -199,7 +199,7 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-add_executable(qb_interface_imu src/main_imu.cpp src/qb_class.cpp src/qb_class_imu.cpp src/qbCube.cpp src/qbHand.cpp src/qbImuBoard.cpp src/qbInterface.cpp src/qbmove_communications.cpp src/imuboard_communications.cpp)
+add_executable(qb_interface_imu src/main_imu.cpp src/qb_class.cpp src/qb_class_imu.cpp src/qbCube.cpp src/qbHand.cpp src/qbImuBoard.cpp src/qbInterface.cpp src/qbmove_communications.cpp src/cp_communications.cpp)
 target_link_libraries(qb_interface_imu ${catkin_LIBRARIES})
 add_dependencies(qb_interface_imu qb_interface_gencpp)
 

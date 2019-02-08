@@ -1,61 +1,71 @@
+// ----------------------------------------------------------------------------
+// BSD 3-Clause License
 
-// Copyright (c) 2012, qbrobotics.
+// Copyright (c) 2016, qbrobotics
+// Copyright (c) 2017-2019, Centro "E.Piaggio"
 // All rights reserved.
-//
+
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-//
-// - Redistributions of source code must retain the above copyright notice, this
-// list of conditions and the following disclaimer.
-// - Redistributions in binary form must reproduce the above copyright notice,
-// this list of conditions and the following disclaimer in the documentation
-// and/or other materials provided with the distribution.
-//
+
+// * Redistributions of source code must retain the above copyright notice, this
+//   list of conditions and the following disclaimer.
+
+// * Redistributions in binary form must reproduce the above copyright notice,
+//   this list of conditions and the following disclaimer in the documentation
+//   and/or other materials provided with the distribution.
+
+// * Neither the name of the copyright holder nor the names of its
+//   contributors may be used to endorse or promote products derived from
+//   this software without specific prior written permission.
+
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+// DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+// FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+// DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+// SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+// CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+// OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // POSSIBILITY OF SUCH DAMAGE.
+// ----------------------------------------------------------------------------
 
 /**
  * \file        qbmove_communications.h
  *
- * \brief       Library of functions for SERIAL PORT communication with a qbMove.
+ * \brief       Library of functions for SERIAL PORT communication with a board.
  *              Function Prototypes.
- *
+ * \date         May 03, 2018
+ * \author       _Centro "E.Piaggio"_
+ * \copyright    (C) 2012-2016 qbrobotics. All rights reserved.
+ * \copyright    (C) 2017-2019 Centro "E.Piaggio". All rights reserved.
  * \details
  *
- *  This library contains all necessary functions for communicating with a qbMove when
+ *  This library contains all necessary functions for communicating with a board when
  *  using a USB to RS485 connector that provides a Virtual COM interface.
 **/
 
  /**
 * \mainpage     qbAPI Libraries
 *
-* \brief        Those functions allows to use the qbMove or the qbHand through a serial port
+* \brief        Those functions allows to use the board through a serial port
 *
-* \version      6.0.0
+* \author       _Centro "E.Piaggio"_
+* \copyright    (C) 2012-2016 qbrobotics. All rights reserved.
+* \copyright    (C) 2017-2018 Centro "E.Piaggio". All rights reserved.
 *
-* \author       qbrobotics
+* \date         May 03, 2018
 *
-* \date         June 01, 2016
-*
-* \details      This is a set of functions that allows to use the qbMoves or the qbHands 
+* \details      This is a set of functions that allows to use the boards 
 *               via a serial port.
 *
 *               Those APIs can be compiled for Unix systems like Linux and
-*               Mac OS X and even for Windows. Refer to https://github.com/qbrobotics/qbAPI/blob/master/README.md
+*               Mac OS X and even for Windows. Refer to https://github.com/NMMI/qbAPI/tree/centropiaggio
 *               for detailed instructions.
 *
-* \copyright    (C)  qbrobotics. All rights reserved.
 */
-
 
 #ifndef QBMOVE_SERIALPORT_H_INCLUDED
 #define QBMOVE_SERIALPORT_H_INCLUDED
@@ -124,11 +134,11 @@ struct comm_settings
  *  \endcode
 **/
 
-int RS485listPorts( char list_of_ports[10][255] );
+int RS485listPorts( char list_of_ports[20][255] );
 
 //================================================================     openRS485
 
-/** This function is used to open a serial port for using with the qbMove or the qbHand.
+/** This function is used to open a serial port for using with the board.
  *
  *  \param comm_settings    A _comm_settings_ structure containing info about the
  *                          communication settings.
@@ -163,7 +173,7 @@ int RS485listPorts( char list_of_ports[10][255] );
 //===============================================================     closeRS485
 
 
-/** This function is used to close a serial port being used with the qbMove or an qbHand.
+/** This function is used to close a serial port being used with the board.
  *
  *  \param  comm_settings_t     A _comm_settings_ structure containing info about the
  *                              communication settings.
@@ -246,7 +256,7 @@ int RS485ListDevices( comm_settings *comm_settings_t, char list_of_ids[255] );
 
 //=============================================================     RS485GetInfo
 
-/** This function is used to ping the serial port for a qbMove or a qbHand and to
+/** This function is used to ping the serial port for a board and to
  *  get information about the device. ONLY USE WHEN ONE DEVICE IS CONNECTED
  *  ONLY.
  *
@@ -281,7 +291,7 @@ void RS485GetInfo( comm_settings *comm_settings_t, char *buffer );
 
 //================================================================     commPing
 
-/** This function is used to ping the qbMove or the qbHand.
+/** This function is used to ping the board.
  *
  *  \param  comm_settings_t     A _comm_settings_ structure containing info about the
  *                              communication settings.
@@ -312,7 +322,7 @@ int commPing( comm_settings *comm_settings_t, int id );
 
 //=============================================================     commActivate
 
-/** This function activates or deactivates a qbMove or a qbHand connected to
+/** This function activates or deactivates a board connected to
  *  the serial port.
  *
  *  \param  comm_settings_t     A _comm_settings_ structure containing info about the
@@ -364,7 +374,7 @@ void commSetBaudRate( comm_settings *comm_settings_t, int id, short int baudrate
 
 //============================================================     commSetWatchDog
 
-/** This function sets watchdog timer of a qbMove or a qbHand.
+/** This function sets watchdog timer of a board.
  *
  *  \param  comm_settings_t     A _comm_settings_ structure containing info about the
  *                              communication settings.
@@ -391,7 +401,7 @@ void commSetWatchDog( comm_settings *comm_settings_t, int id, short int wdt);
 
 //============================================================     commSetInputs
 
-/** This function send reference inputs to a qbMove or a qbHand connected to the serial
+/** This function send reference inputs to a board connected to the serial
  *  port.
  *
  *  \param  comm_settings_t     A _comm_settings_ structure containing info about the
@@ -421,9 +431,8 @@ void commSetInputs( comm_settings *comm_settings_t, int id, short int inputs[]);
 
 //============================================================     commSetPosStiff
 
-/** This function send reference inputs to a qbMove connected to the serial
- *  port. The reference is in shaft position and stiffness preset. IS VALID ONLY WHEN USED
- *  FOR THE qbMove, NOT FOR THE qbHand
+/** This function send reference inputs to a board connected to the serial
+ *  port. The reference is in shaft position and stiffness preset. 
  *
  *  \param  comm_settings_t     A _comm_settings_ structure containing info about the
  *                              communication settings.
@@ -452,7 +461,7 @@ void commSetPosStiff(comm_settings *comm_settings_t, int id, short int inputs[])
 
 //============================================================     commGetInputs
 
-/** This function gets input references from a qbMove or a qbHand connected to the serial
+/** This function gets input references from a board connected to the serial
  *  port.
  *
  *  \param  comm_settings_t     A _comm_settings_ structure containing info about the
@@ -487,7 +496,7 @@ int commGetInputs( comm_settings *comm_settings_t, int id, short int inputs[2] )
 
 //======================================================     commGetMeasurements
 
-/** This function gets position measurements from a qbMove or a qbHand connected to the serial
+/** This function gets position measurements from a board connected to the serial
  *  port.
  *
  *  \param  comm_settings_t     A _comm_settings_ structure containing info about the
@@ -522,7 +531,7 @@ int commGetMeasurements( comm_settings *comm_settings_t, int id, short int measu
 
 //======================================================     commGetCounters
 
-/** This function gets counters values from a qbMove connected to the serial
+/** This function gets counters values from a board connected to the serial
  *  port.
  *
  *  \param  comm_settings_t     A _comm_settings_ structure containing info about the
@@ -557,7 +566,7 @@ int commGetCounters( comm_settings *comm_settings_t, int id, short unsigned int 
 
 //======================================================     commGetCurrents
 
-/** This function gets currents from a qbMove or a qbHand connected to the serial
+/** This function gets currents from a board connected to the serial
 *  port.
 *
 *  \param  comm_settings_t     A _comm_settings_ structure containing info about the
@@ -592,7 +601,7 @@ int commGetCurrents( comm_settings *comm_settings_t, int id, short int currents[
 
 //=======================================================     commGetCurrAndMeas
 
-/** This function gets currents and position measurements from a qbMove or a qbHand
+/** This function gets currents and position measurements from a board
 *   connected to the serial port
 *
 *  \param  comm_settings_t      A _comm_settings_ structure containing info about the
@@ -665,7 +674,7 @@ int commGetEmg(comm_settings *comm_settings_t, int id, short int emg[2]);
 
 //========================================================     commGetVelocities
 
-/** This function gets velocities of the two motors and the shaft from a qbMove
+/** This function gets velocities of the two motors and the shaft from a board
 *   connected to a serial port or from the only shaft of the qbHand
 *
 *  \param  comm_settings_t     A _comm_settings_ structure containing info about the
@@ -736,7 +745,7 @@ int commGetAccelerations(comm_settings *comm_settings_t, int id, short int measu
 
 //==========================================================     commGetActivate
 
-/** This function gets the activation status of a qbMove or a qbHand connected to the serial
+/** This function gets the activation status of a board connected to the serial
  *  port.
  *
  *  \param  comm_settings_t     A _comm_settings_ structure containing info about the
@@ -772,7 +781,7 @@ int commGetActivate( comm_settings *comm_settings_t, int id, char *activate );
 
 //==============================================================     commGetInfo
 
-/** This function is used to ping the qbMove or the qbHand and get information about the
+/** This function is used to ping the board and get information about the
  *  device.
  *
  *  \param  comm_settings_t     A _comm_settings_ structure containing info about the
@@ -831,7 +840,7 @@ int commBootloader(comm_settings *comm_settings_t, int id);
 
 //==============================================================     commCalibrate
 
-/** This function is used to calibrate the maximum stiffness value of the qbMove
+/** This function is used to calibrate the maximum stiffness value of the board
 *
 *   \param  comm_settings_t     A _comm_settings_ structure containing info about the
 *                               communication settings.
@@ -892,7 +901,7 @@ int commHandCalibrate(comm_settings *comm_settings_t, int id, short int speed, s
 //============================================================     commSetZeros
 
 /** This function sets the encoders's zero positon value that remains stored in
- *  the qbMove or qbHand memory.
+ *  the board memory.
  *
  *  \param  comm_settings_t     A _comm_settings_ structure containing info about the
  *                              communication settings.
@@ -926,7 +935,7 @@ int commSetZeros( comm_settings *comm_settings_t,
 
 //============================================================     commGetParamList
 
-/** This function gets all the parameters that are stored in the qbMove or qbHand memory and sets
+/** This function gets all the parameters that are stored in the board memory and sets
     one of them if requested
 *
 *  \param  comm_settings_t     A _comm_settings_ structure containing info about the
@@ -974,7 +983,7 @@ int commGetParamList(comm_settings *comm_settings_t, int id, unsigned short inde
 
 //============================================================     commStoreParams
 
-/** This function stores all parameters that were set in the qbMove or the qbHand memory.
+/** This function stores all parameters that were set in the board memory.
 *
 *  \param  comm_settings_t     A _comm_settings_ structure containing info about the
 *                              communication settings.
@@ -1157,7 +1166,7 @@ int commExtDrive(comm_settings *comm_settings_t, int id, char ext_input);
 
 //============================================================     commSetCuffInputs
 
-/** This function send reference inputs to a qbMove board connected to the serial
+/** This function send reference inputs to a board connected to the serial
  *  port. Is used only when the device is a Cuff.
  *
  *  \param  comm_settings_t     A _comm_settings_ structure containing info about the

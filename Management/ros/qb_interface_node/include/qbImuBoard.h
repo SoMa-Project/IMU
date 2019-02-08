@@ -4,7 +4,7 @@
 #include <iostream>
 
 #include "qbInterface.h"
-#include "imuboard_communications.h"
+#include "cp_communications.h"
 
 class qbImuBoard : public qbInterface
 {
