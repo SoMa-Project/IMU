@@ -9,4 +9,4 @@ compute_angles: true #Angles from computed quaternions (if needed)
 baudrate: 2000000 # BaudRate [200000, 460800]
 IDcubes: [] # ID cubes in chain
 IDhands: [] # ID hands in chain
-IDimuboards: [10] # ID imu boards in chainIDimuboards: [34] 
+IDimuboards: [1, 2, 3, 4, 5] # ID imu boards in chainIDimuboards: [34] 

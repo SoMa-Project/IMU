@@ -65,11 +65,11 @@ qb_class_imu::qb_class_imu(){
 			imuboard_pub_angles_ = node_->advertise<qb_interface::anglesArray>("/qb_class_imu/angles", 1);
 		}
 
-		Acc_.resize(imuboard_chain_[0]->n_imu_,3);
-		Acc_old_.resize(imuboard_chain_[0]->n_imu_,3);
-		Gyro_.resize(imuboard_chain_[0]->n_imu_,3);
-		Ext_Quat_.resize(imuboard_chain_[0]->n_imu_,4);
-		Angles_.resize(imuboard_chain_[0]->n_imu_, 3);
+		Acc_.resize(17,3);		//allocate max size instead of (imuboard_chain.[0]->n_imu_)
+		Acc_old_.resize(17,3);
+		Gyro_.resize(17,3);
+		Ext_Quat_.resize(17,4);
+		Angles_.resize(17, 3);
 
 		Acc_.setZero();
 		Acc_old_.setZero();
@@ -147,6 +147,7 @@ bool qb_class_imu::readIMU(){
 		
 			if (imuboard_chain_[k]->imu_table_[5*i + 0])
 			{
+				tmp_acc.board_id = imuboard_chain_[k]->getID();
 				tmp_acc.id = imuboard_chain_[k]->ids_[i];
 				tmp_acc.x  = imuboard_chain_[k]->imu_values_[(3*3+4+1)*i];
 				tmp_acc.y  = imuboard_chain_[k]->imu_values_[(3*3+4+1)*i+1];
@@ -159,6 +160,7 @@ bool qb_class_imu::readIMU(){
 			}
 			if (imuboard_chain_[k]->imu_table_[5*i + 1])
 			{
+				tmp_gyro.board_id = imuboard_chain_[k]->getID();
 				tmp_gyro.id = imuboard_chain_[k]->ids_[i];
 				tmp_gyro.x  = imuboard_chain_[k]->imu_values_[(3*3+4+1)*i+3];
 				tmp_gyro.y  = imuboard_chain_[k]->imu_values_[(3*3+4+1)*i+4];
@@ -172,6 +174,7 @@ bool qb_class_imu::readIMU(){
 
 			if (imuboard_chain_[k]->imu_table_[5*i + 2] )
 			{
+				tmp_mag.board_id = imuboard_chain_[k]->getID();
 				tmp_mag.id = imuboard_chain_[k]->ids_[i];
 				tmp_mag.x  = imuboard_chain_[k]->imu_values_[(3*3+4+1)*i+6];
 				tmp_mag.y  = imuboard_chain_[k]->imu_values_[(3*3+4+1)*i+7];
@@ -182,6 +185,7 @@ bool qb_class_imu::readIMU(){
 			
 			if (imuboard_chain_[k]->imu_table_[5*i+3])
 			{
+				tmp_quat.board_id = imuboard_chain_[k]->getID();
 				tmp_quat.id = imuboard_chain_[k]->ids_[i];
 				tmp_quat.w  = imuboard_chain_[k]->imu_values_[(3*3+4+1)*i+9];
 				tmp_quat.x  = imuboard_chain_[k]->imu_values_[(3*3+4+1)*i+10];
@@ -191,6 +195,7 @@ bool qb_class_imu::readIMU(){
 			} else { // [GS] Parte che calcola il quaternione
 				if (imuboard_chain_[k]->imu_table_[5*i + 0] && imuboard_chain_[k]->imu_table_[5*i + 1]) { // Controllo se ho il necessario per calcolare il quaternione
 					Ext_Quat_Computer(i);
+					tmp_quat.board_id = imuboard_chain_[k]->getID();
 					tmp_quat.id = imuboard_chain_[k]->ids_[i];
 					tmp_quat.w  = Ext_Quat_(i,0);
 					tmp_quat.x  = Ext_Quat_(i,1);
@@ -200,6 +205,7 @@ bool qb_class_imu::readIMU(){
 
 					if (compute_angles_) {
 						Quat_to_Angles(i);
+						tmp_angles.board_id = imuboard_chain_[k]->getID();
 						tmp_angles.id = imuboard_chain_[k]->ids_[i];
 						tmp_angles.r = Angles_(i,0);
 						tmp_angles.p = Angles_(i,1);
@@ -211,6 +217,7 @@ bool qb_class_imu::readIMU(){
 			
 			if (imuboard_chain_[k]->imu_table_[5*i+4])
 			{
+				tmp_temp.board_id = imuboard_chain_[k]->getID();
 				tmp_temp.id = imuboard_chain_[k]->ids_[i];
 				tmp_temp.value  = imuboard_chain_[k]->imu_values_[(3*3+4+1)*i+13];
 				temp.m.push_back(tmp_temp);

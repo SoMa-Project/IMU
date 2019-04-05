@@ -1,4 +1,4 @@
-C51 COMPILER V9.51   MAIN                                                                  01/31/2019 11:47:32 PAGE 1   
+C51 COMPILER V9.51   MAIN                                                                  02/25/2019 07:53:24 PAGE 1   
 
 
 C51 COMPILER V9.51, COMPILATION OF MODULE MAIN
@@ -62,7 +62,7 @@ line level    source
   50          */
   51          
   52          
-C51 COMPILER V9.51   MAIN                                                                  01/31/2019 11:47:32 PAGE 2   
+C51 COMPILER V9.51   MAIN                                                                  02/25/2019 07:53:24 PAGE 2   
 
   53          // ----------------------------------------------------------------------------
   54          // This version changes:
@@ -126,7 +126,7 @@ line level    source
  112   1              SPI_IMU_Enable();
  113   1              SPI_IMU_ClearRxBuffer();
  114   1              SPI_IMU_ClearTxBuffer();
-C51 COMPILER V9.51   MAIN                                                                  01/31/2019 11:47:32 PAGE 3   
+C51 COMPILER V9.51   MAIN                                                                  02/25/2019 07:53:24 PAGE 3   
 
  115   1              SPI_IMU_ClearFIFO();                                                    
  116   1          CyDelay(10);
@@ -190,7 +190,7 @@ line level    source
  169   2      
  170   2              if(UART_RS485_ReadRxStatus() & UART_RS485_RX_STS_SOFT_BUFF_OVER)
  171   2                  UART_RS485_ClearRxBuffer();
-C51 COMPILER V9.51   MAIN                                                                  01/31/2019 11:47:32 PAGE 4   
+C51 COMPILER V9.51   MAIN                                                                  02/25/2019 07:53:24 PAGE 4   
 
  172   2          }
  173   1          return 0;
@@ -199,7 +199,7 @@ line level    source
  176          
  177          
  178          /* [] END OF FILE */
-C51 COMPILER V9.51   MAIN                                                                  01/31/2019 11:47:32 PAGE 5   
+C51 COMPILER V9.51   MAIN                                                                  02/25/2019 07:53:24 PAGE 5   
 
 ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
@@ -263,7 +263,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
                                            ; SOURCE LINE # 116
 004F E4                CLR     A
 0050 7F0A              MOV     R7,#0AH
-C51 COMPILER V9.51   MAIN                                                                  01/31/2019 11:47:32 PAGE 6   
+C51 COMPILER V9.51   MAIN                                                                  02/25/2019 07:53:24 PAGE 6   
 
 0052 FE                MOV     R6,A
 0053 FD                MOV     R5,A
@@ -327,7 +327,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00AC 120000      E     LCALL   _CyDmaChSetInitialTd
                                            ; SOURCE LINE # 128
 00AF 900000      R     MOV     DPTR,#DMA_Chan
-C51 COMPILER V9.51   MAIN                                                                  01/31/2019 11:47:32 PAGE 7   
+C51 COMPILER V9.51   MAIN                                                                  02/25/2019 07:53:24 PAGE 7   
 
 00B2 E0                MOVX    A,@DPTR
 00B3 FF                MOV     R7,A
@@ -391,7 +391,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00FB 80CF              SJMP    ?C0001
                                            ; SOURCE LINE # 173
                                            ; SOURCE LINE # 174
-C51 COMPILER V9.51   MAIN                                                                  01/31/2019 11:47:32 PAGE 8   
+C51 COMPILER V9.51   MAIN                                                                  02/25/2019 07:53:24 PAGE 8   
 
 00FD         ?C0009:
 00FD 22                RET     
