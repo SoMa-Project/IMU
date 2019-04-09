@@ -298,9 +298,9 @@ void qb_class_imu::Ext_Quat_Computer(int n) {
 	sz = aP(2); 
 	
  	// Check And Prepare Gyros
- 	if (fabs(Gyro_(n,0) < Gyro_Th)) {Gyro_(n,0) = 0;}
-   	if (fabs(Gyro_(n,1) < Gyro_Th)) {Gyro_(n,1) = 0;}
-    if (fabs(Gyro_(n,2) < Gyro_Th)) {Gyro_(n,2) = 0;}
+ 	if (fabs(Gyro_(n,0)) < Gyro_Th) {Gyro_(n,0) = 0;}
+   	if (fabs(Gyro_(n,1)) < Gyro_Th) {Gyro_(n,1) = 0;}
+	if (fabs(Gyro_(n,2)) < Gyro_Th) {Gyro_(n,2) = 0;}
 	gP(0)  = 0; 
 	gP(1)  = Gyro_(n,0);  
 	gP(2)  = Gyro_(n,1);  
