@@ -1083,9 +1083,11 @@ bool qb_class::change_control_pid(qb_interface::control_pid::Request& req, qb_in
     		hand_chain_[i]->getPIDparams(aux_float);
 
     		if (req.kp > 0 && req.kp < 0.21) {
-    			hand_chain_[i]->setPID(req.kp, aux_float[1], aux_float[2]);
+    			hand_chain_[i]->setPID(req.kp, req.ki, req.kd);
 		    
 		    	std::cout << "Setting k_p = " << req.kp << " for hand with ID: " << req.id << std::endl; 
+		    	std::cout << "Setting k_i = " << req.ki << " for hand with ID: " << req.id << std::endl; 
+		    	std::cout << "Setting k_d = " << req.kd << " for hand with ID: " << req.id << std::endl; 
 		    }
 		    else {
 		    	std::cerr << "[Error] k_p PID parameter outside allowed bounds for the hand with ID: " << req.id << std::endl << "By setting k_p beyond limits, correct hand behaviour is not guaranteed" << std::endl; 
